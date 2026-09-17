@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>&lt;no title&gt;</title>
+    <title>Tugas 2 - Text Preprocessing, TF-IDF, ICSDF, dan PCA</title>
   
   
   
@@ -218,8 +218,9 @@
                 </a>
             </li>
         </ul>
-        <ul class="nav bd-sidenav">
+        <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="Tugas_1.html">Tugas 1</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Tugas 2 - Text Preprocessing, TF-IDF, ICSDF, dan PCA</a></li>
 </ul>
 
     </div>
@@ -402,7 +403,7 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1><no title></h1>
+    <h1>Tugas 2 - Text Preprocessing, TF-IDF, ICSDF, dan PCA</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -411,9 +412,33 @@
                 <h2> Contents </h2>
             </div>
             <nav aria-label="Page">
-                <ul class="simple pst-show_toc_level nav section-nav flex-column">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#import-library">2. Import Library</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#membaca-dataset">3. Membaca Dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mengubah-label-menjadi-numerik">4. Mengubah Label Menjadi Numerik</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#menghitung-jumlah-kata-semua-berita">5. Menghitung Jumlah Kata Semua Berita</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kamus-kata-tidak-baku">6. Kamus Kata Tidak Baku</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kamus-bahasa-asing">7. Kamus Bahasa Asing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fungsi-preprocessing">8. Fungsi Preprocessing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#menerapkan-preprocessing-ke-semua-berita">9. Menerapkan Preprocessing ke Semua Berita</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#menghitung-jumlah-kata-setelah-preprocessing">10. Menghitung Jumlah Kata Setelah Preprocessing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mengekstrak-seluruh-kata-unik">11. Mengekstrak Seluruh Kata Unik</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#membagi-data-training-dan-testing">12. Membagi Data Training dan Testing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#representasi-tf-idf">13. Representasi TF-IDF</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#melihat-matriks-tf-idf">14. Melihat Matriks TF-IDF</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#menyimpan-data-tf-idf">15. Menyimpan Data TF-IDF</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#perhitungan-icsdf">16. Perhitungan ICSDF</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tf-idf-icsdf">17. TF-IDF × ICSDF</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#menentukan-kata-paling-penting">18. Menentukan Kata Paling Penting</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reduksi-menjadi-100-fitur-icsdf">19. Reduksi Menjadi 100 Fitur ICSDF</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tabel-hasil-icsdf">20. Tabel Hasil ICSDF</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pca">21. PCA</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#membuat-tabel-data-reduksi-training">22. Membuat Tabel Data Reduksi Training</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#membuat-data-testing">23. Membuat Data Testing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#menyimpan-data-reduksi">24. Menyimpan Data Reduksi</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cek-total-data-training-dan-testing">25. Cek Total Data Training dan Testing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#memastikan-kolom-terakhir-adalah-label">26. Memastikan Kolom Terakhir adalah Label</a></li>
 </ul>
-
             </nav>
         </div>
     </div>
@@ -424,34 +449,15 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <p>#Tugas 2 lanjutan dari tugas pertama “kata unik”</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>pandas<span class="w"> </span>openpyxl<span class="w"> </span>numpy<span class="w"> </span>scikit-learn
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: pandas in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (3.0.5)
-Requirement already satisfied: openpyxl in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (3.1.5)
-Requirement already satisfied: numpy in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (2.5.3)
-Requirement already satisfied: scikit-learn in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (1.9.1)
-Requirement already satisfied: python-dateutil&gt;=2.8.2 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from pandas) (2.9.0.post0)
-Requirement already satisfied: et-xmlfile in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from openpyxl) (2.0.0)
-Requirement already satisfied: scipy&gt;=1.10.0 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from scikit-learn) (1.18.1)
-Requirement already satisfied: joblib&gt;=1.4.0 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from scikit-learn) (1.6.0)
-Requirement already satisfied: narwhals&gt;=2.0.1 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from scikit-learn) (2.26.0)
-Requirement already satisfied: threadpoolctl&gt;=3.5.0 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from scikit-learn) (3.7.0)
-Requirement already satisfied: cloudpickle&gt;=3.0 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from joblib&gt;=1.4.0-&gt;scikit-learn) (3.1.2)
-Requirement already satisfied: six&gt;=1.5 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from python-dateutil&gt;=2.8.2-&gt;pandas) (1.17.0)
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold">[</span><span class=" -Color -Color-Blue">notice</span><span class=" -Color -Color-Bold">]</span> A new release of pip is available: <span class=" -Color -Color-Red">25.3</span> -&gt; <span class=" -Color -Color-Green">26.2.1</span>
-<span class=" -Color -Color-Bold">[</span><span class=" -Color -Color-Blue">notice</span><span class=" -Color -Color-Bold">]</span> To update, run: <span class=" -Color -Color-Green">pip install --upgrade pip</span>
-</pre></div>
-</div>
-</div>
-</div>
+  <section class="tex2jax_ignore mathjax_ignore" id="tugas-2-text-preprocessing-tf-idf-icsdf-dan-pca">
+<h1>Tugas 2 - Text Preprocessing, TF-IDF, ICSDF, dan PCA<a class="headerlink" href="#tugas-2-text-preprocessing-tf-idf-icsdf-dan-pca" title="Link to this heading">#</a></h1>
+<p>Pada tugas ini dilakukan pengolahan terhadap 200 berita dari <a class="reference external" href="http://Detik.com">Detik.com</a> yang terdiri dari 100 berita kategori Sport dan 100 berita kategori Finance.</p>
+<p>Tahapan yang dilakukan meliputi eksplorasi data, pemeriksaan kualitas teks, normalisasi karakter, tokenisasi, normalisasi kata tidak baku dan istilah asing, pembentukan representasi TF-IDF, pembobotan ICSDF, seleksi fitur, serta reduksi dimensi menggunakan PCA.</p>
+<p>Selain itu dilakukan analisis kata unik berdasarkan kategori, analisis kata dengan bobot TF-IDF tertinggi, visualisasi PCA dua dimensi, dan analisis PCA Feature Loading.</p>
+<section id="import-library">
+<h2>2. Import Library<a class="headerlink" href="#import-library" title="Link to this heading">#</a></h2>
+<p>Setelah library tersedia, library yang diperlukan diimpor ke dalam notebook.</p>
+<p><code class="docutils literal notranslate"><span class="pre">pandas</span></code> digunakan untuk membaca dan mengolah dataset. <code class="docutils literal notranslate"><span class="pre">numpy</span></code> digunakan untuk perhitungan numerik. <code class="docutils literal notranslate"><span class="pre">re</span></code> digunakan untuk preprocessing teks dengan regular expression. Library dari <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> digunakan untuk pembagian data, TF-IDF, dan PCA.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
@@ -459,90 +465,34 @@ Requirement already satisfied: six&gt;=1.5 in /workspaces/PPW/envwebmining/lib/p
 <span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">scipy.sparse</span><span class="w"> </span><span class="kn">import</span> <span class="n">csr_matrix</span>
+
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.feature_extraction.text</span><span class="w"> </span><span class="kn">import</span> <span class="n">TfidfVectorizer</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.decomposition</span><span class="w"> </span><span class="kn">import</span> <span class="n">PCA</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.linear_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">LogisticRegression</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">classification_report</span><span class="p">,</span> <span class="n">confusion_matrix</span>
 </pre></div>
 </div>
 </div>
 </div>
+</section>
+<section id="membaca-dataset">
+<h2>3. Membaca Dataset<a class="headerlink" href="#membaca-dataset" title="Link to this heading">#</a></h2>
+<p>Dataset yang digunakan merupakan kumpulan 200 berita yang terdiri dari dua kategori, yaitu Sport dan Finance.</p>
+<p>Dataset memiliki tiga kolom utama, yaitu:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">id</span></code> sebagai identitas berita</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">isi_berita</span></code> sebagai isi teks berita</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">label</span></code> sebagai kategori berita</p></li>
+</ul>
+<p>Masing-masing kategori terdiri dari 100 berita.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="s2">"dataset_detik_200_berita.xlsx"</span><span class="p">)</span>
 
-<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>id</th>
-      <th>isi_berita</th>
-      <th>label</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>1</td>
-      <td>Dalam dua seri terakhir MotoGP 2027, Marc Marq...</td>
-      <td>sport</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>2</td>
-      <td>Alwi Farhan, Moh Zaki Ubaidillah dan Muhamad Y...</td>
-      <td>sport</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>3</td>
-      <td>Di tengah viral insiden cepirit pada ajang Hyr...</td>
-      <td>sport</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>4</td>
-      <td>Dejan Fedinansyah/Felisha Alberta Nathaniel Pa...</td>
-      <td>sport</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>5</td>
-      <td>Bagas Maulana/Apriyani Rahayu tak minder meski...</td>
-      <td>sport</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"Jumlah data :"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">))</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Nama kolom:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Jumlah data :"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Nama kolom :"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Jumlah data per label:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Jumlah data per label :"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">"label"</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span>
 </pre></div>
 </div>
@@ -550,10 +500,10 @@ Requirement already satisfied: six&gt;=1.5 in /workspaces/PPW/envwebmining/lib/p
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah data : 200
 
-Nama kolom:
+Nama kolom :
 Index(['id', 'isi_berita', 'label'], dtype='str')
 
-Jumlah data per label:
+Jumlah data per label :
 label
 sport      100
 finance    100
@@ -562,6 +512,16 @@ Name: count, dtype: int64
 </div>
 </div>
 </div>
+</section>
+<section id="mengubah-label-menjadi-numerik">
+<h2>4. Mengubah Label Menjadi Numerik<a class="headerlink" href="#mengubah-label-menjadi-numerik" title="Link to this heading">#</a></h2>
+<p>Label teks perlu diubah menjadi bentuk numerik agar dapat digunakan pada proses pengolahan data selanjutnya.</p>
+<p>Pada tugas ini digunakan aturan:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">sport</span></code> menjadi <code class="docutils literal notranslate"><span class="pre">1</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">finance</span></code> menjadi <code class="docutils literal notranslate"><span class="pre">0</span></code></p></li>
+</ul>
+<p>Dengan demikian setiap berita mempunyai label numerik yang mewakili kategorinya.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s2">"label_num"</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">"label"</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">({</span>
@@ -632,17 +592,30 @@ Name: count, dtype: int64
 </table>
 </div></div></div>
 </div>
+</section>
+<section id="menghitung-jumlah-kata-semua-berita">
+<h2>5. Menghitung Jumlah Kata Semua Berita<a class="headerlink" href="#menghitung-jumlah-kata-semua-berita" title="Link to this heading">#</a></h2>
+<p>Sebelum dilakukan preprocessing, jumlah kata pada setiap berita dihitung terlebih dahulu.</p>
+<p>Perhitungan dilakukan dengan memisahkan teks berdasarkan spasi menggunakan fungsi <code class="docutils literal notranslate"><span class="pre">split()</span></code>.</p>
+<p>Hasil perhitungan disimpan pada kolom <code class="docutils literal notranslate"><span class="pre">jumlah_kata_asli</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s2">"jumlah_kata_asli"</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">"isi_berita"</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
-    <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s2">"jumlah_kata_asli"</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">"isi_berita"</span><span class="p">]</span>
+    <span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
 <span class="p">)</span>
 
-<span class="n">df</span><span class="p">[[</span><span class="s2">"id"</span><span class="p">,</span> <span class="s2">"jumlah_kata_asli"</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Total seluruh kata :"</span><span class="p">,</span> <span class="n">df</span><span class="p">[</span><span class="s2">"jumlah_kata_asli"</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+
+<span class="n">df</span><span class="p">[[</span><span class="s2">"id"</span><span class="p">,</span> <span class="s2">"label"</span><span class="p">,</span> <span class="s2">"jumlah_kata_asli"</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Total seluruh kata : 67076
+</pre></div>
+</div>
 <div class="output text_html"><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -662,6 +635,7 @@ Name: count, dtype: int64
     <tr style="text-align: right;">
       <th></th>
       <th>id</th>
+      <th>label</th>
       <th>jumlah_kata_asli</th>
     </tr>
   </thead>
@@ -669,56 +643,51 @@ Name: count, dtype: int64
     <tr>
       <th>0</th>
       <td>1</td>
+      <td>sport</td>
       <td>320</td>
     </tr>
     <tr>
       <th>1</th>
       <td>2</td>
+      <td>sport</td>
       <td>323</td>
     </tr>
     <tr>
       <th>2</th>
       <td>3</td>
+      <td>sport</td>
       <td>256</td>
     </tr>
     <tr>
       <th>3</th>
       <td>4</td>
+      <td>sport</td>
       <td>238</td>
     </tr>
     <tr>
       <th>4</th>
       <td>5</td>
+      <td>sport</td>
       <td>402</td>
     </tr>
   </tbody>
 </table>
 </div></div></div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">total_kata</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">"jumlah_kata_asli"</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s2">"Total seluruh kata :"</span><span class="p">,</span> <span class="n">total_kata</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">"jumlah_kata_asli"</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Total seluruh kata : 67076
-count    200.000000
-mean     335.380000
-std      161.031304
-min       42.000000
-25%      241.000000
-50%      303.000000
-75%      392.250000
-max      963.000000
-Name: jumlah_kata_asli, dtype: float64
-</pre></div>
-</div>
-</div>
-</div>
+</section>
+<section id="kamus-kata-tidak-baku">
+<h2>6. Kamus Kata Tidak Baku<a class="headerlink" href="#kamus-kata-tidak-baku" title="Link to this heading">#</a></h2>
+<p>Kamus kata tidak baku digunakan untuk mengubah kata singkatan atau kata tidak baku menjadi bentuk yang lebih standar.</p>
+<p>Contohnya adalah:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">yg</span></code> menjadi <code class="docutils literal notranslate"><span class="pre">yang</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dgn</span></code> menjadi <code class="docutils literal notranslate"><span class="pre">dengan</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">utk</span></code> menjadi <code class="docutils literal notranslate"><span class="pre">untuk</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">krn</span></code> menjadi <code class="docutils literal notranslate"><span class="pre">karena</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tdk</span></code> menjadi <code class="docutils literal notranslate"><span class="pre">tidak</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dr</span></code> menjadi <code class="docutils literal notranslate"><span class="pre">dari</span></code></p></li>
+</ul>
+<p>Normalisasi ini dilakukan agar kata yang mempunyai makna sama tidak dianggap sebagai kata yang berbeda.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kamus_tidak_baku</span> <span class="o">=</span> <span class="p">{</span>
@@ -755,6 +724,25 @@ Name: jumlah_kata_asli, dtype: float64
 </div>
 </div>
 </div>
+</section>
+<section id="kamus-bahasa-asing">
+<h2>7. Kamus Bahasa Asing<a class="headerlink" href="#kamus-bahasa-asing" title="Link to this heading">#</a></h2>
+<p>Kamus bahasa asing digunakan untuk menormalisasi beberapa istilah asing yang terdapat pada berita menjadi istilah bahasa Indonesia.</p>
+<p>Kamus disesuaikan dengan dua kategori dataset, yaitu Sport dan Finance.</p>
+<p>Contohnya pada kategori Sport:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">rider</span></code> menjadi <code class="docutils literal notranslate"><span class="pre">pembalap</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">race</span></code> menjadi <code class="docutils literal notranslate"><span class="pre">balapan</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">team</span></code> menjadi <code class="docutils literal notranslate"><span class="pre">tim</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">player</span></code> menjadi <code class="docutils literal notranslate"><span class="pre">pemain</span></code></p></li>
+</ul>
+<p>Sedangkan pada kategori Finance:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">finance</span></code> menjadi <code class="docutils literal notranslate"><span class="pre">keuangan</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">market</span></code> menjadi <code class="docutils literal notranslate"><span class="pre">pasar</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stock</span></code> menjadi <code class="docutils literal notranslate"><span class="pre">saham</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">investment</span></code> menjadi <code class="docutils literal notranslate"><span class="pre">investasi</span></code></p></li>
+</ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kamus_asing</span> <span class="o">=</span> <span class="p">{</span>
@@ -800,102 +788,187 @@ Name: jumlah_kata_asli, dtype: float64
     <span class="s2">"loss"</span><span class="p">:</span> <span class="s2">"kerugian"</span><span class="p">,</span>
     <span class="s2">"revenue"</span><span class="p">:</span> <span class="s2">"pendapatan"</span>
 <span class="p">}</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Kamus bahasa asing berhasil dibuat."</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Kamus bahasa asing berhasil dibuat.
 </pre></div>
 </div>
 </div>
 </div>
+</section>
+<section id="fungsi-preprocessing">
+<h2>8. Fungsi Preprocessing<a class="headerlink" href="#fungsi-preprocessing" title="Link to this heading">#</a></h2>
+<p>Preprocessing dilakukan untuk membersihkan teks sebelum digunakan dalam proses pembobotan.</p>
+<p>Tahapan preprocessing yang dilakukan adalah:</p>
+<ol class="arabic simple">
+<li><p>Mengubah teks menjadi string.</p></li>
+<li><p>Case folding dengan mengubah seluruh huruf menjadi huruf kecil.</p></li>
+<li><p>Menghapus URL.</p></li>
+<li><p>Menghapus alamat email.</p></li>
+<li><p>Menghapus angka.</p></li>
+<li><p>Menghapus tanda baca, simbol, dan emotikon.</p></li>
+<li><p>Menghapus spasi berlebih.</p></li>
+<li><p>Melakukan tokenisasi menggunakan <code class="docutils literal notranslate"><span class="pre">split()</span></code>.</p></li>
+<li><p>Melakukan normalisasi kata tidak baku.</p></li>
+<li><p>Melakukan normalisasi istilah bahasa asing.</p></li>
+<li><p>Menggabungkan kembali token menjadi teks.</p></li>
+</ol>
+<p>Tahapan tersebut bertujuan menghasilkan teks yang lebih bersih dan konsisten.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">preprocessing</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
     <span class="c1"># Pastikan berupa string</span>
     <span class="n">text</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
 
-    <span class="c1"># =========================</span>
-    <span class="c1"># CASE FOLDING</span>
-    <span class="c1"># =========================</span>
+    <span class="c1"># Case folding</span>
     <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
 
-    <span class="c1"># =========================</span>
-    <span class="c1"># HAPUS URL</span>
-    <span class="c1"># =========================</span>
+    <span class="c1"># Hapus URL</span>
     <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span>
         <span class="sa">r</span><span class="s1">'https?://\S+|www\.\S+'</span><span class="p">,</span>
         <span class="s1">' '</span><span class="p">,</span>
         <span class="n">text</span>
     <span class="p">)</span>
 
-    <span class="c1"># =========================</span>
-    <span class="c1"># HAPUS EMAIL</span>
-    <span class="c1"># =========================</span>
+    <span class="c1"># Hapus email</span>
     <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span>
         <span class="sa">r</span><span class="s1">'\S+@\S+'</span><span class="p">,</span>
         <span class="s1">' '</span><span class="p">,</span>
         <span class="n">text</span>
     <span class="p">)</span>
 
-    <span class="c1"># =========================</span>
-    <span class="c1"># HAPUS ANGKA</span>
-    <span class="c1"># =========================</span>
+    <span class="c1"># Hapus angka</span>
     <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span>
         <span class="sa">r</span><span class="s1">'\d+'</span><span class="p">,</span>
         <span class="s1">' '</span><span class="p">,</span>
         <span class="n">text</span>
     <span class="p">)</span>
 
-    <span class="c1"># =========================</span>
-    <span class="c1"># HAPUS TANDA BACA,</span>
-    <span class="c1"># SIMBOL DAN EMOTICON</span>
-    <span class="c1"># =========================</span>
+    <span class="c1"># Hapus tanda baca, simbol, dan emotikon</span>
     <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span>
         <span class="sa">r</span><span class="s1">'[^a-zA-ZÀ-ÿ\s]'</span><span class="p">,</span>
         <span class="s1">' '</span><span class="p">,</span>
         <span class="n">text</span>
     <span class="p">)</span>
 
-    <span class="c1"># =========================</span>
-    <span class="c1"># HAPUS SPASI BERLEBIH</span>
-    <span class="c1"># =========================</span>
+    <span class="c1"># Hapus spasi berlebih</span>
     <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span>
         <span class="sa">r</span><span class="s1">'\s+'</span><span class="p">,</span>
         <span class="s1">' '</span><span class="p">,</span>
         <span class="n">text</span>
     <span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
 
-    <span class="c1"># =========================</span>
-    <span class="c1"># TOKENISASI</span>
-    <span class="c1"># =========================</span>
-    <span class="n">kata</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="c1"># Tokenisasi</span>
+    <span class="n">tokens</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
 
+    <span class="c1"># Normalisasi kata tidak baku dan bahasa asing</span>
     <span class="n">hasil</span> <span class="o">=</span> <span class="p">[]</span>
 
-    <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">kata</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
 
-        <span class="c1"># Membakukan kata tidak baku</span>
         <span class="k">if</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">kamus_tidak_baku</span><span class="p">:</span>
             <span class="n">token</span> <span class="o">=</span> <span class="n">kamus_tidak_baku</span><span class="p">[</span><span class="n">token</span><span class="p">]</span>
 
-        <span class="c1"># Bahasa asing → Indonesia</span>
         <span class="k">if</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">kamus_asing</span><span class="p">:</span>
             <span class="n">token</span> <span class="o">=</span> <span class="n">kamus_asing</span><span class="p">[</span><span class="n">token</span><span class="p">]</span>
 
         <span class="n">hasil</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
 
+    <span class="c1"># Gabungkan kembali token</span>
     <span class="k">return</span> <span class="s2">" "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">hasil</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
+</section>
+<section id="menerapkan-preprocessing-ke-semua-berita">
+<h2>9. Menerapkan Preprocessing ke Semua Berita<a class="headerlink" href="#menerapkan-preprocessing-ke-semua-berita" title="Link to this heading">#</a></h2>
+<p>Setelah fungsi preprocessing dibuat, fungsi tersebut diterapkan pada seluruh isi berita.</p>
+<p>Hasil preprocessing disimpan pada kolom baru bernama <code class="docutils literal notranslate"><span class="pre">berita_clean</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s2">"berita_clean"</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">"isi_berita"</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
-    <span class="n">preprocessing</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s2">"berita_clean"</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">"isi_berita"</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">preprocessing</span><span class="p">)</span>
+
+<span class="n">df</span><span class="p">[[</span><span class="s2">"isi_berita"</span><span class="p">,</span> <span class="s2">"berita_clean"</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>isi_berita</th>
+      <th>berita_clean</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Dalam dua seri terakhir MotoGP 2027, Marc Marq...</td>
+      <td>dalam dua seri terakhir motogp marc marquez su...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Alwi Farhan, Moh Zaki Ubaidillah dan Muhamad Y...</td>
+      <td>alwi farhan moh zaki ubaidillah dan muhamad yu...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Di tengah viral insiden cepirit pada ajang Hyr...</td>
+      <td>di tengah viral insiden cepirit pada ajang hyr...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Dejan Fedinansyah/Felisha Alberta Nathaniel Pa...</td>
+      <td>dejan fedinansyah felisha alberta nathaniel pa...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Bagas Maulana/Apriyani Rahayu tak minder meski...</td>
+      <td>bagas maulana apriyani rahayu tak minder meski...</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="menghitung-jumlah-kata-setelah-preprocessing">
+<h2>10. Menghitung Jumlah Kata Setelah Preprocessing<a class="headerlink" href="#menghitung-jumlah-kata-setelah-preprocessing" title="Link to this heading">#</a></h2>
+<p>Setelah teks dibersihkan melalui proses preprocessing, jumlah kata pada setiap berita dihitung kembali.</p>
+<p>Perhitungan ini dilakukan untuk melihat perubahan jumlah kata sebelum dan sesudah preprocessing.</p>
+<p>Hasil perhitungan disimpan pada kolom baru bernama <code class="docutils literal notranslate"><span class="pre">jumlah_kata_clean</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s2">"jumlah_kata_clean"</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">"berita_clean"</span><span class="p">]</span>
+    <span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
 <span class="p">)</span>
 
 <span class="n">df</span><span class="p">[</span>
     <span class="p">[</span>
         <span class="s2">"id"</span><span class="p">,</span>
-        <span class="s2">"isi_berita"</span><span class="p">,</span>
-        <span class="s2">"berita_clean"</span>
+        <span class="s2">"label"</span><span class="p">,</span>
+        <span class="s2">"jumlah_kata_asli"</span><span class="p">,</span>
+        <span class="s2">"jumlah_kata_clean"</span>
     <span class="p">]</span>
 <span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
@@ -921,256 +994,91 @@ Name: jumlah_kata_asli, dtype: float64
     <tr style="text-align: right;">
       <th></th>
       <th>id</th>
-      <th>isi_berita</th>
-      <th>berita_clean</th>
+      <th>label</th>
+      <th>jumlah_kata_asli</th>
+      <th>jumlah_kata_clean</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
       <td>1</td>
-      <td>Dalam dua seri terakhir MotoGP 2027, Marc Marq...</td>
-      <td>dalam dua seri terakhir motogp marc marquez su...</td>
+      <td>sport</td>
+      <td>320</td>
+      <td>316</td>
     </tr>
     <tr>
       <th>1</th>
       <td>2</td>
-      <td>Alwi Farhan, Moh Zaki Ubaidillah dan Muhamad Y...</td>
-      <td>alwi farhan moh zaki ubaidillah dan muhamad yu...</td>
+      <td>sport</td>
+      <td>323</td>
+      <td>320</td>
     </tr>
     <tr>
       <th>2</th>
       <td>3</td>
-      <td>Di tengah viral insiden cepirit pada ajang Hyr...</td>
-      <td>di tengah viral insiden cepirit pada ajang hyr...</td>
+      <td>sport</td>
+      <td>256</td>
+      <td>261</td>
     </tr>
     <tr>
       <th>3</th>
       <td>4</td>
-      <td>Dejan Fedinansyah/Felisha Alberta Nathaniel Pa...</td>
-      <td>dejan fedinansyah felisha alberta nathaniel pa...</td>
+      <td>sport</td>
+      <td>238</td>
+      <td>241</td>
     </tr>
     <tr>
       <th>4</th>
       <td>5</td>
-      <td>Bagas Maulana/Apriyani Rahayu tak minder meski...</td>
-      <td>bagas maulana apriyani rahayu tak minder meski...</td>
+      <td>sport</td>
+      <td>402</td>
+      <td>406</td>
     </tr>
   </tbody>
 </table>
 </div></div></div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s2">"jumlah_kata_clean"</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">"berita_clean"</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
-    <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
-    <span class="s2">"Total kata sebelum preprocessing :"</span><span class="p">,</span>
-    <span class="n">df</span><span class="p">[</span><span class="s2">"jumlah_kata_asli"</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-<span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span>
-    <span class="s2">"Total kata setelah preprocessing :"</span><span class="p">,</span>
-    <span class="n">df</span><span class="p">[</span><span class="s2">"jumlah_kata_clean"</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Total kata sebelum preprocessing : 67076
-Total kata setelah preprocessing : 65434
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
-    <span class="s2">"Total kata sebelum preprocessing :"</span><span class="p">,</span>
-    <span class="n">df</span><span class="p">[</span><span class="s2">"jumlah_kata_asli"</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-<span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span>
-    <span class="s2">"Total kata setelah preprocessing :"</span><span class="p">,</span>
-    <span class="n">df</span><span class="p">[</span><span class="s2">"jumlah_kata_clean"</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Total kata sebelum preprocessing : 67076
-Total kata setelah preprocessing : 65434
-</pre></div>
-</div>
-</div>
-</div>
+</section>
+<section id="mengekstrak-seluruh-kata-unik">
+<h2>11. Mengekstrak Seluruh Kata Unik<a class="headerlink" href="#mengekstrak-seluruh-kata-unik" title="Link to this heading">#</a></h2>
+<p>Setelah seluruh berita melalui proses preprocessing, semua kata dari setiap berita dikumpulkan.</p>
+<p>Kemudian kata-kata tersebut diubah menjadi kumpulan kata unik menggunakan <code class="docutils literal notranslate"><span class="pre">set()</span></code>.</p>
+<p>Tahap ini dilakukan untuk mengetahui jumlah seluruh kata dan jumlah kata unik yang terdapat pada dataset setelah preprocessing.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">semua_kata</span> <span class="o">=</span> <span class="p">[]</span>
 
 <span class="k">for</span> <span class="n">berita</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[</span><span class="s2">"berita_clean"</span><span class="p">]:</span>
-    <span class="n">semua_kata</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
-        <span class="n">berita</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
-    <span class="p">)</span>
+    <span class="n">semua_kata</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">berita</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
 
-<span class="n">kata_unik</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span>
-    <span class="nb">set</span><span class="p">(</span><span class="n">semua_kata</span><span class="p">)</span>
-<span class="p">)</span>
+<span class="n">kata_unik</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">semua_kata</span><span class="p">))</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">"Jumlah seluruh kata:"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">semua_kata</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"Jumlah kata unik:"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">kata_unik</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Jumlah seluruh kata :"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">semua_kata</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Jumlah kata unik :"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">kata_unik</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Contoh kata unik:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">kata_unik</span><span class="p">[:</span><span class="mi">50</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah seluruh kata: 65434
-Jumlah kata unik: 7291
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah seluruh kata : 65434
+Jumlah kata unik : 7291
+
+Contoh kata unik:
+['a', 'aaa', 'aau', 'ab', 'abad', 'abadi', 'abal', 'abdullah', 'abdurrahkman', 'abha', 'abraham', 'abrahham', 'absen', 'absorber', 'abu', 'academy', 'acara', 'acaranya', 'accelerating', 'acceptance', 'access', 'accessories', 'accident', 'accreditation', 'acd', 'ace', 'aceh', 'achadie', 'achilles', 'achmad', 'acosta', 'acuan', 'ada', 'adalah', 'adam', 'adanya', 'adaptasi', 'adaptif', 'adapun', 'adb', 'adcp', 'ade', 'adelaide', 'adelguer', 'adella', 'adhang', 'adhi', 'adhipramana', 'adhitama', 'adi']
 </pre></div>
 </div>
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kata_unik</span><span class="p">[:</span><span class="mi">100</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>['a',
- 'aaa',
- 'aau',
- 'ab',
- 'abad',
- 'abadi',
- 'abal',
- 'abdullah',
- 'abdurrahkman',
- 'abha',
- 'abraham',
- 'abrahham',
- 'absen',
- 'absorber',
- 'abu',
- 'academy',
- 'acara',
- 'acaranya',
- 'accelerating',
- 'acceptance',
- 'access',
- 'accessories',
- 'accident',
- 'accreditation',
- 'acd',
- 'ace',
- 'aceh',
- 'achadie',
- 'achilles',
- 'achmad',
- 'acosta',
- 'acuan',
- 'ada',
- 'adalah',
- 'adam',
- 'adanya',
- 'adaptasi',
- 'adaptif',
- 'adapun',
- 'adb',
- 'adcp',
- 'ade',
- 'adelaide',
- 'adelguer',
- 'adella',
- 'adhang',
- 'adhi',
- 'adhipramana',
- 'adhitama',
- 'adi',
- 'adibha',
- 'adik',
- 'adil',
- 'adinata',
- 'aditya',
- 'administrasi',
- 'administratif',
- 'administrator',
- 'adp',
- 'adr',
- 'adrenalin',
- 'adrian',
- 'adrianto',
- 'adshila',
- 'aduh',
- 'adventure',
- 'aerox',
- 'afc',
- 'aff',
- 'afiliasi',
- 'afirmasi',
- 'agak',
- 'agar',
- 'agenda',
- 'agius',
- 'agn',
- 'agraria',
- 'agreement',
- 'agresif',
- 'agribisnis',
- 'agung',
- 'agus',
- 'agusman',
- 'agustus',
- 'ahhn',
- 'ahi',
- 'ahli',
- 'ahmad',
- 'ahren',
- 'ahy',
- 'ahza',
- 'ai',
- 'aichi',
- 'ailsie',
- 'ain',
- 'air',
- 'aira',
- 'airport',
- 'ajaib',
- 'ajak']
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"Jumlah kata unik:"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">kata_unik</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah kata unik: 7291
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"Jumlah kata unik:"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">kata_unik</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah kata unik: 7291
-</pre></div>
-</div>
-</div>
-</div>
+</section>
+<section id="membagi-data-training-dan-testing">
+<h2>12. Membagi Data Training dan Testing<a class="headerlink" href="#membagi-data-training-dan-testing" title="Link to this heading">#</a></h2>
+<p>Dataset dibagi menjadi data training dan data testing.</p>
+<p>Pembagian data yang digunakan adalah 160 data untuk training dan 40 data untuk testing.</p>
+<p><code class="docutils literal notranslate"><span class="pre">random_state=42</span></code> digunakan agar pembagian data dapat menghasilkan pembagian yang sama ketika kode dijalankan kembali.</p>
+<p>Parameter <code class="docutils literal notranslate"><span class="pre">stratify</span></code> digunakan agar jumlah masing-masing label tetap seimbang pada data training dan testing.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_train_text</span><span class="p">,</span> <span class="n">X_test_text</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
@@ -1181,24 +1089,10 @@ Jumlah kata unik: 7291
     <span class="n">stratify</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">"label_num"</span><span class="p">]</span>
 <span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">"Jumlah training:"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_train_text</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"Jumlah testing:"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_test_text</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah training:
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 160
-Jumlah testing: 40
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"TRAINING"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Jumlah training :"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_train_text</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Jumlah testing :"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_test_text</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">TRAINING"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">y_train</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">TESTING"</span><span class="p">)</span>
@@ -1207,7 +1101,10 @@ Jumlah testing: 40
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TRAINING
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah training : 160
+Jumlah testing : 40
+
+TRAINING
 label_num
 0    80
 1    80
@@ -1222,6 +1119,13 @@ Name: count, dtype: int64
 </div>
 </div>
 </div>
+</section>
+<section id="representasi-tf-idf">
+<h2>13. Representasi TF-IDF<a class="headerlink" href="#representasi-tf-idf" title="Link to this heading">#</a></h2>
+<p>TF-IDF digunakan untuk mengubah data teks menjadi bentuk numerik.</p>
+<p>Pada tahap ini, proses <code class="docutils literal notranslate"><span class="pre">fit_transform()</span></code> dilakukan pada data training untuk membentuk vocabulary dan menghitung nilai TF-IDF.</p>
+<p>Data testing kemudian menggunakan <code class="docutils literal notranslate"><span class="pre">transform()</span></code> berdasarkan vocabulary yang telah diperoleh dari data training.</p>
+<p>Parameter yang digunakan adalah <code class="docutils literal notranslate"><span class="pre">min_df=2</span></code> dan <code class="docutils literal notranslate"><span class="pre">max_df=0.95</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tfidf</span> <span class="o">=</span> <span class="n">TfidfVectorizer</span><span class="p">(</span>
@@ -1229,52 +1133,36 @@ Name: count, dtype: int64
     <span class="n">max_df</span><span class="o">=</span><span class="mf">0.95</span>
 <span class="p">)</span>
 
-<span class="n">X_train_tfidf</span> <span class="o">=</span> <span class="n">tfidf</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span>
-    <span class="n">X_train_text</span>
-<span class="p">)</span>
-
-<span class="n">X_test_tfidf</span> <span class="o">=</span> <span class="n">tfidf</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span>
-    <span class="n">X_test_text</span>
-<span class="p">)</span>
+<span class="n">X_train_tfidf</span> <span class="o">=</span> <span class="n">tfidf</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_train_text</span><span class="p">)</span>
+<span class="n">X_test_tfidf</span> <span class="o">=</span> <span class="n">tfidf</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test_text</span><span class="p">)</span>
 
 <span class="n">nama_fitur</span> <span class="o">=</span> <span class="n">tfidf</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">()</span>
 
-<span class="nb">print</span><span class="p">(</span>
-    <span class="s2">"Jumlah fitur TF-IDF:"</span><span class="p">,</span>
-    <span class="nb">len</span><span class="p">(</span><span class="n">nama_fitur</span><span class="p">)</span>
-<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Jumlah fitur TF-IDF :"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">nama_fitur</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Shape training :"</span><span class="p">,</span> <span class="n">X_train_tfidf</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Shape testing :"</span><span class="p">,</span> <span class="n">X_test_tfidf</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah fitur TF-IDF: 3140
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah fitur TF-IDF : 3140
+Shape training : (160, 3140)
+Shape testing : (40, 3140)
 </pre></div>
 </div>
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"Ukuran X_train_tfidf:"</span><span class="p">,</span> <span class="n">X_train_tfidf</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"Ukuran X_test_tfidf :"</span><span class="p">,</span> <span class="n">X_test_tfidf</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Ukuran X_train_tfidf: (160, 3140)
-Ukuran X_test_tfidf : (40, 3140)
-</pre></div>
-</div>
-</div>
-</div>
+</section>
+<section id="melihat-matriks-tf-idf">
+<h2>14. Melihat Matriks TF-IDF<a class="headerlink" href="#melihat-matriks-tf-idf" title="Link to this heading">#</a></h2>
+<p>Hasil proses TF-IDF berupa matriks yang berisi bobot setiap kata pada setiap berita.</p>
+<p>Setiap baris mewakili satu berita, sedangkan setiap kolom mewakili satu fitur atau kata.</p>
+<p>Matriks training kemudian ditampilkan dalam bentuk DataFrame agar hasil pembobotan dapat dilihat dengan lebih mudah.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tfidf_train_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
     <span class="n">X_train_tfidf</span><span class="o">.</span><span class="n">toarray</span><span class="p">(),</span>
     <span class="n">columns</span><span class="o">=</span><span class="n">nama_fitur</span>
-<span class="p">)</span>
-
-<span class="n">tfidf_train_df</span><span class="p">[</span><span class="s2">"label"</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_train</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span>
-    <span class="n">drop</span><span class="o">=</span><span class="kc">True</span>
 <span class="p">)</span>
 
 <span class="n">tfidf_train_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
@@ -1449,39 +1337,25 @@ Ukuran X_test_tfidf : (40, 3140)
 <p>5 rows × 3140 columns</p>
 </div></div></div>
 </div>
+</section>
+<section id="menyimpan-data-tf-idf">
+<h2>15. Menyimpan Data TF-IDF<a class="headerlink" href="#menyimpan-data-tf-idf" title="Link to this heading">#</a></h2>
+<p>Hasil TF-IDF untuk data training dan testing disimpan dalam format Excel.</p>
+<p>Kolom <code class="docutils literal notranslate"><span class="pre">label</span></code> ditambahkan sebagai kolom terakhir sehingga data hasil TF-IDF tetap mempunyai informasi mengenai kategori berita.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
-    <span class="s2">"Ukuran DataFrame TF-IDF:"</span><span class="p">,</span>
-    <span class="n">tfidf_train_df</span><span class="o">.</span><span class="n">shape</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Ukuran DataFrame TF-IDF: (160, 3140)
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tfidf_train_df</span><span class="p">[</span><span class="s2">"label"</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_train</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span>
-    <span class="n">drop</span><span class="o">=</span><span class="kc">True</span>
-<span class="p">)</span>
-
-<span class="n">tfidf_train_df</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span>
-    <span class="s2">"data_tfidf_training.xlsx"</span><span class="p">,</span>
-    <span class="n">index</span><span class="o">=</span><span class="kc">False</span>
-<span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tfidf_train_df</span><span class="p">[</span><span class="s2">"label"</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_train</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 <span class="n">tfidf_test_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
     <span class="n">X_test_tfidf</span><span class="o">.</span><span class="n">toarray</span><span class="p">(),</span>
     <span class="n">columns</span><span class="o">=</span><span class="n">nama_fitur</span>
 <span class="p">)</span>
 
-<span class="n">tfidf_test_df</span><span class="p">[</span><span class="s2">"label"</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_test</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span>
-    <span class="n">drop</span><span class="o">=</span><span class="kc">True</span>
+<span class="n">tfidf_test_df</span><span class="p">[</span><span class="s2">"label"</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_test</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">tfidf_train_df</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span>
+    <span class="s2">"data_tfidf_training.xlsx"</span><span class="p">,</span>
+    <span class="n">index</span><span class="o">=</span><span class="kc">False</span>
 <span class="p">)</span>
 
 <span class="n">tfidf_test_df</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span>
@@ -1499,6 +1373,13 @@ Ukuran X_test_tfidf : (40, 3140)
 </div>
 </div>
 </div>
+</section>
+<section id="perhitungan-icsdf">
+<h2>16. Perhitungan ICSDF<a class="headerlink" href="#perhitungan-icsdf" title="Link to this heading">#</a></h2>
+<p>Setelah mendapatkan nilai TF-IDF, tahap berikutnya adalah menghitung nilai ICSDF.</p>
+<p>ICSDF dihitung berdasarkan penyebaran suatu kata pada masing-masing kelas.</p>
+<p>Pada dataset ini terdapat dua kelas, yaitu Sport dan Finance.</p>
+<p>Untuk setiap kelas dihitung jumlah dokumen yang mengandung suatu kata. Nilai tersebut digunakan untuk mendapatkan kepadatan kata pada masing-masing kelas dan kemudian dihitung nilai ICSDF.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">features</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
@@ -1513,9 +1394,7 @@ Ukuran X_test_tfidf : (40, 3140)
 
 <span class="n">y_train_array</span> <span class="o">=</span> <span class="n">y_train</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
 
-<span class="k">for</span> <span class="n">kelas</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span>
-    <span class="n">y_train</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
-<span class="p">):</span>
+<span class="k">for</span> <span class="n">kelas</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">y_train</span><span class="o">.</span><span class="n">unique</span><span class="p">()):</span>
 
     <span class="n">mask</span> <span class="o">=</span> <span class="p">(</span>
         <span class="n">y_train_array</span> <span class="o">==</span> <span class="n">kelas</span>
@@ -1525,20 +1404,16 @@ Ukuran X_test_tfidf : (40, 3140)
         <span class="n">mask</span>
     <span class="p">]</span>
 
-    <span class="c1"># Berapa dokumen kelas tersebut</span>
-    <span class="c1"># mengandung sebuah kata</span>
     <span class="n">document_frequency_class</span> <span class="o">=</span> <span class="p">(</span>
         <span class="p">(</span><span class="n">X_class</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
         <span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
         <span class="o">.</span><span class="n">A1</span>
     <span class="p">)</span>
 
-    <span class="c1"># Jumlah dokumen dalam kelas</span>
     <span class="n">jumlah_dokumen_class</span> <span class="o">=</span> <span class="p">(</span>
         <span class="n">X_class</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="p">)</span>
 
-    <span class="c1"># Kepadatan kata pada kelas</span>
     <span class="n">class_density</span> <span class="o">=</span> <span class="p">(</span>
         <span class="n">document_frequency_class</span>
         <span class="o">/</span>
@@ -1548,13 +1423,8 @@ Ukuran X_test_tfidf : (40, 3140)
     <span class="n">class_space_density</span> <span class="o">+=</span> <span class="p">(</span>
         <span class="n">class_density</span>
     <span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">epsilon</span> <span class="o">=</span> <span class="mf">1e-12</span>
+
+<span class="n">epsilon</span> <span class="o">=</span> <span class="mf">1e-12</span>
 
 <span class="n">icsdf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
     <span class="p">(</span><span class="n">jumlah_kelas</span> <span class="o">+</span> <span class="n">epsilon</span><span class="p">)</span>
@@ -1702,6 +1572,12 @@ Ukuran X_test_tfidf : (40, 3140)
 </table>
 </div></div></div>
 </div>
+</section>
+<section id="tf-idf-icsdf">
+<h2>17. TF-IDF × ICSDF<a class="headerlink" href="#tf-idf-icsdf" title="Link to this heading">#</a></h2>
+<p>Setelah nilai ICSDF diperoleh, nilai tersebut digunakan untuk memberikan bobot tambahan pada matriks TF-IDF.</p>
+<p>Proses dilakukan dengan mengalikan matriks TF-IDF dengan nilai ICSDF untuk data training dan data testing.</p>
+<p>Hasilnya merupakan matriks TF-IDF yang sudah diberi pembobotan berdasarkan ICSDF.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_train_icsdf</span> <span class="o">=</span> <span class="n">X_train_tfidf</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span>
@@ -1712,39 +1588,31 @@ Ukuran X_test_tfidf : (40, 3140)
     <span class="n">icsdf</span>
 <span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span>
-    <span class="s2">"Ukuran training:"</span><span class="p">,</span>
-    <span class="n">X_train_icsdf</span><span class="o">.</span><span class="n">shape</span>
-<span class="p">)</span>
+<span class="n">X_train_icsdf</span> <span class="o">=</span> <span class="n">csr_matrix</span><span class="p">(</span><span class="n">X_train_icsdf</span><span class="p">)</span>
+<span class="n">X_test_icsdf</span> <span class="o">=</span> <span class="n">csr_matrix</span><span class="p">(</span><span class="n">X_test_icsdf</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span>
-    <span class="s2">"Ukuran testing:"</span><span class="p">,</span>
-    <span class="n">X_test_icsdf</span><span class="o">.</span><span class="n">shape</span>
-<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Shape training :"</span><span class="p">,</span> <span class="n">X_train_icsdf</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Shape testing :"</span><span class="p">,</span> <span class="n">X_test_icsdf</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Ukuran training: (160, 3140)
-Ukuran testing: (40, 3140)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Shape training : (160, 3140)
+Shape testing : (40, 3140)
 </pre></div>
 </div>
 </div>
 </div>
+</section>
+<section id="menentukan-kata-paling-penting">
+<h2>18. Menentukan Kata Paling Penting<a class="headerlink" href="#menentukan-kata-paling-penting" title="Link to this heading">#</a></h2>
+<p>Setelah mendapatkan matriks TF-IDF × ICSDF, setiap fitur diberikan skor berdasarkan nilai rata-ratanya pada data training.</p>
+<p>Fitur kemudian diurutkan berdasarkan skor tersebut.</p>
+<p>Fitur dengan skor tertinggi dianggap sebagai kata yang paling penting dan akan digunakan pada tahap reduksi fitur berikutnya.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_train_icsdf</span> <span class="o">=</span> <span class="n">csr_matrix</span><span class="p">(</span>
-    <span class="n">X_train_icsdf</span>
-<span class="p">)</span>
-
-<span class="n">X_test_icsdf</span> <span class="o">=</span> <span class="n">csr_matrix</span><span class="p">(</span>
-    <span class="n">X_test_icsdf</span>
-<span class="p">)</span>
-
-<span class="n">skor_fitur</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span>
-    <span class="n">X_train_icsdf</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span>
-        <span class="n">axis</span><span class="o">=</span><span class="mi">0</span>
-    <span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">skor_fitur</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span>
+    <span class="n">X_train_icsdf</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
 
 <span class="n">TOP_K</span> <span class="o">=</span> <span class="mi">100</span>
@@ -1753,31 +1621,42 @@ Ukuran testing: (40, 3140)
     <span class="n">skor_fitur</span>
 <span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">][:</span><span class="n">TOP_K</span><span class="p">]</span>
 
-<span class="n">kata_penting</span> <span class="o">=</span> <span class="n">features</span><span class="p">[</span>
-    <span class="n">top_index</span>
-<span class="p">]</span>
+<span class="n">kata_penting</span> <span class="o">=</span> <span class="n">features</span><span class="p">[</span><span class="n">top_index</span><span class="p">]</span>
 
-<span class="nb">print</span><span class="p">(</span>
-    <span class="s2">"Jumlah kata penting:"</span><span class="p">,</span>
-    <span class="nb">len</span><span class="p">(</span><span class="n">kata_penting</span><span class="p">)</span>
-<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Jumlah fitur terpilih :"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">kata_penting</span><span class="p">))</span>
 
-<span class="nb">print</span><span class="p">(</span>
-    <span class="n">kata_penting</span><span class="p">[:</span><span class="mi">30</span><span class="p">]</span>
-<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Kata paling penting:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">kata_penting</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah kata penting: 100
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah fitur terpilih : 100
+
+Kata paling penting:
 ['marquez' 'purbaya' 'emas' 'pertandingan' 'marc' 'beras' 'motogp' 'poin'
  'lrt' 'asian' 'fortifikasi' 'suahasil' 'bezzecchi' 'martin' 'artikel'
  'djarum' 'aku' 'atlet' 'balapan' 'peserta' 'keuangan' 'rp' 'medali'
- 'pejabat' 'manggarai' 'nathan' 'fiskal' 'saham' 'jepang' 'posisi']
+ 'pejabat' 'manggarai' 'nathan' 'fiskal' 'saham' 'jepang' 'posisi' 'harga'
+ 'pb' 'moto' 'perombakan' 'prabowo' 'kebijakan' 'hyrox' 'olahraga'
+ 'indonesia' 'lap' 'saya' 'pramono' 'veda' 'wib' 'stasiun' 'san' 'jakarta'
+ 'ihsg' 'buruh' 'antam' 'marino' 'sesi' 'kualifikasi' 'konsumen' 'motor'
+ 'pelajar' 'investasi' 'imam' 'anak' 'detik' 'layanan' 'jorge' 'dki'
+ 'alex' 'barat' 'menteri' 'pertamina' 'pembalap' 'nagoya' 'bonus' 'ganda'
+ 'para' 'set' 'dia' 'tni' 'pemerintah' 'juara' 'tim' 'riders' 'bea'
+ 'pelatih' 'energi' 'kami' 'bandara' 'ojk' 'daerah' 'marco' 'ekonomi'
+ 'seri' 'ubed' 'pelanggan' 'utang' 'kuarter' 'chandra' 'presiden' 'lari'
+ 'fadia' 'cukai' 'rkab' 'kita']
 </pre></div>
 </div>
 </div>
 </div>
+</section>
+<section id="reduksi-menjadi-100-fitur-icsdf">
+<h2>19. Reduksi Menjadi 100 Fitur ICSDF<a class="headerlink" href="#reduksi-menjadi-100-fitur-icsdf" title="Link to this heading">#</a></h2>
+<p>Dari seluruh fitur yang tersedia, dipilih 100 fitur dengan skor tertinggi.</p>
+<p>Matriks training dan testing kemudian direduksi menggunakan indeks fitur tersebut.</p>
+<p>Dengan demikian jumlah fitur berkurang menjadi 100 fitur.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_train_selected</span> <span class="o">=</span> <span class="n">X_train_icsdf</span><span class="p">[</span>
@@ -1790,38 +1669,238 @@ Ukuran testing: (40, 3140)
     <span class="n">top_index</span>
 <span class="p">]</span>
 
-<span class="nb">print</span><span class="p">(</span>
-    <span class="s2">"Sebelum seleksi:"</span><span class="p">,</span>
-    <span class="n">X_train_tfidf</span><span class="o">.</span><span class="n">shape</span>
-<span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span>
-    <span class="s2">"Sesudah ICSDF:"</span><span class="p">,</span>
-    <span class="n">X_train_selected</span><span class="o">.</span><span class="n">shape</span>
-<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Sebelum seleksi :"</span><span class="p">,</span> <span class="n">X_train_tfidf</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Sesudah ICSDF :"</span><span class="p">,</span> <span class="n">X_train_selected</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sebelum seleksi: (160, 3140)
-Sesudah ICSDF: (160, 100)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sebelum seleksi : (160, 3140)
+Sesudah ICSDF : (160, 100)
 </pre></div>
 </div>
 </div>
 </div>
+</section>
+<section id="tabel-hasil-icsdf">
+<h2>20. Tabel Hasil ICSDF<a class="headerlink" href="#tabel-hasil-icsdf" title="Link to this heading">#</a></h2>
+<p>Hasil reduksi 100 fitur kemudian diubah menjadi DataFrame.</p>
+<p>Nama kolom menggunakan 100 kata yang telah dipilih sebagai fitur penting.</p>
+<p>Label data training ditambahkan sebagai kolom terakhir.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">icsdf_train_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">X_train_selected</span><span class="o">.</span><span class="n">toarray</span><span class="p">(),</span>
+    <span class="n">columns</span><span class="o">=</span><span class="n">kata_penting</span>
+<span class="p">)</span>
+
+<span class="n">icsdf_train_df</span><span class="p">[</span><span class="s2">"label"</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">y_train</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">icsdf_train_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>marquez</th>
+      <th>purbaya</th>
+      <th>emas</th>
+      <th>pertandingan</th>
+      <th>marc</th>
+      <th>beras</th>
+      <th>motogp</th>
+      <th>poin</th>
+      <th>lrt</th>
+      <th>asian</th>
+      <th>...</th>
+      <th>utang</th>
+      <th>kuarter</th>
+      <th>chandra</th>
+      <th>presiden</th>
+      <th>lari</th>
+      <th>fadia</th>
+      <th>cukai</th>
+      <th>rkab</th>
+      <th>kita</th>
+      <th>label</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.000000</td>
+      <td>0.508939</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>...</td>
+      <td>1.201229</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.077630</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.500480</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.433286</td>
+      <td>0.0</td>
+      <td>0.149583</td>
+      <td>0.224374</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>...</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.054586</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>...</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.016046</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.716891</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.223431</td>
+      <td>0.0</td>
+      <td>0.321395</td>
+      <td>0.321395</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>...</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.047410</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.241737</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.313922</td>
+      <td>0.0</td>
+      <td>0.650250</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>...</td>
+      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.000000</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 101 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">icsdf_train_df</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span>
+    <span class="s2">"data_icsdf_training.xlsx"</span><span class="p">,</span>
+    <span class="n">index</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Data ICSDF berhasil disimpan."</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Data ICSDF berhasil disimpan.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="pca">
+<h2>21. PCA<a class="headerlink" href="#pca" title="Link to this heading">#</a></h2>
+<p>Setelah fitur direduksi menjadi 100 fitur menggunakan ICSDF, tahap selanjutnya adalah melakukan reduksi dimensi menggunakan Principal Component Analysis (PCA).</p>
+<p>Pada tugas ini digunakan 20 komponen utama.</p>
+<p>Dengan PCA, 100 fitur hasil ICSDF diubah menjadi 20 fitur baru yang disebut PC1 sampai PC20.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span>
     <span class="n">n_components</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
     <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
 <span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_train_selected_dense</span> <span class="o">=</span> <span class="p">(</span>
+
+<span class="n">X_train_selected_dense</span> <span class="o">=</span> <span class="p">(</span>
     <span class="n">X_train_selected</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span>
 <span class="p">)</span>
 
@@ -1837,56 +1916,38 @@ Sesudah ICSDF: (160, 100)
     <span class="n">X_test_selected_dense</span>
 <span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span>
-    <span class="s2">"Ukuran PCA training:"</span><span class="p">,</span>
-    <span class="n">X_train_pca</span><span class="o">.</span><span class="n">shape</span>
-<span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span>
-    <span class="s2">"Ukuran PCA testing:"</span><span class="p">,</span>
-    <span class="n">X_test_pca</span><span class="o">.</span><span class="n">shape</span>
-<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Shape training PCA :"</span><span class="p">,</span> <span class="n">X_train_pca</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Shape testing PCA :"</span><span class="p">,</span> <span class="n">X_test_pca</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Ukuran PCA training: (160, 20)
-Ukuran PCA testing: (40, 20)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Shape training PCA : (160, 20)
+Shape testing PCA : (40, 20)
 </pre></div>
 </div>
 </div>
 </div>
+</section>
+<section id="membuat-tabel-data-reduksi-training">
+<h2>22. Membuat Tabel Data Reduksi Training<a class="headerlink" href="#membuat-tabel-data-reduksi-training" title="Link to this heading">#</a></h2>
+<p>Hasil PCA pada data training kemudian dibuat menjadi DataFrame.</p>
+<p>Data hasil PCA terdiri dari 20 komponen utama, yaitu PC1 sampai PC20.</p>
+<p>Label ditambahkan sebagai kolom terakhir.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nama_pc</span> <span class="o">=</span> <span class="p">[</span>
     <span class="sa">f</span><span class="s2">"PC</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">"</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span>
-        <span class="mi">1</span><span class="p">,</span>
-        <span class="mi">21</span>
-    <span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">21</span><span class="p">)</span>
 <span class="p">]</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">nama_pc</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>['PC1', 'PC2', 'PC3', 'PC4', 'PC5', 'PC6', 'PC7', 'PC8', 'PC9', 'PC10', 'PC11', 'PC12', 'PC13', 'PC14', 'PC15', 'PC16', 'PC17', 'PC18', 'PC19', 'PC20']
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_train_reduksi</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+<span class="n">df_train_reduksi</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
     <span class="n">X_train_pca</span><span class="p">,</span>
     <span class="n">columns</span><span class="o">=</span><span class="n">nama_pc</span>
 <span class="p">)</span>
 
 <span class="n">df_train_reduksi</span><span class="p">[</span><span class="s2">"label"</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="n">y_train</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span>
-        <span class="n">drop</span><span class="o">=</span><span class="kc">True</span>
-    <span class="p">)</span>
+    <span class="n">y_train</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="p">)</span>
 
 <span class="n">df_train_reduksi</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
@@ -2061,6 +2122,12 @@ Ukuran PCA testing: (40, 20)
 <p>5 rows × 21 columns</p>
 </div></div></div>
 </div>
+</section>
+<section id="membuat-data-testing">
+<h2>23. Membuat Data Testing<a class="headerlink" href="#membuat-data-testing" title="Link to this heading">#</a></h2>
+<p>Data testing yang sebelumnya telah melalui proses TF-IDF dan ICSDF juga direduksi menggunakan PCA.</p>
+<p>Data testing menggunakan transformasi PCA yang telah dibentuk berdasarkan data training.</p>
+<p>Hasilnya terdiri dari 20 komponen utama dan satu kolom label.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_test_reduksi</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
@@ -2069,9 +2136,7 @@ Ukuran PCA testing: (40, 20)
 <span class="p">)</span>
 
 <span class="n">df_test_reduksi</span><span class="p">[</span><span class="s2">"label"</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="n">y_test</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span>
-        <span class="n">drop</span><span class="o">=</span><span class="kc">True</span>
-    <span class="p">)</span>
+    <span class="n">y_test</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="p">)</span>
 
 <span class="n">df_test_reduksi</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
@@ -2246,6 +2311,11 @@ Ukuran PCA testing: (40, 20)
 <p>5 rows × 21 columns</p>
 </div></div></div>
 </div>
+</section>
+<section id="menyimpan-data-reduksi">
+<h2>24. Menyimpan Data Reduksi<a class="headerlink" href="#menyimpan-data-reduksi" title="Link to this heading">#</a></h2>
+<p>Data hasil reduksi PCA untuk training dan testing disimpan dalam format Excel.</p>
+<p>File tersebut berisi 20 komponen PCA dan satu kolom label.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_train_reduksi</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span>
@@ -2268,125 +2338,59 @@ Ukuran PCA testing: (40, 20)
 </div>
 </div>
 </div>
+</section>
+<section id="cek-total-data-training-dan-testing">
+<h2>25. Cek Total Data Training dan Testing<a class="headerlink" href="#cek-total-data-training-dan-testing" title="Link to this heading">#</a></h2>
+<p>Tahap terakhir dilakukan untuk memastikan jumlah data training dan testing sudah sesuai dengan pembagian sebelumnya.</p>
+<p>Data training harus memiliki 160 data, sedangkan data testing harus memiliki 40 data.</p>
+<p>Selain itu, jumlah kolom harus 21, yaitu 20 komponen PCA dan satu kolom label.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
-    <span class="s2">"Total training:"</span><span class="p">,</span>
-    <span class="nb">len</span><span class="p">(</span><span class="n">df_train_reduksi</span><span class="p">)</span>
-<span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"Shape training :"</span><span class="p">,</span> <span class="n">df_train_reduksi</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Shape testing :"</span><span class="p">,</span> <span class="n">df_test_reduksi</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span>
-    <span class="s2">"Total testing:"</span><span class="p">,</span>
-    <span class="nb">len</span><span class="p">(</span><span class="n">df_test_reduksi</span><span class="p">)</span>
-<span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span>
-    <span class="s2">"Total keseluruhan:"</span><span class="p">,</span>
-    <span class="nb">len</span><span class="p">(</span><span class="n">df_train_reduksi</span><span class="p">)</span>
-    <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_test_reduksi</span><span class="p">)</span>
-<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Jumlah training :"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_train_reduksi</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Jumlah testing :"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_test_reduksi</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Total training: 160
-Total testing: 40
-Total keseluruhan: 200
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Shape training : (160, 21)
+Shape testing : (40, 21)
+
+Jumlah training : 160
+Jumlah testing : 40
 </pre></div>
 </div>
 </div>
 </div>
+</section>
+<section id="memastikan-kolom-terakhir-adalah-label">
+<h2>26. Memastikan Kolom Terakhir adalah Label<a class="headerlink" href="#memastikan-kolom-terakhir-adalah-label" title="Link to this heading">#</a></h2>
+<p>Pemeriksaan terakhir dilakukan untuk memastikan kolom <code class="docutils literal notranslate"><span class="pre">label</span></code> berada pada posisi paling akhir.</p>
+<p>Dengan demikian data hasil reduksi memiliki 20 fitur PCA dan satu label sebagai kolom terakhir.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_train_reduksi</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span>
-    <span class="s2">"data_reduksi_training.xlsx"</span><span class="p">,</span>
-    <span class="n">index</span><span class="o">=</span><span class="kc">False</span>
-<span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"Kolom terakhir training :"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_train_reduksi</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
 
-<span class="n">df_test_reduksi</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span>
-    <span class="s2">"data_reduksi_testing.xlsx"</span><span class="p">,</span>
-    <span class="n">index</span><span class="o">=</span><span class="kc">False</span>
-<span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s2">"Data reduksi berhasil disimpan."</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Kolom terakhir testing :"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_test_reduksi</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Data reduksi berhasil disimpan.
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
-    <span class="s2">"Training :"</span><span class="p">,</span>
-    <span class="n">df_train_reduksi</span><span class="o">.</span><span class="n">shape</span>
-<span class="p">)</span>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Kolom terakhir training :
+label
 
-<span class="nb">print</span><span class="p">(</span>
-    <span class="s2">"Testing :"</span><span class="p">,</span>
-    <span class="n">df_test_reduksi</span><span class="o">.</span><span class="n">shape</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Training : (160, 21)
-Testing : (40, 21)
+Kolom terakhir testing :
+label
 </pre></div>
 </div>
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"Kolom training:"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">df_train_reduksi</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Kolom testing:"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">df_test_reduksi</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Kolom training:
-['PC1', 'PC2', 'PC3', 'PC4', 'PC5', 'PC6', 'PC7', 'PC8', 'PC9', 'PC10', 'PC11', 'PC12', 'PC13', 'PC14', 'PC15', 'PC16', 'PC17', 'PC18', 'PC19', 'PC20', 'label']
-
-Kolom testing:
-['PC1', 'PC2', 'PC3', 'PC4', 'PC5', 'PC6', 'PC7', 'PC8', 'PC9', 'PC10', 'PC11', 'PC12', 'PC13', 'PC14', 'PC15', 'PC16', 'PC17', 'PC18', 'PC19', 'PC20', 'label']
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
-    <span class="s2">"Total training:"</span><span class="p">,</span>
-    <span class="nb">len</span><span class="p">(</span><span class="n">df_train_reduksi</span><span class="p">)</span>
-<span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span>
-    <span class="s2">"Total testing:"</span><span class="p">,</span>
-    <span class="nb">len</span><span class="p">(</span><span class="n">df_test_reduksi</span><span class="p">)</span>
-<span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span>
-    <span class="s2">"Total data:"</span><span class="p">,</span>
-    <span class="nb">len</span><span class="p">(</span><span class="n">df_train_reduksi</span><span class="p">)</span>
-    <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_test_reduksi</span><span class="p">)</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Total training: 160
-Total testing: 40
-Total data: 200
-</pre></div>
-</div>
-</div>
-</div>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -2444,9 +2448,33 @@ Total data: 200
     <i class="fa-solid fa-list"></i> Contents
   </div>
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
-    <ul class="simple pst-show_toc_level nav section-nav flex-column">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#import-library">2. Import Library</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#membaca-dataset">3. Membaca Dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mengubah-label-menjadi-numerik">4. Mengubah Label Menjadi Numerik</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#menghitung-jumlah-kata-semua-berita">5. Menghitung Jumlah Kata Semua Berita</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kamus-kata-tidak-baku">6. Kamus Kata Tidak Baku</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kamus-bahasa-asing">7. Kamus Bahasa Asing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fungsi-preprocessing">8. Fungsi Preprocessing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#menerapkan-preprocessing-ke-semua-berita">9. Menerapkan Preprocessing ke Semua Berita</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#menghitung-jumlah-kata-setelah-preprocessing">10. Menghitung Jumlah Kata Setelah Preprocessing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mengekstrak-seluruh-kata-unik">11. Mengekstrak Seluruh Kata Unik</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#membagi-data-training-dan-testing">12. Membagi Data Training dan Testing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#representasi-tf-idf">13. Representasi TF-IDF</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#melihat-matriks-tf-idf">14. Melihat Matriks TF-IDF</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#menyimpan-data-tf-idf">15. Menyimpan Data TF-IDF</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#perhitungan-icsdf">16. Perhitungan ICSDF</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tf-idf-icsdf">17. TF-IDF × ICSDF</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#menentukan-kata-paling-penting">18. Menentukan Kata Paling Penting</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reduksi-menjadi-100-fitur-icsdf">19. Reduksi Menjadi 100 Fitur ICSDF</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tabel-hasil-icsdf">20. Tabel Hasil ICSDF</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pca">21. PCA</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#membuat-tabel-data-reduksi-training">22. Membuat Tabel Data Reduksi Training</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#membuat-data-testing">23. Membuat Data Testing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#menyimpan-data-reduksi">24. Menyimpan Data Reduksi</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cek-total-data-training-dan-testing">25. Cek Total Data Training dan Testing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#memastikan-kolom-terakhir-adalah-label">26. Memastikan Kolom Terakhir adalah Label</a></li>
 </ul>
-
   </nav></div>
 
 </div></div>
