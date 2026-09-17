@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>&lt;no title&gt;</title>
+    <title>Tugas 1</title>
   
   
   
@@ -64,6 +64,7 @@
     <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="&lt;no title&gt;" href="Tugas_2.html" />
     <link rel="prev" title="PPW (Pencarian &amp; penambangan Web)" href="intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -152,10 +153,6 @@
   
 
   
-    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
-      <span class="fa-solid fa-outdent"></span>
-    </button>
-  
 </div>
 
     </header>
@@ -218,7 +215,10 @@
                 </a>
             </li>
         </ul>
-        
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Tugas 1</a></li>
+</ul>
+
     </div>
 </nav></div>
     </div>
@@ -386,9 +386,7 @@
 <button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
 </button>
-<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="fa-solid fa-list"></span>
-</button>
+
 </div></div>
       
     </div>
@@ -399,19 +397,11 @@
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1><no title></h1>
+    <h1>Tugas 1</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
-            <div>
-                <h2> Contents </h2>
-            </div>
-            <nav aria-label="Page">
-                <ul class="simple pst-show_toc_level nav section-nav flex-column">
-</ul>
-
-            </nav>
         </div>
     </div>
 </div>
@@ -421,7 +411,9 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <div class="cell docutils container">
+  <section class="tex2jax_ignore mathjax_ignore" id="tugas-1">
+<h1>Tugas 1<a class="headerlink" href="#tugas-1" title="Link to this heading">#</a></h1>
+<div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">pip</span> install requests beautifulsoup4 trafilatura pandas openpyxl tqdm
 </pre></div>
@@ -434,7 +426,9 @@ Requirement already satisfied: trafilatura in /workspaces/PPW/envwebmining/lib/p
 Requirement already satisfied: pandas in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (3.0.5)
 Requirement already satisfied: openpyxl in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (3.1.5)
 Requirement already satisfied: tqdm in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (4.70.1)
-Requirement already satisfied: charset_normalizer&lt;4,&gt;=2 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from requests) (3.5.1)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: charset_normalizer&lt;4,&gt;=2 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from requests) (3.5.1)
 Requirement already satisfied: idna&lt;4,&gt;=2.5 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from requests) (3.19)
 Requirement already satisfied: urllib3&lt;3,&gt;=1.26 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from requests) (2.7.0)
 Requirement already satisfied: certifi&gt;=2023.5.7 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from requests) (2026.7.22)
@@ -449,10 +443,16 @@ Requirement already satisfied: python-dateutil&gt;=2.8.2 in /workspaces/PPW/envw
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: et-xmlfile in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from openpyxl) (2.0.0)
-Requirement already satisfied: babel&gt;=2.16.0 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from courlan&gt;=1.4.0-&gt;trafilatura) (2.18.0)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: babel&gt;=2.16.0 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from courlan&gt;=1.4.0-&gt;trafilatura) (2.18.0)
 Requirement already satisfied: tld&gt;=0.13 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from courlan&gt;=1.4.0-&gt;trafilatura) (0.13.2)
-Requirement already satisfied: dateparser&gt;=1.1.2 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from htmldate&gt;=1.10.0-&gt;trafilatura) (1.4.3)
-Requirement already satisfied: pytz&gt;=2024.2 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from dateparser&gt;=1.1.2-&gt;htmldate&gt;=1.10.0-&gt;trafilatura) (2026.3.post1)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: dateparser&gt;=1.1.2 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from htmldate&gt;=1.10.0-&gt;trafilatura) (1.4.3)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: pytz&gt;=2024.2 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from dateparser&gt;=1.1.2-&gt;htmldate&gt;=1.10.0-&gt;trafilatura) (2026.3.post1)
 Requirement already satisfied: regex&gt;=2024.9.11 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from dateparser&gt;=1.1.2-&gt;htmldate&gt;=1.10.0-&gt;trafilatura) (2026.9.3)
 Requirement already satisfied: tzlocal&gt;=0.2 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from dateparser&gt;=1.1.2-&gt;htmldate&gt;=1.10.0-&gt;trafilatura) (5.4.4)
 Requirement already satisfied: lxml_html_clean in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from lxml[html_clean]&gt;=4.4.2-&gt;justext&gt;=3.0.2-&gt;trafilatura) (0.4.5)
@@ -668,9 +668,7 @@ Finance: https://finance.detik.com/indeks
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Membaca halaman 7
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah link: 137
+Jumlah link: 137
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Membaca halaman 8
@@ -701,7 +699,7 @@ Total kandidat Sport: 157
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Membaca halaman 1
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah link: 17
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah link: 18
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Membaca halaman 2
@@ -719,19 +717,19 @@ Total kandidat Sport: 157
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Membaca halaman 4
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah link: 74
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah link: 75
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Membaca halaman 5
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah link: 91
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah link: 94
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Membaca halaman 6
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah link: 110
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah link: 111
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Membaca halaman 7
@@ -743,14 +741,14 @@ Total kandidat Sport: 157
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Membaca halaman 8
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah link: 147
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah link: 149
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Membaca halaman 9
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah link: 162
-Total kandidat Finance: 162
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah link: 164
+Total kandidat Finance: 164
 </pre></div>
 </div>
 </div>
@@ -772,7 +770,7 @@ Total kandidat Finance: 162
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Membaca halaman 1
-Jumlah link: 17
+Jumlah link: 18
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Membaca halaman 2
@@ -784,15 +782,15 @@ Jumlah link: 55
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Membaca halaman 4
-Jumlah link: 74
+Jumlah link: 75
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Membaca halaman 5
-Jumlah link: 91
+Jumlah link: 94
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Membaca halaman 6
-Jumlah link: 110
+Jumlah link: 111
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Membaca halaman 7
@@ -800,12 +798,12 @@ Jumlah link: 130
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Membaca halaman 8
-Jumlah link: 147
+Jumlah link: 149
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Membaca halaman 9
-Jumlah link: 162
-Total kandidat Finance: 162
+Jumlah link: 164
+Total kandidat Finance: 164
 </pre></div>
 </div>
 </div>
@@ -931,103 +929,103 @@ Total kandidat Finance: 162
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping sport:   0%|                                                                       | 0/157 [00:00&lt;?, ?it/s]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping sport:   1%|▍                                                              | 1/157 [00:01&lt;05:11,  2.00s/it]
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>sport berhasil: 0
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping sport:   1%|▊                                                              | 2/157 [00:03&lt;04:46,  1.85s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping sport:   1%|▍                                                              | 1/157 [00:02&lt;05:22,  2.07s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>sport berhasil: 1
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping sport:   2%|█▏                                                             | 3/157 [00:05&lt;05:06,  1.99s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping sport:   1%|▊                                                              | 2/157 [00:04&lt;05:42,  2.21s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>sport berhasil: 2
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping sport:   3%|█▌                                                             | 4/157 [00:07&lt;04:26,  1.74s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping sport:   2%|█▏                                                             | 3/157 [00:06&lt;05:45,  2.25s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>sport berhasil: 3
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping sport:   3%|██                                                             | 5/157 [00:09&lt;04:42,  1.86s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping sport:   3%|█▌                                                             | 4/157 [00:08&lt;05:21,  2.10s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>sport berhasil: 4
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping sport:   4%|██▍                                                            | 6/157 [00:11&lt;04:41,  1.86s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping sport:   3%|██                                                             | 5/157 [00:09&lt;04:40,  1.85s/it]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>sport berhasil: 4
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping sport:   4%|██▍                                                            | 6/157 [00:11&lt;04:34,  1.81s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>sport berhasil: 5
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping sport:   4%|██▊                                                            | 7/157 [00:12&lt;04:27,  1.78s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping sport:   4%|██▊                                                            | 7/157 [00:13&lt;04:25,  1.77s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>sport berhasil: 6
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping sport:   5%|███▏                                                           | 8/157 [00:14&lt;04:01,  1.62s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping sport:   5%|███▏                                                           | 8/157 [00:15&lt;04:21,  1.75s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>sport berhasil: 7
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping sport:   6%|███▌                                                           | 9/157 [00:15&lt;04:01,  1.63s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping sport:   6%|███▌                                                           | 9/157 [00:16&lt;04:14,  1.72s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>sport berhasil: 8
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping sport:   6%|███▉                                                          | 10/157 [00:17&lt;04:08,  1.69s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping sport:   6%|███▉                                                          | 10/157 [00:18&lt;04:24,  1.80s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>sport berhasil: 9
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping sport:   7%|████▎                                                         | 11/157 [00:19&lt;04:12,  1.73s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping sport:   7%|████▎                                                         | 11/157 [00:20&lt;04:38,  1.90s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>sport berhasil: 10
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping sport:   8%|████▋                                                         | 12/157 [00:21&lt;04:10,  1.73s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping sport:   8%|████▋                                                         | 12/157 [00:23&lt;04:47,  1.98s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>sport berhasil: 11
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping sport:   8%|█████▏                                                        | 13/157 [00:23&lt;04:16,  1.78s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping sport:   8%|█████▏                                                        | 13/157 [00:24&lt;04:27,  1.86s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>sport berhasil: 12
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping sport:   9%|█████▌                                                        | 14/157 [00:24&lt;04:14,  1.78s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping sport:   9%|█████▌                                                        | 14/157 [00:25&lt;04:00,  1.68s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>sport berhasil: 13
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping sport:  10%|█████▉                                                        | 15/157 [00:26&lt;04:19,  1.83s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping sport:  10%|█████▉                                                        | 15/157 [00:28&lt;04:21,  1.84s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>sport berhasil: 14
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping sport:  10%|██████▎                                                       | 16/157 [00:28&lt;04:15,  1.81s/it]
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>sport berhasil: 15
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping sport:  10%|██████▎                                                       | 16/157 [00:29&lt;04:15,  1.81s/it]
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping sport:  10%|██████▎                                                       | 16/157 [00:29&lt;04:24,  1.87s/it]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>sport berhasil: 15
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
@@ -1041,15 +1039,146 @@ Total kandidat Finance: 162
 <span class="g g-Whitespace">      </span><span class="mi">3</span>     <span class="s2">"sport"</span><span class="p">,</span>
 <span class="g g-Whitespace">      </span><span class="mi">4</span>     <span class="n">target</span><span class="o">=</span><span class="mi">100</span>
 
-<span class="nn">Cell In[9], line 27,</span> in <span class="ni">scraping_kategori</span><span class="nt">(links, label, target)</span>
-<span class="g g-Whitespace">     </span><span class="mi">23</span>                 <span class="p">}</span>
-<span class="g g-Whitespace">     </span><span class="mi">24</span>             <span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">25</span> 
-<span class="g g-Whitespace">     </span><span class="mi">26</span>         <span class="c1"># Delay supaya tidak terlalu cepat</span>
-<span class="ne">---&gt; </span><span class="mi">27</span>         <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span>
-<span class="g g-Whitespace">     </span><span class="mi">28</span>             <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">29</span>         <span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">30</span> 
+<span class="nn">Cell In[9], line 16,</span> in <span class="ni">scraping_kategori</span><span class="nt">(links, label, target)</span>
+<span class="g g-Whitespace">     </span><span class="mi">12</span> 
+<span class="g g-Whitespace">     </span><span class="mi">13</span>         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">hasil</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">target</span><span class="p">:</span>
+<span class="g g-Whitespace">     </span><span class="mi">14</span>             <span class="k">break</span>
+<span class="g g-Whitespace">     </span><span class="mi">15</span> 
+<span class="ne">---&gt; </span><span class="mi">16</span>         <span class="n">isi</span> <span class="o">=</span> <span class="n">ambil_isi_berita</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">17</span> 
+<span class="g g-Whitespace">     </span><span class="mi">18</span>         <span class="k">if</span> <span class="n">isi</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+<span class="g g-Whitespace">     </span><span class="mi">19</span>             <span class="n">hasil</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+
+<span class="nn">Cell In[11], line 24,</span> in <span class="ni">ambil_isi_berita</span><span class="nt">(url)</span>
+<span class="g g-Whitespace">     </span><span class="mi">20</span> 
+<span class="g g-Whitespace">     </span><span class="mi">21</span>         <span class="k">if</span> <span class="n">isi</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">isi</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">300</span><span class="p">:</span>
+<span class="g g-Whitespace">     </span><span class="mi">22</span>             <span class="k">return</span> <span class="n">isi</span>
+<span class="g g-Whitespace">     </span><span class="mi">23</span> 
+<span class="ne">---&gt; </span><span class="mi">24</span>     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<span class="g g-Whitespace">     </span><span class="mi">25</span>         <span class="nb">print</span><span class="p">(</span><span class="s2">"Gagal:"</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">26</span>         <span class="nb">print</span><span class="p">(</span><span class="s2">"Error:"</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">27</span><span class="w"> </span>
+
+<span class="nn">File /workspaces/PPW/envwebmining/lib/python3.14/site-packages/requests/sessions.py:671,</span> in <span class="ni">Session.get</span><span class="nt">(self, url, params, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">661</span><span class="w"> </span><span class="sa">r</span><span class="sd">"""Sends a GET request. Returns :class:`Response` object.</span>
+<span class="g g-Whitespace">    </span><span class="mi">662</span><span class="sd"> </span>
+<span class="g g-Whitespace">    </span><span class="mi">663</span><span class="sd"> :param url: URL for the new :class:`Request` object.</span>
+<span class="sd">   (...)    667 :rtype: requests.Response</span>
+<span class="g g-Whitespace">    </span><span class="mi">668</span><span class="sd"> """</span>
+<span class="g g-Whitespace">    </span><span class="mi">670</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">"allow_redirects"</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">671</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="s2">"GET"</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<span class="nn">File /workspaces/PPW/envwebmining/lib/python3.14/site-packages/requests/sessions.py:651,</span> in <span class="ni">Session.request</span><span class="nt">(self, method, url, params, data, headers, cookies, files, auth, timeout, allow_redirects, proxies, hooks, stream, verify, cert, json)</span>
+<span class="g g-Whitespace">    </span><span class="mi">646</span> <span class="n">send_kwargs</span> <span class="o">=</span> <span class="p">{</span>
+<span class="g g-Whitespace">    </span><span class="mi">647</span>     <span class="s2">"timeout"</span><span class="p">:</span> <span class="n">timeout</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">648</span>     <span class="s2">"allow_redirects"</span><span class="p">:</span> <span class="n">allow_redirects</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">649</span> <span class="p">}</span>
+<span class="g g-Whitespace">    </span><span class="mi">650</span> <span class="n">send_kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">651</span> <span class="n">resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">prep</span><span class="p">,</span> <span class="o">**</span><span class="n">send_kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">653</span> <span class="k">return</span> <span class="n">resp</span>
+
+<span class="nn">File /workspaces/PPW/envwebmining/lib/python3.14/site-packages/requests/sessions.py:784,</span> in <span class="ni">Session.send</span><span class="nt">(self, request, **kwargs)</span>
+<span class="g g-Whitespace">    </span><span class="mi">781</span> <span class="n">start</span> <span class="o">=</span> <span class="n">preferred_clock</span><span class="p">()</span>
+<span class="g g-Whitespace">    </span><span class="mi">783</span> <span class="c1"># Send the request</span>
+<span class="ne">--&gt; </span><span class="mi">784</span> <span class="n">r</span> <span class="o">=</span> <span class="n">adapter</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">786</span> <span class="c1"># Total elapsed time of the request (approximately)</span>
+<span class="g g-Whitespace">    </span><span class="mi">787</span> <span class="n">elapsed</span> <span class="o">=</span> <span class="n">preferred_clock</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span>
+
+<span class="nn">File /workspaces/PPW/envwebmining/lib/python3.14/site-packages/requests/adapters.py:696,</span> in <span class="ni">HTTPAdapter.send</span><span class="nt">(self, request, stream, timeout, verify, cert, proxies)</span>
+<span class="g g-Whitespace">    </span><span class="mi">693</span>     <span class="n">resolved_timeout</span> <span class="o">=</span> <span class="n">TimeoutSauce</span><span class="p">(</span><span class="n">connect</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span> <span class="n">read</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">695</span> <span class="k">try</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">696</span>     <span class="n">resp</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">697</span>         <span class="n">method</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">method</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">698</span>         <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">699</span>         <span class="n">body</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">body</span><span class="p">,</span>  <span class="c1"># type: ignore[arg-type]  # urllib3 stubs don't accept Iterable[bytes | str]</span>
+<span class="g g-Whitespace">    </span><span class="mi">700</span>         <span class="n">headers</span><span class="o">=</span><span class="n">request</span><span class="o">.</span><span class="n">headers</span><span class="p">,</span>  <span class="c1"># type: ignore[arg-type]  # urllib3#3072</span>
+<span class="g g-Whitespace">    </span><span class="mi">701</span>         <span class="n">redirect</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">702</span>         <span class="n">assert_same_host</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">703</span>         <span class="n">preload_content</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">704</span>         <span class="n">decode_content</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">705</span>         <span class="n">retries</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_retries</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">706</span>         <span class="n">timeout</span><span class="o">=</span><span class="n">resolved_timeout</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">707</span>         <span class="n">chunked</span><span class="o">=</span><span class="n">chunked</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">708</span>     <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">710</span> <span class="k">except</span> <span class="p">(</span><span class="n">ProtocolError</span><span class="p">,</span> <span class="ne">OSError</span><span class="p">)</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">711</span>     <span class="k">raise</span> <span class="ne">ConnectionError</span><span class="p">(</span><span class="n">err</span><span class="p">,</span> <span class="n">request</span><span class="o">=</span><span class="n">request</span><span class="p">)</span>
+
+<span class="nn">File /workspaces/PPW/envwebmining/lib/python3.14/site-packages/urllib3/connectionpool.py:788,</span> in <span class="ni">HTTPConnectionPool.urlopen</span><span class="nt">(self, method, url, body, headers, retries, redirect, assert_same_host, timeout, pool_timeout, release_conn, chunked, body_pos, preload_content, decode_content, **response_kw)</span>
+<span class="g g-Whitespace">    </span><span class="mi">785</span> <span class="n">response_conn</span> <span class="o">=</span> <span class="n">conn</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">release_conn</span> <span class="k">else</span> <span class="kc">None</span>
+<span class="g g-Whitespace">    </span><span class="mi">787</span> <span class="c1"># Make the request on the HTTPConnection object</span>
+<span class="ne">--&gt; </span><span class="mi">788</span> <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_request</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">789</span>     <span class="n">conn</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">790</span>     <span class="n">method</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">791</span>     <span class="n">url</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">792</span>     <span class="n">timeout</span><span class="o">=</span><span class="n">timeout_obj</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">793</span>     <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">794</span>     <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">795</span>     <span class="n">chunked</span><span class="o">=</span><span class="n">chunked</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">796</span>     <span class="n">retries</span><span class="o">=</span><span class="n">retries</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">797</span>     <span class="n">response_conn</span><span class="o">=</span><span class="n">response_conn</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">798</span>     <span class="n">preload_content</span><span class="o">=</span><span class="n">preload_content</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">799</span>     <span class="n">decode_content</span><span class="o">=</span><span class="n">decode_content</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">800</span>     <span class="o">**</span><span class="n">response_kw</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">801</span> <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">803</span> <span class="c1"># Everything went great!</span>
+<span class="g g-Whitespace">    </span><span class="mi">804</span> <span class="n">clean_exit</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="nn">File /workspaces/PPW/envwebmining/lib/python3.14/site-packages/urllib3/connectionpool.py:534,</span> in <span class="ni">HTTPConnectionPool._make_request</span><span class="nt">(self, conn, method, url, body, headers, retries, timeout, chunked, response_conn, preload_content, decode_content, enforce_content_length)</span>
+<span class="g g-Whitespace">    </span><span class="mi">532</span> <span class="c1"># Receive the response from the server</span>
+<span class="g g-Whitespace">    </span><span class="mi">533</span> <span class="k">try</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">534</span>     <span class="n">response</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">getresponse</span><span class="p">()</span>
+<span class="g g-Whitespace">    </span><span class="mi">535</span> <span class="k">except</span> <span class="p">(</span><span class="n">BaseSSLError</span><span class="p">,</span> <span class="ne">OSError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">536</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_raise_timeout</span><span class="p">(</span><span class="n">err</span><span class="o">=</span><span class="n">e</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">timeout_value</span><span class="o">=</span><span class="n">read_timeout</span><span class="p">)</span>
+
+<span class="nn">File /workspaces/PPW/envwebmining/lib/python3.14/site-packages/urllib3/connection.py:571,</span> in <span class="ni">HTTPConnection.getresponse</span><span class="nt">(self)</span>
+<span class="g g-Whitespace">    </span><span class="mi">568</span> <span class="n">_shutdown</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sock</span><span class="p">,</span> <span class="s2">"shutdown"</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">570</span> <span class="c1"># Get the response from http.client.HTTPConnection</span>
+<span class="ne">--&gt; </span><span class="mi">571</span> <span class="n">httplib_response</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">getresponse</span><span class="p">()</span>
+<span class="g g-Whitespace">    </span><span class="mi">573</span> <span class="k">try</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">574</span>     <span class="n">assert_header_parsing</span><span class="p">(</span><span class="n">httplib_response</span><span class="o">.</span><span class="n">msg</span><span class="p">)</span>
+
+<span class="nn">File /usr/local/python/3.14.2/lib/python3.14/http/client.py:1450,</span> in <span class="ni">HTTPConnection.getresponse</span><span class="nt">(self)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1448</span> <span class="k">try</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1449</span>     <span class="k">try</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1450</span>         <span class="n">response</span><span class="o">.</span><span class="n">begin</span><span class="p">()</span>
+<span class="g g-Whitespace">   </span><span class="mi">1451</span>     <span class="k">except</span> <span class="ne">ConnectionError</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1452</span>         <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="nn">File /usr/local/python/3.14.2/lib/python3.14/http/client.py:336,</span> in <span class="ni">HTTPResponse.begin</span><span class="nt">(self)</span>
+<span class="g g-Whitespace">    </span><span class="mi">334</span> <span class="c1"># read until we get a non-100 response</span>
+<span class="g g-Whitespace">    </span><span class="mi">335</span> <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">336</span>     <span class="n">version</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="n">reason</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_status</span><span class="p">()</span>
+<span class="g g-Whitespace">    </span><span class="mi">337</span>     <span class="k">if</span> <span class="n">status</span> <span class="o">!=</span> <span class="n">CONTINUE</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">338</span>         <span class="k">break</span>
+
+<span class="nn">File /usr/local/python/3.14.2/lib/python3.14/http/client.py:297,</span> in <span class="ni">HTTPResponse._read_status</span><span class="nt">(self)</span>
+<span class="g g-Whitespace">    </span><span class="mi">296</span> <span class="k">def</span><span class="w"> </span><span class="nf">_read_status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="ne">--&gt; </span><span class="mi">297</span>     <span class="n">line</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fp</span><span class="o">.</span><span class="n">readline</span><span class="p">(</span><span class="n">_MAXLINE</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="s2">"iso-8859-1"</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">298</span>     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">_MAXLINE</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">299</span>         <span class="k">raise</span> <span class="n">LineTooLong</span><span class="p">(</span><span class="s2">"status line"</span><span class="p">)</span>
+
+<span class="nn">File /usr/local/python/3.14.2/lib/python3.14/socket.py:725,</span> in <span class="ni">SocketIO.readinto</span><span class="nt">(self, b)</span>
+<span class="g g-Whitespace">    </span><span class="mi">723</span>     <span class="k">raise</span> <span class="ne">OSError</span><span class="p">(</span><span class="s2">"cannot read from timed out object"</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">724</span> <span class="k">try</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">725</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sock</span><span class="o">.</span><span class="n">recv_into</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">726</span> <span class="k">except</span> <span class="n">timeout</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">727</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_timeout_occurred</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="nn">File /usr/local/python/3.14.2/lib/python3.14/ssl.py:1304,</span> in <span class="ni">SSLSocket.recv_into</span><span class="nt">(self, buffer, nbytes, flags)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1300</span>     <span class="k">if</span> <span class="n">flags</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1301</span>         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1302</span>           <span class="s2">"non-zero flags not allowed in calls to recv_into() on </span><span class="si">%s</span><span class="s2">"</span> <span class="o">%</span>
+<span class="g g-Whitespace">   </span><span class="mi">1303</span>           <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">)</span>
+<span class="ne">-&gt; </span><span class="mi">1304</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">nbytes</span><span class="p">,</span> <span class="n">buffer</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1305</span> <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1306</span>     <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">recv_into</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="n">nbytes</span><span class="p">,</span> <span class="n">flags</span><span class="p">)</span>
+
+<span class="nn">File /usr/local/python/3.14.2/lib/python3.14/ssl.py:1138,</span> in <span class="ni">SSLSocket.read</span><span class="nt">(self, len, buffer)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1136</span> <span class="k">try</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1137</span>     <span class="k">if</span> <span class="n">buffer</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1138</span>         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sslobj</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="nb">len</span><span class="p">,</span> <span class="n">buffer</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1139</span>     <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1140</span>         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sslobj</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="nb">len</span><span class="p">)</span>
 
 <span class="ne">KeyboardInterrupt</span>: 
 </pre></div>
@@ -1067,619 +1196,619 @@ Total kandidat Finance: 162
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:   1%|▍                                                            | 1/162 [00:01&lt;03:38,  1.36s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:   1%|▍                                                            | 1/162 [00:02&lt;05:32,  2.06s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 1
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:   1%|▊                                                            | 2/162 [00:02&lt;03:12,  1.20s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:   1%|▊                                                            | 2/162 [00:04&lt;05:27,  2.05s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 2
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:   2%|█▏                                                           | 3/162 [00:03&lt;03:28,  1.31s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:   2%|█▏                                                           | 3/162 [00:06&lt;05:27,  2.06s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 3
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:   2%|█▌                                                           | 4/162 [00:05&lt;03:26,  1.31s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:   2%|█▌                                                           | 4/162 [00:07&lt;04:54,  1.87s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 4
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:   3%|█▉                                                           | 5/162 [00:07&lt;03:54,  1.49s/it]
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 4
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:   4%|██▎                                                          | 6/162 [00:08&lt;03:43,  1.43s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:   3%|█▉                                                           | 5/162 [00:09&lt;04:42,  1.80s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 5
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:   4%|██▋                                                          | 7/162 [00:09&lt;03:36,  1.40s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:   4%|██▎                                                          | 6/162 [00:10&lt;04:18,  1.66s/it]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 5
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:   4%|██▋                                                          | 7/162 [00:12&lt;04:22,  1.69s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 6
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:   5%|███                                                          | 8/162 [00:11&lt;03:55,  1.53s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:   5%|███                                                          | 8/162 [00:14&lt;04:32,  1.77s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 7
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:   6%|███▍                                                         | 9/162 [00:12&lt;03:51,  1.51s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:   6%|███▍                                                         | 9/162 [00:15&lt;04:14,  1.66s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 8
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:   6%|███▋                                                        | 10/162 [00:15&lt;04:22,  1.73s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:   6%|███▋                                                        | 10/162 [00:18&lt;04:41,  1.85s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 9
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:   7%|████                                                        | 11/162 [00:16&lt;04:23,  1.74s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:   7%|████                                                        | 11/162 [00:20&lt;04:47,  1.91s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 10
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:   7%|████▍                                                       | 12/162 [00:19&lt;04:37,  1.85s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:   7%|████▍                                                       | 12/162 [00:22&lt;04:51,  1.94s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 11
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:   8%|████▊                                                       | 13/162 [00:20&lt;04:09,  1.67s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:   8%|████▊                                                       | 13/162 [00:24&lt;04:44,  1.91s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 12
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:   9%|█████▏                                                      | 14/162 [00:22&lt;04:30,  1.83s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:   9%|█████▏                                                      | 14/162 [00:26&lt;04:47,  1.94s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 13
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:   9%|█████▌                                                      | 15/162 [00:24&lt;04:23,  1.79s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:   9%|█████▌                                                      | 15/162 [00:27&lt;04:32,  1.86s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 14
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  10%|█████▉                                                      | 16/162 [00:25&lt;04:11,  1.72s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  10%|█████▉                                                      | 16/162 [00:30&lt;04:56,  2.03s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 15
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  10%|██████▎                                                     | 17/162 [00:27&lt;04:19,  1.79s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  10%|██████▎                                                     | 17/162 [00:32&lt;05:06,  2.12s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 16
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  11%|██████▋                                                     | 18/162 [00:29&lt;04:12,  1.75s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  11%|██████▋                                                     | 18/162 [00:34&lt;04:43,  1.97s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 17
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  12%|███████                                                     | 19/162 [00:30&lt;03:52,  1.62s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  12%|███████                                                     | 19/162 [00:35&lt;04:24,  1.85s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 18
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  12%|███████▍                                                    | 20/162 [00:31&lt;03:36,  1.53s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  12%|███████▍                                                    | 20/162 [00:37&lt;04:34,  1.93s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 19
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  13%|███████▊                                                    | 21/162 [00:33&lt;03:37,  1.54s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  13%|███████▊                                                    | 21/162 [00:39&lt;04:28,  1.90s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 20
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  14%|████████▏                                                   | 22/162 [00:35&lt;03:47,  1.62s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  14%|████████▏                                                   | 22/162 [00:41&lt;04:07,  1.77s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 21
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  14%|████████▌                                                   | 23/162 [00:37&lt;04:05,  1.77s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  14%|████████▌                                                   | 23/162 [00:42&lt;04:08,  1.78s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 22
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  15%|████████▉                                                   | 24/162 [00:38&lt;03:42,  1.61s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  15%|████████▉                                                   | 24/162 [00:45&lt;04:25,  1.93s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 23
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  15%|█████████▎                                                  | 25/162 [00:39&lt;03:26,  1.51s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  15%|█████████▎                                                  | 25/162 [00:46&lt;04:04,  1.78s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 24
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  16%|█████████▋                                                  | 26/162 [00:42&lt;03:55,  1.73s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  16%|█████████▋                                                  | 26/162 [00:48&lt;04:22,  1.93s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 25
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  17%|██████████                                                  | 27/162 [00:44&lt;04:11,  1.86s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  17%|██████████                                                  | 27/162 [00:50&lt;04:07,  1.83s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 26
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  17%|██████████▎                                                 | 28/162 [00:46&lt;03:59,  1.79s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  17%|██████████▎                                                 | 28/162 [00:52&lt;04:07,  1.84s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 27
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  18%|██████████▋                                                 | 29/162 [00:47&lt;03:41,  1.66s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  18%|██████████▋                                                 | 29/162 [00:53&lt;03:41,  1.67s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 28
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  19%|███████████                                                 | 30/162 [00:48&lt;03:25,  1.56s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  19%|███████████                                                 | 30/162 [00:55&lt;03:28,  1.58s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 29
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  19%|███████████▍                                                | 31/162 [00:50&lt;03:13,  1.48s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  19%|███████████▍                                                | 31/162 [00:56&lt;03:28,  1.59s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 30
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  20%|███████████▊                                                | 32/162 [00:51&lt;03:31,  1.62s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  20%|███████████▊                                                | 32/162 [00:58&lt;03:50,  1.77s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 31
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  20%|████████████▏                                               | 33/162 [00:53&lt;03:20,  1.55s/it]
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 31
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  21%|████████████▌                                               | 34/162 [00:55&lt;03:41,  1.73s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  20%|████████████▏                                               | 33/162 [01:00&lt;03:56,  1.84s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 32
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  22%|████████████▉                                               | 35/162 [00:57&lt;03:54,  1.85s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  21%|████████████▌                                               | 34/162 [01:02&lt;04:03,  1.90s/it]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 32
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  22%|████████████▉                                               | 35/162 [01:04&lt;03:52,  1.83s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 33
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  22%|█████████████▎                                              | 36/162 [00:59&lt;03:42,  1.77s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  22%|█████████████▎                                              | 36/162 [01:06&lt;03:47,  1.80s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 34
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  23%|█████████████▋                                              | 37/162 [01:00&lt;03:25,  1.65s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  23%|█████████████▋                                              | 37/162 [01:07&lt;03:27,  1.66s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 35
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  23%|██████████████                                              | 38/162 [01:02&lt;03:28,  1.68s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  23%|██████████████                                              | 38/162 [01:09&lt;03:34,  1.73s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 36
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  24%|██████████████▍                                             | 39/162 [01:04&lt;03:33,  1.73s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  24%|██████████████▍                                             | 39/162 [01:11&lt;03:49,  1.87s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 37
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  25%|██████████████▊                                             | 40/162 [01:06&lt;03:39,  1.80s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  25%|██████████████▊                                             | 40/162 [01:13&lt;03:35,  1.76s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 38
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  25%|███████████████▏                                            | 41/162 [01:08&lt;03:44,  1.86s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  25%|███████████████▏                                            | 41/162 [01:15&lt;03:43,  1.85s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 39
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  26%|███████████████▌                                            | 42/162 [01:10&lt;03:44,  1.87s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  26%|███████████████▌                                            | 42/162 [01:16&lt;03:33,  1.78s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 40
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  27%|███████████████▉                                            | 43/162 [01:11&lt;03:32,  1.78s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  27%|███████████████▉                                            | 43/162 [01:18&lt;03:17,  1.66s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 41
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  27%|████████████████▎                                           | 44/162 [01:13&lt;03:20,  1.70s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  27%|████████████████▎                                           | 44/162 [01:20&lt;03:27,  1.76s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 42
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  28%|████████████████▋                                           | 45/162 [01:14&lt;03:04,  1.58s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  28%|████████████████▋                                           | 45/162 [01:22&lt;03:40,  1.88s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 43
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  28%|█████████████████                                           | 46/162 [01:15&lt;02:52,  1.48s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  28%|█████████████████                                           | 46/162 [01:23&lt;03:26,  1.78s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 44
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  29%|█████████████████▍                                          | 47/162 [01:17&lt;03:16,  1.71s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  29%|█████████████████▍                                          | 47/162 [01:25&lt;03:12,  1.67s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 45
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  30%|█████████████████▊                                          | 48/162 [01:19&lt;03:00,  1.58s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  30%|█████████████████▊                                          | 48/162 [01:26&lt;03:08,  1.65s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 46
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  30%|██████████████████▏                                         | 49/162 [01:20&lt;02:59,  1.59s/it]
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 46
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  31%|██████████████████▌                                         | 50/162 [01:22&lt;03:14,  1.74s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  30%|██████████████████▏                                         | 49/162 [01:28&lt;03:02,  1.62s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 47
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  31%|██████████████████▉                                         | 51/162 [01:25&lt;03:27,  1.87s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  31%|██████████████████▌                                         | 50/162 [01:30&lt;03:21,  1.80s/it]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 47
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  31%|██████████████████▉                                         | 51/162 [01:32&lt;03:07,  1.69s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 48
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  32%|███████████████████▎                                        | 52/162 [01:27&lt;03:35,  1.96s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  32%|███████████████████▎                                        | 52/162 [01:34&lt;03:17,  1.80s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 49
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  33%|███████████████████▋                                        | 53/162 [01:28&lt;03:15,  1.79s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  33%|███████████████████▋                                        | 53/162 [01:36&lt;03:25,  1.88s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 50
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  33%|████████████████████                                        | 54/162 [01:30&lt;03:00,  1.68s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  33%|████████████████████                                        | 54/162 [01:38&lt;03:34,  1.99s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 51
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  34%|████████████████████▎                                       | 55/162 [01:31&lt;02:57,  1.66s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  34%|████████████████████▎                                       | 55/162 [01:40&lt;03:22,  1.89s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 52
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  35%|████████████████████▋                                       | 56/162 [01:33&lt;03:04,  1.74s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  35%|████████████████████▋                                       | 56/162 [01:41&lt;03:06,  1.76s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 53
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  35%|█████████████████████                                       | 57/162 [01:35&lt;02:56,  1.68s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  35%|█████████████████████                                       | 57/162 [01:43&lt;02:51,  1.64s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 54
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  36%|█████████████████████▍                                      | 58/162 [01:36&lt;02:55,  1.68s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  36%|█████████████████████▍                                      | 58/162 [01:44&lt;02:49,  1.63s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 55
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  36%|█████████████████████▊                                      | 59/162 [01:38&lt;02:44,  1.60s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  36%|█████████████████████▊                                      | 59/162 [01:45&lt;02:36,  1.52s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 56
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  37%|██████████████████████▏                                     | 60/162 [01:39&lt;02:36,  1.54s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  37%|██████████████████████▏                                     | 60/162 [01:47&lt;02:52,  1.69s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 57
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  38%|██████████████████████▌                                     | 61/162 [01:41&lt;02:47,  1.66s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  38%|██████████████████████▌                                     | 61/162 [01:49&lt;02:56,  1.75s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 58
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  38%|██████████████████████▉                                     | 62/162 [01:42&lt;02:31,  1.52s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  38%|██████████████████████▉                                     | 62/162 [01:52&lt;03:07,  1.87s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 59
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  39%|███████████████████████▎                                    | 63/162 [01:44&lt;02:42,  1.64s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  39%|███████████████████████▎                                    | 63/162 [01:54&lt;03:09,  1.91s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 60
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  40%|███████████████████████▋                                    | 64/162 [01:46&lt;02:47,  1.71s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  40%|███████████████████████▋                                    | 64/162 [01:55&lt;02:59,  1.83s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 61
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  40%|████████████████████████                                    | 65/162 [01:47&lt;02:35,  1.60s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  40%|████████████████████████                                    | 65/162 [01:57&lt;03:03,  1.89s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 62
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  41%|████████████████████████▍                                   | 66/162 [01:49&lt;02:33,  1.60s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  41%|████████████████████████▍                                   | 66/162 [01:59&lt;03:00,  1.88s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 63
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  41%|████████████████████████▊                                   | 67/162 [01:51&lt;02:41,  1.70s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  41%|████████████████████████▊                                   | 67/162 [02:01&lt;03:04,  1.95s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 64
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  42%|█████████████████████████▏                                  | 68/162 [01:53&lt;02:48,  1.80s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  42%|█████████████████████████▏                                  | 68/162 [02:03&lt;03:11,  2.03s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 65
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  43%|█████████████████████████▌                                  | 69/162 [01:54&lt;02:34,  1.66s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  43%|█████████████████████████▌                                  | 69/162 [02:05&lt;03:00,  1.94s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 66
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  43%|█████████████████████████▉                                  | 70/162 [01:56&lt;02:30,  1.64s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  43%|█████████████████████████▉                                  | 70/162 [02:07&lt;02:54,  1.89s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 67
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  44%|██████████████████████████▎                                 | 71/162 [01:57&lt;02:20,  1.55s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  44%|██████████████████████████▎                                 | 71/162 [02:09&lt;02:48,  1.85s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 68
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  44%|██████████████████████████▋                                 | 72/162 [01:59&lt;02:18,  1.53s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  44%|██████████████████████████▋                                 | 72/162 [02:10&lt;02:30,  1.67s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 69
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  45%|███████████████████████████                                 | 73/162 [02:00&lt;02:14,  1.51s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  45%|███████████████████████████                                 | 73/162 [02:11&lt;02:19,  1.57s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 70
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  46%|███████████████████████████▍                                | 74/162 [02:02&lt;02:21,  1.61s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  46%|███████████████████████████▍                                | 74/162 [02:13&lt;02:27,  1.67s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 71
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  46%|███████████████████████████▊                                | 75/162 [02:04&lt;02:25,  1.67s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  46%|███████████████████████████▊                                | 75/162 [02:15&lt;02:21,  1.63s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 72
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  47%|████████████████████████████▏                               | 76/162 [02:05&lt;02:20,  1.63s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  47%|████████████████████████████▏                               | 76/162 [02:17&lt;02:27,  1.71s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 73
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  48%|████████████████████████████▌                               | 77/162 [02:07&lt;02:09,  1.53s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  48%|████████████████████████████▌                               | 77/162 [02:18&lt;02:26,  1.73s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 74
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  48%|████████████████████████████▉                               | 78/162 [02:09&lt;02:21,  1.68s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  48%|████████████████████████████▉                               | 78/162 [02:20&lt;02:18,  1.65s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 75
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  49%|█████████████████████████████▎                              | 79/162 [02:11&lt;02:33,  1.86s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  49%|█████████████████████████████▎                              | 79/162 [02:21&lt;02:15,  1.64s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 76
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  49%|█████████████████████████████▋                              | 80/162 [02:13&lt;02:34,  1.89s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  49%|█████████████████████████████▋                              | 80/162 [02:23&lt;02:21,  1.73s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 77
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  50%|██████████████████████████████                              | 81/162 [02:15&lt;02:32,  1.88s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  50%|██████████████████████████████                              | 81/162 [02:26&lt;02:33,  1.89s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 78
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  51%|██████████████████████████████▎                             | 82/162 [02:17&lt;02:33,  1.92s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  51%|██████████████████████████████▎                             | 82/162 [02:28&lt;02:32,  1.91s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 79
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  51%|██████████████████████████████▋                             | 83/162 [02:19&lt;02:39,  2.02s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  51%|██████████████████████████████▋                             | 83/162 [02:29&lt;02:24,  1.83s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 80
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  52%|███████████████████████████████                             | 84/162 [02:21&lt;02:31,  1.95s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  52%|███████████████████████████████                             | 84/162 [02:31&lt;02:28,  1.91s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 81
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  52%|███████████████████████████████▍                            | 85/162 [02:23&lt;02:31,  1.96s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  52%|███████████████████████████████▍                            | 85/162 [02:34&lt;02:33,  1.99s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 82
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  53%|███████████████████████████████▊                            | 86/162 [02:25&lt;02:33,  2.02s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  53%|███████████████████████████████▊                            | 86/162 [02:35&lt;02:16,  1.79s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 83
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  54%|████████████████████████████████▏                           | 87/162 [02:27&lt;02:30,  2.01s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  54%|████████████████████████████████▏                           | 87/162 [02:36&lt;02:02,  1.64s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 84
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  54%|████████████████████████████████▌                           | 88/162 [02:29&lt;02:29,  2.02s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  54%|████████████████████████████████▌                           | 88/162 [02:38&lt;01:56,  1.57s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 85
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  55%|████████████████████████████████▉                           | 89/162 [02:31&lt;02:27,  2.02s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  55%|████████████████████████████████▉                           | 89/162 [02:40&lt;02:06,  1.74s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 86
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  56%|█████████████████████████████████▎                          | 90/162 [02:32&lt;02:10,  1.81s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  56%|█████████████████████████████████▎                          | 90/162 [02:42&lt;02:09,  1.79s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 87
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  56%|█████████████████████████████████▋                          | 91/162 [02:34&lt;01:58,  1.67s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  56%|█████████████████████████████████▋                          | 91/162 [02:43&lt;02:03,  1.74s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 88
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  57%|██████████████████████████████████                          | 92/162 [02:36&lt;02:03,  1.76s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  57%|██████████████████████████████████                          | 92/162 [02:45&lt;01:54,  1.64s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 89
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  57%|██████████████████████████████████▍                         | 93/162 [02:37&lt;01:59,  1.73s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  57%|██████████████████████████████████▍                         | 93/162 [02:46&lt;01:49,  1.58s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 90
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  58%|██████████████████████████████████▊                         | 94/162 [02:39&lt;02:05,  1.84s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  58%|██████████████████████████████████▊                         | 94/162 [02:48&lt;01:57,  1.73s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 91
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  59%|███████████████████████████████████▏                        | 95/162 [02:41&lt;02:08,  1.92s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  59%|███████████████████████████████████▏                        | 95/162 [02:50&lt;01:58,  1.78s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 92
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  59%|███████████████████████████████████▌                        | 96/162 [02:43&lt;02:05,  1.90s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  59%|███████████████████████████████████▌                        | 96/162 [02:52&lt;01:52,  1.70s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 93
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  60%|███████████████████████████████████▉                        | 97/162 [02:45&lt;02:06,  1.95s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  60%|███████████████████████████████████▉                        | 97/162 [02:54&lt;01:55,  1.78s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 94
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  60%|████████████████████████████████████▎                       | 98/162 [02:47&lt;02:04,  1.94s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  60%|████████████████████████████████████▎                       | 98/162 [02:55&lt;01:50,  1.73s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 95
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  61%|████████████████████████████████████▋                       | 99/162 [02:49&lt;02:01,  1.93s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  61%|████████████████████████████████████▋                       | 99/162 [02:57&lt;01:55,  1.83s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 96
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  62%|████████████████████████████████████▍                      | 100/162 [02:51&lt;01:58,  1.91s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  62%|████████████████████████████████████▍                      | 100/162 [02:59&lt;01:44,  1.68s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 97
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  62%|████████████████████████████████████▊                      | 101/162 [02:53&lt;01:54,  1.87s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  62%|████████████████████████████████████▊                      | 101/162 [03:00&lt;01:38,  1.62s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 98
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  63%|█████████████████████████████████████▏                     | 102/162 [02:54&lt;01:47,  1.80s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  63%|█████████████████████████████████████▏                     | 102/162 [03:01&lt;01:33,  1.56s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 99
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  64%|█████████████████████████████████████▌                     | 103/162 [02:57&lt;01:41,  1.72s/it]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scraping finance:  64%|█████████████████████████████████████▌                     | 103/162 [03:03&lt;01:45,  1.78s/it]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>finance berhasil: 100
@@ -2050,6 +2179,7 @@ Name: count, dtype: int64
 </div>
 </div>
 </div>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -2090,29 +2220,21 @@ Name: count, dtype: int64
         <p class="prev-next-title">PPW (Pencarian &amp; penambangan Web)</p>
       </div>
     </a>
+    <a class="right-next"
+       href="Tugas_2.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">&lt;no title&gt;</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
             </div>
             
             
-              
-                <dialog id="pst-secondary-sidebar-modal"></dialog>
-                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-
-  <div class="sidebar-secondary-item"><div
-    id="pst-page-navigation-heading-2"
-    class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> Contents
-  </div>
-  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
-    <ul class="simple pst-show_toc_level nav section-nav flex-column">
-</ul>
-
-  </nav></div>
-
-</div></div>
               
             
           </div>
