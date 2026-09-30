@@ -1,0 +1,3442 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Klasifikasi Berita Menggunakan Skip-gram dan Naive Bayes</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css?v=8cd3d715" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tugas_3';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Tugas 2 - Text Preprocessing, TF-IDF, ICSDF, dan PCA" href="Tugas_2.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="_static/searchtools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/pp.jpeg" class="logo__image only-light" alt=" - Home"/>
+    <img src="_static/pp.jpeg" class="logo__image only-dark pst-js-only" alt=" - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    PPW (Pencarian & penambangan Web)
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Tugas_1.html">Tugas 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tugas_2.html">Tugas 2 - Text Preprocessing, TF-IDF, ICSDF, dan PCA</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Klasifikasi Berita Menggunakan Skip-gram dan Naive Bayes</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Ftugas_3.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/tugas_3.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Klasifikasi Berita Menggunakan Skip-gram dan Naive Bayes</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pencarian-dan-penambangan-web">Pencarian dan Penambangan Web</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#alur-proses">Alur proses</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ketentuan-preprocessing">Ketentuan preprocessing</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#install-library">1. Install Library</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#import-library">2. Import Library</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#membaca-dataset">3. Membaca Dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pemeriksaan-dataset">4. Pemeriksaan Dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mengubah-label-menjadi-numerik">5. Mengubah Label Menjadi Numerik</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#menghitung-jumlah-kata-sebelum-preprocessing">6. Menghitung Jumlah Kata Sebelum Preprocessing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preprocessing">7. Preprocessing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pemeriksaan-hasil-preprocessing">8. Pemeriksaan Hasil Preprocessing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#menghitung-jumlah-kata-setelah-preprocessing">9. Menghitung Jumlah Kata Setelah Preprocessing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#membagi-data-training-dan-testing">10. Membagi Data Training dan Testing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tokenisasi">11. Tokenisasi</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#membuat-pasangan-target-dan-context">12. Membuat Pasangan Target dan Context</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#membuat-vocabulary">13. Membuat Vocabulary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parameter-skip-gram">14. Parameter Skip-gram</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fungsi-softmax">15. Fungsi Softmax</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inisialisasi-bobot-skip-gram">16. Inisialisasi Bobot Skip-gram</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#training-skip-gram">16. Training Skip-gram</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#word-embedding-hasil-skip-gram">17. Word Embedding Hasil Skip-gram</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#melihat-vektor-kata">18. Melihat Vektor Kata</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mengubah-berita-menjadi-vektor">19. Mengubah Berita Menjadi Vektor</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset-vektor-training">20. Dataset Vektor Training</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset-vektor-testing">21. Dataset Vektor Testing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#menyimpan-hasil-vektor-skip-gram">22. Menyimpan Hasil Vektor Skip-gram</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#menyiapkan-data-untuk-naive-bayes">23. Menyiapkan Data untuk Naive Bayes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#training-gaussian-naive-bayes">24. Training Gaussian Naive Bayes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prediksi-data-testing">25. Prediksi Data Testing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluasi-accuracy">26. Evaluasi Accuracy</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#precision-recall-dan-f1-score">27. Precision, Recall, dan F1-Score</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#confusion-matrix">28. Confusion Matrix</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ringkasan-hasil-evaluasi">29. Ringkasan Hasil Evaluasi</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="klasifikasi-berita-menggunakan-skip-gram-dan-naive-bayes">
+<h1>Klasifikasi Berita Menggunakan Skip-gram dan Naive Bayes<a class="headerlink" href="#klasifikasi-berita-menggunakan-skip-gram-dan-naive-bayes" title="Link to this heading">#</a></h1>
+<section id="pencarian-dan-penambangan-web">
+<h2>Pencarian dan Penambangan Web<a class="headerlink" href="#pencarian-dan-penambangan-web" title="Link to this heading">#</a></h2>
+<p>Notebook ini merupakan lanjutan dari tugas sebelumnya.</p>
+<p>Pada tugas sebelumnya, berita direpresentasikan menggunakan TF-IDF, ICSDF,
+dan PCA. Pada tugas ini, representasi teks diganti menggunakan metode
+Word2Vec Skip-gram dan klasifikasi dilakukan menggunakan Naive Bayes.</p>
+<section id="alur-proses">
+<h3>Alur proses<a class="headerlink" href="#alur-proses" title="Link to this heading">#</a></h3>
+<p>Dataset berita
+↓
+Preprocessing
+↓
+Pembagian Training dan Testing
+↓
+Tokenisasi
+↓
+Skip-gram
+↓
+Word Embedding
+↓
+Vektor setiap berita
+↓
+Naive Bayes
+↓
+Prediksi
+↓
+Evaluasi</p>
+</section>
+<section id="ketentuan-preprocessing">
+<h3>Ketentuan preprocessing<a class="headerlink" href="#ketentuan-preprocessing" title="Link to this heading">#</a></h3>
+<p>Preprocessing pada tugas ini hanya menghilangkan tanda baca.</p>
+<p>Tidak dilakukan:</p>
+<ul class="simple">
+<li><p>Stopword removal</p></li>
+<li><p>Stemming</p></li>
+<li><p>Normalisasi kata</p></li>
+<li><p>Translasi bahasa asing</p></li>
+<li><p>TF-IDF</p></li>
+<li><p>ICSDF</p></li>
+<li><p>PCA</p></li>
+</ul>
+</section>
+</section>
+<section id="install-library">
+<h2>1. Install Library<a class="headerlink" href="#install-library" title="Link to this heading">#</a></h2>
+<p>Library yang digunakan pada tugas ini adalah:</p>
+<ul class="simple">
+<li><p>pandas untuk membaca dan mengolah dataset</p></li>
+<li><p>numpy untuk operasi numerik</p></li>
+<li><p>gensim untuk Word2Vec Skip-gram</p></li>
+<li><p>scikit-learn untuk pembagian data dan Naive Bayes</p></li>
+<li><p>matplotlib dan seaborn untuk visualisasi evaluasi</p></li>
+<li><p>openpyxl untuk membaca dan menyimpan file Excel</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>-q<span class="w"> </span>pandas<span class="w"> </span>numpy<span class="w"> </span>scikit-learn<span class="w"> </span>matplotlib<span class="w"> </span>seaborn<span class="w"> </span>openpyxl
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold">[</span><span class=" -Color -Color-Blue">notice</span><span class=" -Color -Color-Bold">]</span> A new release of pip is available: <span class=" -Color -Color-Red">25.3</span> -&gt; <span class=" -Color -Color-Green">26.2.1</span>
+<span class=" -Color -Color-Bold">[</span><span class=" -Color -Color-Blue">notice</span><span class=" -Color -Color-Bold">]</span> To update, run: <span class=" -Color -Color-Green">pip install --upgrade pip</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="import-library">
+<h2>2. Import Library<a class="headerlink" href="#import-library" title="Link to this heading">#</a></h2>
+<p>Tahap ini digunakan untuk memanggil library yang diperlukan dalam proses
+preprocessing, pembentukan Skip-gram, klasifikasi Naive Bayes, dan evaluasi.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">unicodedata</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.naive_bayes</span><span class="w"> </span><span class="kn">import</span> <span class="n">GaussianNB</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">accuracy_score</span><span class="p">,</span>
+    <span class="n">precision_score</span><span class="p">,</span>
+    <span class="n">recall_score</span><span class="p">,</span>
+    <span class="n">f1_score</span><span class="p">,</span>
+    <span class="n">confusion_matrix</span><span class="p">,</span>
+    <span class="n">classification_report</span>
+<span class="p">)</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="membaca-dataset">
+<h2>3. Membaca Dataset<a class="headerlink" href="#membaca-dataset" title="Link to this heading">#</a></h2>
+<p>Dataset yang digunakan merupakan dataset berita yang sama dengan tugas
+sebelumnya.</p>
+<p>Dataset terdiri dari 200 berita dengan dua kategori:</p>
+<ul class="simple">
+<li><p>sport</p></li>
+<li><p>finance</p></li>
+</ul>
+<p>Kolom yang digunakan:</p>
+<ul class="simple">
+<li><p>id</p></li>
+<li><p>isi_berita</p></li>
+<li><p>label</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Sesuaikan nama file dengan dataset yang kamu punya</span>
+<span class="n">FILE_DATASET</span> <span class="o">=</span> <span class="s2">"dataset_detik_200_berita.xlsx"</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span><span class="n">FILE_DATASET</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Jumlah data :"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Nama kolom  :"</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah data : 200
+Nama kolom  : ['id', 'isi_berita', 'label']
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>isi_berita</th>
+      <th>label</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>Dalam dua seri terakhir MotoGP 2027, Marc Marq...</td>
+      <td>sport</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>Alwi Farhan, Moh Zaki Ubaidillah dan Muhamad Y...</td>
+      <td>sport</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>Di tengah viral insiden cepirit pada ajang Hyr...</td>
+      <td>sport</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>Dejan Fedinansyah/Felisha Alberta Nathaniel Pa...</td>
+      <td>sport</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>Bagas Maulana/Apriyani Rahayu tak minder meski...</td>
+      <td>sport</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="pemeriksaan-dataset">
+<h2>4. Pemeriksaan Dataset<a class="headerlink" href="#pemeriksaan-dataset" title="Link to this heading">#</a></h2>
+<p>Sebelum melakukan preprocessing, dataset diperiksa untuk mengetahui
+struktur data dan memastikan tidak terdapat nilai kosong pada kolom utama.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"Informasi dataset:"</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Jumlah nilai kosong:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[[</span><span class="s2">"id"</span><span class="p">,</span> <span class="s2">"isi_berita"</span><span class="p">,</span> <span class="s2">"label"</span><span class="p">]]</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Distribusi label:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">"label"</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Informasi dataset:
+&lt;class 'pandas.DataFrame'&gt;
+RangeIndex: 200 entries, 0 to 199
+Data columns (total 3 columns):
+ #   Column      Non-Null Count  Dtype
+---  ------      --------------  -----
+ 0   id          200 non-null    int64
+ 1   isi_berita  200 non-null    str  
+ 2   label       200 non-null    str  
+dtypes: int64(1), str(2)
+memory usage: 4.8 KB
+
+Jumlah nilai kosong:
+id            0
+isi_berita    0
+label         0
+dtype: int64
+
+Distribusi label:
+label
+sport      100
+finance    100
+Name: count, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="mengubah-label-menjadi-numerik">
+<h2>5. Mengubah Label Menjadi Numerik<a class="headerlink" href="#mengubah-label-menjadi-numerik" title="Link to this heading">#</a></h2>
+<p>Label berita diubah menjadi bentuk numerik agar dapat digunakan oleh
+algoritma klasifikasi.</p>
+<p>Mapping yang digunakan:</p>
+<ul class="simple">
+<li><p>finance = 0</p></li>
+<li><p>sport = 1</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s2">"label_num"</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">"label"</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">({</span>
+    <span class="s2">"finance"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s2">"sport"</span><span class="p">:</span> <span class="mi">1</span>
+<span class="p">})</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Mapping label:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"finance = 0"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"sport   = 1"</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Distribusi label numerik:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">"label_num"</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">sort_index</span><span class="p">())</span>
+
+<span class="n">display</span><span class="p">(</span>
+    <span class="n">df</span><span class="p">[[</span><span class="s2">"id"</span><span class="p">,</span> <span class="s2">"label"</span><span class="p">,</span> <span class="s2">"label_num"</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mapping label:
+finance = 0
+sport   = 1
+
+Distribusi label numerik:
+label_num
+0    100
+1    100
+Name: count, dtype: int64
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>label</th>
+      <th>label_num</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>sport</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>sport</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>sport</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>sport</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>sport</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="menghitung-jumlah-kata-sebelum-preprocessing">
+<h2>6. Menghitung Jumlah Kata Sebelum Preprocessing<a class="headerlink" href="#menghitung-jumlah-kata-sebelum-preprocessing" title="Link to this heading">#</a></h2>
+<p>Jumlah kata dihitung sebelum preprocessing untuk mengetahui kondisi awal
+dataset.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s2">"jumlah_kata_asli"</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">"isi_berita"</span><span class="p">]</span>
+    <span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">"Total seluruh kata:"</span><span class="p">,</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">"jumlah_kata_asli"</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Statistik jumlah kata:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">"jumlah_kata_asli"</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>
+
+<span class="n">display</span><span class="p">(</span>
+    <span class="n">df</span><span class="p">[</span>
+        <span class="p">[</span><span class="s2">"id"</span><span class="p">,</span> <span class="s2">"label"</span><span class="p">,</span> <span class="s2">"jumlah_kata_asli"</span><span class="p">]</span>
+    <span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Total seluruh kata: 67076
+
+Statistik jumlah kata:
+count    200.000000
+mean     335.380000
+std      161.031304
+min       42.000000
+25%      241.000000
+50%      303.000000
+75%      392.250000
+max      963.000000
+Name: jumlah_kata_asli, dtype: float64
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>label</th>
+      <th>jumlah_kata_asli</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>sport</td>
+      <td>320</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>sport</td>
+      <td>323</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>sport</td>
+      <td>256</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>sport</td>
+      <td>238</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>sport</td>
+      <td>402</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="preprocessing">
+<h2>7. Preprocessing<a class="headerlink" href="#preprocessing" title="Link to this heading">#</a></h2>
+<p>Pada tugas ini preprocessing dilakukan dengan hanya menghilangkan tanda baca.</p>
+<p>Tidak dilakukan:</p>
+<ul class="simple">
+<li><p>Stopword removal</p></li>
+<li><p>Stemming</p></li>
+<li><p>Normalisasi kata tidak baku</p></li>
+<li><p>Translasi kata asing</p></li>
+<li><p>TF-IDF</p></li>
+<li><p>ICSDF</p></li>
+<li><p>PCA</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">remove_punctuation</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+
+    <span class="n">text</span> <span class="o">=</span> <span class="s2">""</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+        <span class="n">char</span>
+        <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">text</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">unicodedata</span><span class="o">.</span><span class="n">category</span><span class="p">(</span><span class="n">char</span><span class="p">)</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"P"</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">"\s+"</span><span class="p">,</span> <span class="s2">" "</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">text</span>
+
+
+<span class="n">df</span><span class="p">[</span><span class="s2">"berita_clean"</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">"isi_berita"</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+    <span class="n">remove_punctuation</span>
+<span class="p">)</span>
+
+<span class="n">display</span><span class="p">(</span>
+    <span class="n">df</span><span class="p">[</span>
+        <span class="p">[</span><span class="s2">"id"</span><span class="p">,</span> <span class="s2">"isi_berita"</span><span class="p">,</span> <span class="s2">"berita_clean"</span><span class="p">,</span> <span class="s2">"label"</span><span class="p">]</span>
+    <span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>isi_berita</th>
+      <th>berita_clean</th>
+      <th>label</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>Dalam dua seri terakhir MotoGP 2027, Marc Marq...</td>
+      <td>Dalam dua seri terakhir MotoGP 2027 Marc Marqu...</td>
+      <td>sport</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>Alwi Farhan, Moh Zaki Ubaidillah dan Muhamad Y...</td>
+      <td>Alwi Farhan Moh Zaki Ubaidillah dan Muhamad Yu...</td>
+      <td>sport</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>Di tengah viral insiden cepirit pada ajang Hyr...</td>
+      <td>Di tengah viral insiden cepirit pada ajang Hyr...</td>
+      <td>sport</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>Dejan Fedinansyah/Felisha Alberta Nathaniel Pa...</td>
+      <td>Dejan FedinansyahFelisha Alberta Nathaniel Pas...</td>
+      <td>sport</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>Bagas Maulana/Apriyani Rahayu tak minder meski...</td>
+      <td>Bagas MaulanaApriyani Rahayu tak minder meski ...</td>
+      <td>sport</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="pemeriksaan-hasil-preprocessing">
+<h2>8. Pemeriksaan Hasil Preprocessing<a class="headerlink" href="#pemeriksaan-hasil-preprocessing" title="Link to this heading">#</a></h2>
+<p>Beberapa data ditampilkan untuk melihat perbedaan teks sebelum dan
+sesudah tanda baca dihilangkan.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">))):</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"DATA </span><span class="si">{</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Sebelum:"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s2">"isi_berita"</span><span class="p">])</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Sesudah:"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="s2">"berita_clean"</span><span class="p">])</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"-"</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>DATA 1
+Sebelum:
+Dalam dua seri terakhir MotoGP 2027, Marc Marquez sukses sapu bersih poin maksimal. Penampilan rider Ducati itu membuat pengamat MotoGP Carlo Pernat menyebutnya seperti makhluk dari Mars. Marquez menyapu bersih MotoGP San Marino di Misano. Ia meraih kemenangan pada Sprint Race dan balapan utama sehingga mengamankan 37 poin dalam satu akhir pekan. Hasil tersebut melanjutkan performa apik Marquez pada seri sebelumnya, ketika meraih 37 poin di MotoGP Aragon. Artinya, Marc mengumpulkan 74 poin maksimal dalam dua seri beruntun. Bagi Pernat, yang membuat Marquez berbeda bukan sekadar kecepatannya. Gaya balap rider asal Spanyol itu dinilai sudah berubah seiring bertambahnya usia dan pengalaman. Pernat menilai Marquez kini lebih mampu mengendalikan situasi balapan dibandingkan beberapa tahun lalu, tidak lagi terlalu sering mengambil risiko hingga berujung crash. Ia lebih baik dalam membaca kondisi dan mengelola balapan. "Marquez adalah makhluk Mars. Bahkan seiring bertambahnya usia, dengan semua masalah yang pernah dia alami, dia mampu mengelola balapan dengan cara yang tidak bisa dilakukan pebalap lain," ucapnya seperti dilansir Motosan. "Kita selalu bersulang untuk Marquez. Dalam beberapa Grand Prix terakhir, kita selalu bersulang untuknya, sekarang sudah dua kali berturut-turut. Jika dia adalah Marquez empat atau lima tahun lalu, saya akan mengatakan tidak ada yang seperti dia dalam hal cara dia membalap, meskipun terkadang dia terjatuh." "Sekarang, gaya balapnya juga sudah berubah: dia tidak lagi terjatuh, dia mengelola situasi yang dihadapinya. Karena waktu terus berjalan, dia pernah mengalami masalah pada bahu, tetapi dia mampu mengatasi semuanya. Dan dia mengelolanya dengan sangat baik sampai-sampai, dalam tanda kutip, dia membuat pebalap lain terjatuh. Bukan karena dia mendorong mereka, tentu saja." Pernyataan Pernat tersebut muncul setelah Marquez tampil dominan di Misano. Ia berhasil mengambil alih posisi terdepan setelah Marco Bezzecchi terjatuh dan kemudian menahan tekanan Jorge Martin sebelum meraih kemenangan. Marc Marquez kini berada di puncak klasemen MotoGP 2026 dengan 274 poin, sama dengan Jorge Martin tetapi unggul jumlah kemenangan. Kemenangan di Misano menjadi kemenangan GP kelimanya dalam tujuh balapan terakhir.
+
+Sesudah:
+Dalam dua seri terakhir MotoGP 2027 Marc Marquez sukses sapu bersih poin maksimal Penampilan rider Ducati itu membuat pengamat MotoGP Carlo Pernat menyebutnya seperti makhluk dari Mars Marquez menyapu bersih MotoGP San Marino di Misano Ia meraih kemenangan pada Sprint Race dan balapan utama sehingga mengamankan 37 poin dalam satu akhir pekan Hasil tersebut melanjutkan performa apik Marquez pada seri sebelumnya ketika meraih 37 poin di MotoGP Aragon Artinya Marc mengumpulkan 74 poin maksimal dalam dua seri beruntun Bagi Pernat yang membuat Marquez berbeda bukan sekadar kecepatannya Gaya balap rider asal Spanyol itu dinilai sudah berubah seiring bertambahnya usia dan pengalaman Pernat menilai Marquez kini lebih mampu mengendalikan situasi balapan dibandingkan beberapa tahun lalu tidak lagi terlalu sering mengambil risiko hingga berujung crash Ia lebih baik dalam membaca kondisi dan mengelola balapan Marquez adalah makhluk Mars Bahkan seiring bertambahnya usia dengan semua masalah yang pernah dia alami dia mampu mengelola balapan dengan cara yang tidak bisa dilakukan pebalap lain ucapnya seperti dilansir Motosan Kita selalu bersulang untuk Marquez Dalam beberapa Grand Prix terakhir kita selalu bersulang untuknya sekarang sudah dua kali berturutturut Jika dia adalah Marquez empat atau lima tahun lalu saya akan mengatakan tidak ada yang seperti dia dalam hal cara dia membalap meskipun terkadang dia terjatuh Sekarang gaya balapnya juga sudah berubah dia tidak lagi terjatuh dia mengelola situasi yang dihadapinya Karena waktu terus berjalan dia pernah mengalami masalah pada bahu tetapi dia mampu mengatasi semuanya Dan dia mengelolanya dengan sangat baik sampaisampai dalam tanda kutip dia membuat pebalap lain terjatuh Bukan karena dia mendorong mereka tentu saja Pernyataan Pernat tersebut muncul setelah Marquez tampil dominan di Misano Ia berhasil mengambil alih posisi terdepan setelah Marco Bezzecchi terjatuh dan kemudian menahan tekanan Jorge Martin sebelum meraih kemenangan Marc Marquez kini berada di puncak klasemen MotoGP 2026 dengan 274 poin sama dengan Jorge Martin tetapi unggul jumlah kemenangan Kemenangan di Misano menjadi kemenangan GP kelimanya dalam tujuh balapan terakhir
+----------------------------------------------------------------------------------------------------
+DATA 2
+Sebelum:
+Alwi Farhan, Moh Zaki Ubaidillah dan Muhamad Yusuf memetik pelajaran berharga dari Kento Momota. Itu untuk modal tampil di Asian Games 2026. Tim bulutangkis Indonesia telah menyelesaikan rangkaian pemusatan latihan di Tokyo dan akan bertolak ke Nagoya pada Kamis (17/9) pagi untuk masuk ke perkampungan atlet. Pada training camp terakhir tim bulutangkis di Tokyo, Momota menjadi mentor sekaligus sparring partner tim tunggal putra Indonesia. Tiga dari empat tunggal putra Indonesia yaitu Alwi, Ubed sapaan akrab Moh Zaki Ubaidillah, dan Yusuf, berstatus debutan dan akan menjadi andalan tim bulutangkis di Asian Games Aichi-Nagoya 2026. Selain ada Jonatan Christie. "Kami tahu Kento Momota sesuperior apa dulu jadi bisa bermain bareng hari ini pastinya senang dan sebuah kehormatan. Pengalaman yang tidak bisa dilupakan," kata Alwi dalam keterangan tertulisnya, Rabu (16/9/2026). "Senang bisa berbagi lapangan dengan dia, tadi juga Momota sempat memberikan evaluasi dan masukan tentang cara main ke saya," ucap Ubed. Bagi Alwi dan Ubed, walaupun ini Asian Games pertama, namun mereka punya pengalaman memperkuat Indonesia untuk ajang dengan persaingan ketat seperti SEA Games, Piala Sudirman, hingga Piala Thomas. "Pastinya kami bersyukur dan senang juga bisa mewakili Indonesia di Asian Games. Kami ingin memaksimalkan kesempatan yang ada. Ini Asian Games pertama dan dengan hasil kemarin di SEA Games untuk saya dan Ubed cukup meyakinkan jadi ada modal bagus untuk ke multievent yang levelnya lebih tinggi," ucap Alwi. "Persiapan individunya sejauh ini Alhamdulillah cukup lancar. Persiapan bersama tim pun juga berjalan dengan baik. Kami siap untuk bertanding di minggu depan," tambah Ubed. Berbeda dengan Yusuf yang belum punya pengalaman tampil di turnamen besar. Dukungan senior sangat berguna baginya untuk meningkatkan percaya diri. "Pastinya awal-awal ada groginya tapi dari senior terus mengingatkan buat lebih enjoy saja," ucap Yusuf. "Mereka selalu berpesan untuk menganggap ini seperti turnamen individu saja. Tetap fokus, semangat dan lebih tenang," ujarnya. Asian Games Aichi-Nagoya 2026 cabang bulutangkis bergulir pada 20-24 September (beregu) dan 25-29 September (perorangan) di Ichinomiya City Municipal Gymnasium, Aichi, Jepang. (mcy/aff)
+
+Sesudah:
+Alwi Farhan Moh Zaki Ubaidillah dan Muhamad Yusuf memetik pelajaran berharga dari Kento Momota Itu untuk modal tampil di Asian Games 2026 Tim bulutangkis Indonesia telah menyelesaikan rangkaian pemusatan latihan di Tokyo dan akan bertolak ke Nagoya pada Kamis 179 pagi untuk masuk ke perkampungan atlet Pada training camp terakhir tim bulutangkis di Tokyo Momota menjadi mentor sekaligus sparring partner tim tunggal putra Indonesia Tiga dari empat tunggal putra Indonesia yaitu Alwi Ubed sapaan akrab Moh Zaki Ubaidillah dan Yusuf berstatus debutan dan akan menjadi andalan tim bulutangkis di Asian Games AichiNagoya 2026 Selain ada Jonatan Christie Kami tahu Kento Momota sesuperior apa dulu jadi bisa bermain bareng hari ini pastinya senang dan sebuah kehormatan Pengalaman yang tidak bisa dilupakan kata Alwi dalam keterangan tertulisnya Rabu 1692026 Senang bisa berbagi lapangan dengan dia tadi juga Momota sempat memberikan evaluasi dan masukan tentang cara main ke saya ucap Ubed Bagi Alwi dan Ubed walaupun ini Asian Games pertama namun mereka punya pengalaman memperkuat Indonesia untuk ajang dengan persaingan ketat seperti SEA Games Piala Sudirman hingga Piala Thomas Pastinya kami bersyukur dan senang juga bisa mewakili Indonesia di Asian Games Kami ingin memaksimalkan kesempatan yang ada Ini Asian Games pertama dan dengan hasil kemarin di SEA Games untuk saya dan Ubed cukup meyakinkan jadi ada modal bagus untuk ke multievent yang levelnya lebih tinggi ucap Alwi Persiapan individunya sejauh ini Alhamdulillah cukup lancar Persiapan bersama tim pun juga berjalan dengan baik Kami siap untuk bertanding di minggu depan tambah Ubed Berbeda dengan Yusuf yang belum punya pengalaman tampil di turnamen besar Dukungan senior sangat berguna baginya untuk meningkatkan percaya diri Pastinya awalawal ada groginya tapi dari senior terus mengingatkan buat lebih enjoy saja ucap Yusuf Mereka selalu berpesan untuk menganggap ini seperti turnamen individu saja Tetap fokus semangat dan lebih tenang ujarnya Asian Games AichiNagoya 2026 cabang bulutangkis bergulir pada 2024 September beregu dan 2529 September perorangan di Ichinomiya City Municipal Gymnasium Aichi Jepang mcyaff
+----------------------------------------------------------------------------------------------------
+DATA 3
+Sebelum:
+Di tengah viral insiden cepirit pada ajang Hyrox, ada atlet Malaysia mengaku sebaliknya. Ia didiskualifikasi karena pergi ke toilet. Melansir The Rakyat post, adalah Zarif Zakaria yang kena apes. Atlet Malaysia itu didiskualifikasi dari Hyrox Bangkok, Thailand, bulan lalu. Gara-garanya, ia mengaku sempat pergi ke toilet sebelum perlombaan dimulai. Zarif jadi agak telat, dan akhirnya malah didiskualifikasi. Hal itu ia bagikan di media sosial Threads-nya. Ia kesal sebab pada ajang Hyrox Beijing, atlet Joanna Wietrzyk justru diperbolehkan menyelesaikan perlombaan meski cepirit dan kotorannya ke mana-mana. "Saya kena DQ cuma karena pergi ke toilet sebelum perlombaan. Kok bisa orang ikut lomba saat kena diare dan tidak didiskualifikasi," tulisnya. Zarif juga membagikan foto aksinya di Hyrox Bangkok dan catatan waktunya. Ada keterangan tertulis DQ atau diskualifikasi di catatan waktunya. Saat disinggung soal alasan kenapa bisa didiskualifikasi, Zarif menjelaskan dirinya memang telat ikut start. Namun, ia tetap mempertanyakan kenapa ada atlet yang mencret dan tetap diperbolehkan ikut lomba. Unggahan itu ia buat menanggapi insiden viral di Hyrox Beijing akhir pekan lalu. Pemegang rekor dunia, Joanna Wietrzyk, kedapatan berlomba meski cepirit di tengah sesi. Atlet asal Australia itu mengalami diare hingga mencret di celana, namun tetap melanjutkan race. Kotorannya mengalir di kakinya, dan fotonya viral di media sosial. Wietrzyk akhirnya bisa menyelesaikan perlombaan, bahkan memenangkannya. Ia kemudian mengunggah foto sedang di rumah sakit, dan menyindir mereka yang mengkritiknya. Hyrox kemudian disorot karena dianggap mengabaikan protokol kesehatan dan standar perlombaannya. Sempat pasang badan, pendiri olahraga indoor itu, Moritz Furste, akhirnya meminta maaf dan akan mengubah aturan Hyrox gara-gara insiden tersebut. (yna/pur)
+
+Sesudah:
+Di tengah viral insiden cepirit pada ajang Hyrox ada atlet Malaysia mengaku sebaliknya Ia didiskualifikasi karena pergi ke toilet Melansir The Rakyat post adalah Zarif Zakaria yang kena apes Atlet Malaysia itu didiskualifikasi dari Hyrox Bangkok Thailand bulan lalu Garagaranya ia mengaku sempat pergi ke toilet sebelum perlombaan dimulai Zarif jadi agak telat dan akhirnya malah didiskualifikasi Hal itu ia bagikan di media sosial Threadsnya Ia kesal sebab pada ajang Hyrox Beijing atlet Joanna Wietrzyk justru diperbolehkan menyelesaikan perlombaan meski cepirit dan kotorannya ke manamana Saya kena DQ cuma karena pergi ke toilet sebelum perlombaan Kok bisa orang ikut lomba saat kena diare dan tidak didiskualifikasi tulisnya Zarif juga membagikan foto aksinya di Hyrox Bangkok dan catatan waktunya Ada keterangan tertulis DQ atau diskualifikasi di catatan waktunya Saat disinggung soal alasan kenapa bisa didiskualifikasi Zarif menjelaskan dirinya memang telat ikut start Namun ia tetap mempertanyakan kenapa ada atlet yang mencret dan tetap diperbolehkan ikut lomba Unggahan itu ia buat menanggapi insiden viral di Hyrox Beijing akhir pekan lalu Pemegang rekor dunia Joanna Wietrzyk kedapatan berlomba meski cepirit di tengah sesi Atlet asal Australia itu mengalami diare hingga mencret di celana namun tetap melanjutkan race Kotorannya mengalir di kakinya dan fotonya viral di media sosial Wietrzyk akhirnya bisa menyelesaikan perlombaan bahkan memenangkannya Ia kemudian mengunggah foto sedang di rumah sakit dan menyindir mereka yang mengkritiknya Hyrox kemudian disorot karena dianggap mengabaikan protokol kesehatan dan standar perlombaannya Sempat pasang badan pendiri olahraga indoor itu Moritz Furste akhirnya meminta maaf dan akan mengubah aturan Hyrox garagara insiden tersebut ynapur
+----------------------------------------------------------------------------------------------------
+DATA 4
+Sebelum:
+Dejan Fedinansyah/Felisha Alberta Nathaniel Pasaribu memberikan dukungan kepada dua pasangan ganda campuran Indonesia yang tampil di Asian Games 2026. Keduanya tak iri meski kesempatan tampil di multievent Asia belum datang kepada mereka. PBSI mengirimkan dua pasangan ganda campuran ke Asian Games Aichi-Nagoya 2026 yang berlangsung pada 19 September hingga 4 Oktober. Mereka adalah Amri Syahnawi/Nita Violina Marwah dan Nikolaus Joaquin/Siti Fadia Silva Ramadhanti. Amri/Nita merupakan pasangan ganda campuran murni. Sementara Joaquin/Fadia merupakan "pasangan cabutan" dari sektor ganda putra dan ganda putri. Tapi Dejan tetap memberikan dukungan kepada keduanya. "Ada harapan lah. Ini juga buat Indonesia kok. Kalau mix double bagus, mau Amri/Nita, Joaquin/Fadia juga kan untuk Indonesia juga. Jadi kita doakan lah buat mereka," kata Dejan saat ditemui di Pelatnas PBSI, Cipayung, Rabu (16/9/2026). Dejan sejatinya juga memiliki keinginan untuk tampil di Asian Games. Apalagi, eks tandemnya, Fadia, kembali bermain di sektor ganda campuran. Namun, Dejan tak mempermasalahkan komposisi pasangan yang dipilih untuk Asian Games 2026. Ia menilai keputusan tersebut merupakan bagian dari strategi dan tetap ditujukan untuk kepentingan Indonesia. "Enggak lah. Ini kan strategi, akhirnya buat Indonesia juga. Belum rezekinya saja," lanjutnya soal komposisi pemain. Dejan tetap menyimpan ambisi untuk tampil di ajang multievent tersebut. Namun, untuk saat ini, ia memilih menatap target yang lebih besar, yakni Olimpiade. "Pengen lah (main di Asian Games). Semua pasti ingin main Asian Games, cuma kan belum waktunya. Olimpiade? Amin. yang penting Itu saja, dan juara Olimpiade. Amin," pungkas Dejan. (mcy/krs)
+
+Sesudah:
+Dejan FedinansyahFelisha Alberta Nathaniel Pasaribu memberikan dukungan kepada dua pasangan ganda campuran Indonesia yang tampil di Asian Games 2026 Keduanya tak iri meski kesempatan tampil di multievent Asia belum datang kepada mereka PBSI mengirimkan dua pasangan ganda campuran ke Asian Games AichiNagoya 2026 yang berlangsung pada 19 September hingga 4 Oktober Mereka adalah Amri SyahnawiNita Violina Marwah dan Nikolaus JoaquinSiti Fadia Silva Ramadhanti AmriNita merupakan pasangan ganda campuran murni Sementara JoaquinFadia merupakan pasangan cabutan dari sektor ganda putra dan ganda putri Tapi Dejan tetap memberikan dukungan kepada keduanya Ada harapan lah Ini juga buat Indonesia kok Kalau mix double bagus mau AmriNita JoaquinFadia juga kan untuk Indonesia juga Jadi kita doakan lah buat mereka kata Dejan saat ditemui di Pelatnas PBSI Cipayung Rabu 1692026 Dejan sejatinya juga memiliki keinginan untuk tampil di Asian Games Apalagi eks tandemnya Fadia kembali bermain di sektor ganda campuran Namun Dejan tak mempermasalahkan komposisi pasangan yang dipilih untuk Asian Games 2026 Ia menilai keputusan tersebut merupakan bagian dari strategi dan tetap ditujukan untuk kepentingan Indonesia Enggak lah Ini kan strategi akhirnya buat Indonesia juga Belum rezekinya saja lanjutnya soal komposisi pemain Dejan tetap menyimpan ambisi untuk tampil di ajang multievent tersebut Namun untuk saat ini ia memilih menatap target yang lebih besar yakni Olimpiade Pengen lah main di Asian Games Semua pasti ingin main Asian Games cuma kan belum waktunya Olimpiade Amin yang penting Itu saja dan juara Olimpiade Amin pungkas Dejan mcykrs
+----------------------------------------------------------------------------------------------------
+DATA 5
+Sebelum:
+Bagas Maulana/Apriyani Rahayu tak minder meski harus kembali berjuang dari nol. Mereka menjadi pasangan baru di sektor ganda campuran dan siap menjalankan peran sebagai pelapis Amri Syahnawi dkk. Seperti diketahui, Pelatih Kepala Ganda Campuran Nova Widianto mengubah komposisi sebagian pemain di sektor ganda campuran. Bagas/Apri pun mulai menjalankan status sebagai tandem sejak September ini. "Pelatih pasti menginginkan ada pelapis untuk mix double dan kami ingin juga. Sekarang kami juga sudah pure main mix, tak bisa (pindah) ke ganda. Jadi kami mau memaksimalkan itu dan tak ingin menyia-nyiakan pelatih karena sudah dipercaya. Kami ingin membuktikan," kata Bagas di Pelatnas PBSI, Cipayung, Rabu (16/9/2026). Baik Bagas maupun Apri sejatinya bukan atlet baru. Keduanya sudah berpengalaman dan mengoleksi gelar di turnamen besar dari sektor masing-masing, yakni ganda putra dan ganda putri. Bagas pernah menjuarai All England 2022 dan Korea Open 2024. Sementara Apri merupakan peraih medali emas Olimpiade 2020 di Tokyo. Dengan status sebagai pemain yang sudah senior, matang, dan kenyang pengalaman, bukan tidak mungkin ada rasa minder ketika harus kembali membangun semuanya dari awal. Namun, hal itu tidak dirasakan Bagas/Apri. Pasangan yang sama-sama berusia 28 tahun itu justru melihat tugas tersebut sebagai tantangan baru yang harus dihadapi dengan jiwa petarung. "Sebenarnya dilihat dari situ sudah matang. Cuma kami harus berpikir kembali lagi jangan berpikir seperti itu. Awal dari ganda putra, ke mix juga, sama harus dari nol lagi. Ini sebenarnya enggak apa-apa sih," ujar Bagas. "Kalau jiwa petarung sih enggak ada begitu. Anggap saja ini tantangan baru. Gas lagi. Lagian masih muda kan," ucapnya mantap. Apri sepakat dengan Bagas. Baginya, keputusan pindah ke ganda campuran merupakan pembuktian bahwa dirinya masih mampu bersaing dan masih banyak hal yang bisa dieksplorasi. "Ini perubahan baru, tantangan buat saya untuk lebih, kenapa tak diambil karena saya merasa masih bisa. Dari diri sendiri merasa lebih mampu. Masih banyak yang bisa dieksplore, dan saya masih mau belajar lagi. Bagas juga sama ya sudah kita hajar saja," kata Apri. "Challenge sih. Tantangan baru juga buat kami. Kami tak ingin melihat, kami sudah lama nih di sini, sudah senior. Masih muda lah kami," tegasnya. Tak hanya itu, Bagas/Apri juga siap bekerja lebih keras. Sebagai pasangan baru, mereka belum memiliki peringkat di sektor ganda campuran. "Kalau saya dan Bagas memang harus ekstra karena poin kami tak ada. Jadi harus ekstra banget. Harus benar-benar hasilnya yang baik saja. Yang bagus banget gitu. Bukan bagus saja. Karena modal buat poin kami tahun depan," kata Apri.
+
+Sesudah:
+Bagas MaulanaApriyani Rahayu tak minder meski harus kembali berjuang dari nol Mereka menjadi pasangan baru di sektor ganda campuran dan siap menjalankan peran sebagai pelapis Amri Syahnawi dkk Seperti diketahui Pelatih Kepala Ganda Campuran Nova Widianto mengubah komposisi sebagian pemain di sektor ganda campuran BagasApri pun mulai menjalankan status sebagai tandem sejak September ini Pelatih pasti menginginkan ada pelapis untuk mix double dan kami ingin juga Sekarang kami juga sudah pure main mix tak bisa pindah ke ganda Jadi kami mau memaksimalkan itu dan tak ingin menyianyiakan pelatih karena sudah dipercaya Kami ingin membuktikan kata Bagas di Pelatnas PBSI Cipayung Rabu 1692026 Baik Bagas maupun Apri sejatinya bukan atlet baru Keduanya sudah berpengalaman dan mengoleksi gelar di turnamen besar dari sektor masingmasing yakni ganda putra dan ganda putri Bagas pernah menjuarai All England 2022 dan Korea Open 2024 Sementara Apri merupakan peraih medali emas Olimpiade 2020 di Tokyo Dengan status sebagai pemain yang sudah senior matang dan kenyang pengalaman bukan tidak mungkin ada rasa minder ketika harus kembali membangun semuanya dari awal Namun hal itu tidak dirasakan BagasApri Pasangan yang samasama berusia 28 tahun itu justru melihat tugas tersebut sebagai tantangan baru yang harus dihadapi dengan jiwa petarung Sebenarnya dilihat dari situ sudah matang Cuma kami harus berpikir kembali lagi jangan berpikir seperti itu Awal dari ganda putra ke mix juga sama harus dari nol lagi Ini sebenarnya enggak apaapa sih ujar Bagas Kalau jiwa petarung sih enggak ada begitu Anggap saja ini tantangan baru Gas lagi Lagian masih muda kan ucapnya mantap Apri sepakat dengan Bagas Baginya keputusan pindah ke ganda campuran merupakan pembuktian bahwa dirinya masih mampu bersaing dan masih banyak hal yang bisa dieksplorasi Ini perubahan baru tantangan buat saya untuk lebih kenapa tak diambil karena saya merasa masih bisa Dari diri sendiri merasa lebih mampu Masih banyak yang bisa dieksplore dan saya masih mau belajar lagi Bagas juga sama ya sudah kita hajar saja kata Apri Challenge sih Tantangan baru juga buat kami Kami tak ingin melihat kami sudah lama nih di sini sudah senior Masih muda lah kami tegasnya Tak hanya itu BagasApri juga siap bekerja lebih keras Sebagai pasangan baru mereka belum memiliki peringkat di sektor ganda campuran Kalau saya dan Bagas memang harus ekstra karena poin kami tak ada Jadi harus ekstra banget Harus benarbenar hasilnya yang baik saja Yang bagus banget gitu Bukan bagus saja Karena modal buat poin kami tahun depan kata Apri
+----------------------------------------------------------------------------------------------------
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="menghitung-jumlah-kata-setelah-preprocessing">
+<h2>9. Menghitung Jumlah Kata Setelah Preprocessing<a class="headerlink" href="#menghitung-jumlah-kata-setelah-preprocessing" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s2">"jumlah_kata_clean"</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">"berita_clean"</span><span class="p">]</span>
+    <span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">"Total kata sebelum preprocessing:"</span><span class="p">,</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">"jumlah_kata_asli"</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">"Total kata setelah preprocessing:"</span><span class="p">,</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">"jumlah_kata_clean"</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="p">)</span>
+
+<span class="n">display</span><span class="p">(</span>
+    <span class="n">df</span><span class="p">[</span>
+        <span class="p">[</span>
+            <span class="s2">"id"</span><span class="p">,</span>
+            <span class="s2">"jumlah_kata_asli"</span><span class="p">,</span>
+            <span class="s2">"jumlah_kata_clean"</span><span class="p">,</span>
+            <span class="s2">"label"</span>
+        <span class="p">]</span>
+    <span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Total kata sebelum preprocessing: 67076
+Total kata setelah preprocessing: 66885
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>jumlah_kata_asli</th>
+      <th>jumlah_kata_clean</th>
+      <th>label</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>320</td>
+      <td>320</td>
+      <td>sport</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>323</td>
+      <td>323</td>
+      <td>sport</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>256</td>
+      <td>256</td>
+      <td>sport</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>238</td>
+      <td>238</td>
+      <td>sport</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>402</td>
+      <td>402</td>
+      <td>sport</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="membagi-data-training-dan-testing">
+<h2>10. Membagi Data Training dan Testing<a class="headerlink" href="#membagi-data-training-dan-testing" title="Link to this heading">#</a></h2>
+<p>Dataset dibagi menjadi:</p>
+<ul class="simple">
+<li><p>160 data training</p></li>
+<li><p>40 data testing</p></li>
+</ul>
+<p>Pembagian dilakukan secara stratified agar distribusi kelas tetap seimbang.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_train_text</span><span class="p">,</span> <span class="n">X_test_text</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">"berita_clean"</span><span class="p">],</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">"label_num"</span><span class="p">],</span>
+    <span class="n">test_size</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span>
+    <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span>
+    <span class="n">stratify</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">"label_num"</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Jumlah training :"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_train_text</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Jumlah testing  :"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_test_text</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Distribusi TRAINING:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="n">y_train</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Distribusi TESTING:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="n">y_test</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah training : 160
+Jumlah testing  : 40
+
+Distribusi TRAINING:
+label_num
+0    80
+1    80
+Name: count, dtype: int64
+
+Distribusi TESTING:
+label_num
+0    20
+1    20
+Name: count, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="tokenisasi">
+<h2>11. Tokenisasi<a class="headerlink" href="#tokenisasi" title="Link to this heading">#</a></h2>
+<p>Pada tahap ini setiap berita diubah menjadi kumpulan token atau kata.</p>
+<p>Tokenisasi dilakukan menggunakan metode <code class="docutils literal notranslate"><span class="pre">split()</span></code> setelah proses
+penghapusan tanda baca.</p>
+<p>Contoh:</p>
+<p>“saya suka makan nasi”</p>
+<p>menjadi:</p>
+<p>[“saya”, “suka”, “makan”, “nasi”]</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_sentences</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">text</span> <span class="ow">in</span> <span class="n">X_train_text</span>
+<span class="p">]</span>
+
+<span class="n">test_sentences</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">text</span> <span class="ow">in</span> <span class="n">X_test_text</span>
+<span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Contoh tokenisasi TRAINING:"</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_sentences</span><span class="p">))):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">."</span><span class="p">,</span> <span class="n">train_sentences</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Contoh tokenisasi TESTING:"</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_sentences</span><span class="p">))):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">."</span><span class="p">,</span> <span class="n">test_sentences</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Contoh tokenisasi TRAINING:
+1. ['Mantan', 'Menteri', 'Keuangan', 'Purbaya', 'Yudhi', 'Sadewa', 'menegaskan', 'seluruh', 'urusan', 'yang', 'berkaitan', 'dengan', 'kesepakatan', 'peralihan', 'handover', 'serta', 'penanganan', 'utang', 'proyek', 'Kereta', 'Cepat', 'JakartaBandung', 'Whoosh', 'kini', 'sepenuhnya', 'diserahkan', 'kepada', 'Bendahara', 'Negara', 'yang', 'baru', 'Suahasil', 'Nazara', 'Purbaya', 'menyatakan', 'dengan', 'pencopotannya', 'seluruh', 'rangkaian', 'rencana', 'yang', 'sempat', 'ia', 'rancang', 'terkait', 'peralihan', 'utang', 'Whoosh', 'ke', 'Kementerian', 'Keuangan', 'otomatis', 'menjadi', 'tanggung', 'jawab', 'Suahasil', 'selaku', 'Menkeu', 'selanjutnya', 'Nanti', 'tergantung', 'menteri', 'yang', 'baru', 'lah', 'ujar', 'Purbaya', 'saat', 'ditemui', 'awak', 'media', 'usai', 'acara', 'serah', 'terima', 'jabatan', 'Menkeu', 'kepada', 'Suahasil', 'di', 'Kantor', 'Kemenkeu', 'Jakarta', 'Pusat', 'Selasa', '1592026', 'kemarin', 'Purbaya', 'pun', 'mengaku', 'lega', 'setelah', 'tak', 'lagi', 'menjabat', 'sebagai', 'Menteri', 'Keuangan', 'Terlebih', 'beban', 'utang', 'yang', 'harus', 'ia', 'pikirkan', 'begitu', 'besar', 'Cicilan', 'utang', 'Whoosh', 'sendiri', 'sekitar', 'Rp', '1', 'triliun', 'per', 'tahun', 'untuk', 'tenor', 'hingga', '80', 'tahun', 'setelah', 'melalui', 'proses', 'restrukturisasi', 'dan', 'peralihan', 'pembayaran', 'dari', 'Danantara', 'ke', 'Kemenkeu', 'Kan', 'gue', 'bukan', 'Menteri', 'Keuangannya', 'Alhamdulillah', 'selamat', 'gue', 'ujarnya', 'Ketika', 'ditanya', 'apakah', 'dengan', 'melepaskan', 'beban', 'pikiran', 'itu', 'membuat', 'dirinya', 'kini', 'bisa', 'tidur', 'nyenyak', 'Purbaya', 'justru', 'bercanda', 'soal', 'usianya', 'Nggak', 'Umur', 'saya', 'nggak', 'sampe', '80', 'tahun', '10', 'tahun', 'lagi', 'udah', 'syukur', 'kalau', 'bisa', 'Jadi', 'kita', 'doa', 'aja', 'doa', 'terus', 'Makasih', 'ya', 'ujarnya', 'Untuk', 'diketahui', 'saat', 'masih', 'menjabat', 'sebagai', 'Menkeu', 'Purbaya', 'menyampaikan', 'bahwa', 'pemerintah', 'telah', 'merestrukturisasi', 'utang', 'proyek', 'kereta', 'cepat', 'JakartaBandung', 'atau', 'Whoosh', 'dengan', 'tenor', 'pembayaran', 'hingga', '80', 'tahun', 'Skema', 'tersebut', 'membuat', 'cicilan', 'utang', 'diperkirakan', 'sekitar', 'Rp', '1', 'triliun', 'per', 'tahun', 'Kala', 'itu', 'pun', 'dirinya', 'juga', 'sempat', 'bergurau', 'bisa', 'lebih', 'dulu', 'meninggal', 'sebelum', 'kewajiban', 'pembayaran', 'cicilan', 'itu', 'rampung', 'diselesaikan', 'Berarti', 'kan', 'total', 'utang', 'besar', 'tapi', 'distretch', '80', 'tahun', 'sudah', 'direstrukturisasi', 'Cicilannya', 'Rp', '1', 'triliun', 'atau', 'sedikit', 'di', 'bawah', 'Rp', '1', 'triliun', 'dari', 'tahun', 'ke', 'tahun', 'Ada', 'yang', 'tinggi', 'ada', 'yang', 'rendah', 'tapi', 'kalau', 'kita', 'lihat', 'oh', 'masih', 'bisa', 'lah', 'Tenor', 'cicilan', '80', 'tahun', 'saya', 'dengar', 'kemarin', 'makanya', 'hebat', 'juga', 'tuh', 'Iya', 'kita', 'sudah', 'mati', 'santai', 'saja', 'ujar', 'Purbaya', 'disusul', 'tawa', 'di', 'kawasan', 'Sunter', 'Jakarta', 'Utara', 'Selasa', '89', 'Purbaya', 'menjelaskan', 'pengelolaan', 'utang', 'Whoosh', 'akan', 'dialihkan', 'dari', 'Badan', 'Pengelola', 'Investasi', 'BPI', 'Daya', 'Anagata', 'Nusantara', 'Danantara', 'ke', 'Kementerian', 'Keuangan', 'Kemenkeu', 'pada', '15', 'September', 'Nantinya', 'utang', 'Whoosh', 'akan', 'dibayarkan', 'oleh', 'Special', 'Mission', 'Vehicle', 'SMV', 'atau', 'Indonesia', 'Investment', 'Authority', 'INA', 'Ada', 'kemungkinan', 'mungkin', 'kita', 'pakai', 'SMV', 'atau', 'INA', 'jelasnya', 'Menurutnya', 'kewajiban', 'utang', 'ini', 'tidak', 'begitu', 'besar', 'sehingga', 'bisa', 'ditangani', 'oleh', 'satu', 'entitas', 'SMV', 'di', 'bawah', 'Kementerian', 'Keuangan', 'Ia', 'juga', 'memastikan', 'kebutuhan', 'anggaran', 'untuk', 'membayar', 'kewajiban', 'tersebut', 'tersedia', 'Jadi', 'gini', 'saya', 'cuma', 'lihat', 'bebannya', 'setiap', 'tahun', 'seperti', 'apa', 'sih', 'saya', 'lihat', 'setiap', 'tahun', 'saya', 'lihat', 'oh', 'kalau', 'segini', 'saja', 'cukup', 'lah', 'ditangani', 'oleh', 'satu', 'SMV', 'Satu', 'perusahaan', 'SMV', 'di', 'bawah', 'Departemen', 'Keuangan', 'atau', 'dua', 'tapi', 'uangnya', 'cukup', 'lebih', 'pungkasnya', 'Simak', 'juga', 'Video', 'Nasib', 'Pengalihan', 'Utang', 'Whoosh', 'ke', 'Kemenkeu', 'Usai', 'Suahasil', 'Gantikan', 'Purbaya', 'acdacd']
+2. ['Rider', 'KTM', 'Pedro', 'Acosta', 'yakin', 'betul', 'Marc', 'Marquez', 'akan', 'merebut', 'titel', 'juara', 'dunia', 'MotoGP', '2026', 'Marquez', 'punya', 'beberapa', 'keunggulan', 'dibandingkan', 'rivalrivalnya', 'Marquez', 'kembali', 'dalam', 'persaingan', 'titel', 'juara', 'melawan', 'duo', 'Aprilia', 'Marco', 'Bezzecchi', 'dan', 'Jorge', 'Martin', 'Sempat', 'tercecer', '90', 'poin', 'pebalap', 'Ducati', 'itu', 'kini', 'hanya', 'tertinggal', '19', 'poin', 'dari', 'Martin', 'dan', 'mengungguli', 'Bezzecchi', 'lima', 'poin', 'di', 'klasemen', 'Kejuaraan', 'kini', 'tinggal', 'sembilan', 'seri', 'yang', 'dimulai', 'dari', 'MotoGP', 'San', 'Marino', '2026', 'pada', 'akhir', 'pekan', 'ini', 'Marquez', 'diprediksi', 'akan', 'tangguh', 'di', 'Misano', 'mengingat', 'dia', 'adalah', 'pemenang', 'terbanyak', 'termasuk', 'dua', 'edisi', 'terakhir', 'Acosta', 'memprediksi', 'Marc', 'Marquez', 'akan', 'merengkuh', 'titel', 'juara', 'dunia', 'kesepuluh', 'Pasalnya', 'Marquez', 'tangguh', 'di', 'sebagian', 'besar', 'seri', 'yang', 'tersisa', 'dan', 'unggul', 'pengalaman', 'daripada', 'duo', 'Aprilia', 'Masalahnya', 'adalah', 'Marc', 'telah', 'memperoleh', 'banyak', 'sekali', 'angka', 'sehingga', 'dia', 'sudah', 'membangun', 'banyak', 'momentum', 'di', 'musim', 'ini', 'kata', 'pebalap', 'berusia', '22', 'tahun', 'itu', 'dilansir', 'Motorsport', 'Ada', 'sirkuitsirkuit', 'di', 'depan', 'yang', 'sangat', 'cocok', 'dengan', 'dia', 'Terlepas', 'dari', 'Indonesia', 'kurasa', 'tidak', 'ada', 'satu', 'sirkuit', 'pun', 'yang', 'tidak', 'dia', 'menangi', 'Dari', 'seluruh', 'balapan', 'yang', 'tersisa', 'hanya', 'itu', 'dan', 'Portimao', 'yang', 'bisa', 'berjalan', 'buruk', 'buat', 'dia', 'kurasa', 'dia', 'belum', 'pernah', 'finis', 'di', 'sana', 'Dan', 'bahkan', 'seandainya', 'mereka', 'tidak', 'menghapus', 'Qatar', 'dari', 'kalender', 'dia', 'telah', 'membangun', 'banyak', 'sekali', 'momentum', 'dan', 'di', 'hari', 'yang', 'buruk', 'dia', 'masih', 'mendapatkan', 'angka', 'di', 'manapun', 'sambung', 'El', 'Tiburron', 'Di', 'saat', 'Marc', 'harus', 'mendesak', 'dia', 'akan', 'melakukannya', 'seperti', 'yang', 'dia', 'lakukan', 'di', 'tikungan', 'pertama', 'di', 'Aragon', 'Jadi', 'kurasa', 'ini', 'akan', 'jadi', 'persaingan', 'ketat', 'sampai', 'balapan', 'terakhir', 'tapi', 'Marc', 'itu', 'kan', 'pebalap', 'yang', 'punya', 'pengalaman', 'terbanyak', 'Dia', 'seharusnya', 'memenangi', 'kejuaraa', 'dunia', 'ini', 'Acosta', 'menyimpulkan', 'rinyna']
+3. ['Momen', 'pergantian', 'tahun', 'jadi', 'kesempatan', 'emas', 'buat', 'selfreward', 'setelah', 'setahun', 'penuh', 'kerja', 'keras', 'Entah', 'itu', 'solo', 'trip', 'yang', 'sudah', 'lama', 'tertahan', 'di', 'wishlist', 'quality', 'time', 'berdua', 'dengan', 'pasangan', 'atau', 'liburan', 'seru', 'bareng', 'keluarga', 'Tak', 'heran', 'kalau', 'liburan', 'akhir', 'tahun', 'jadi', 'bagian', 'dari', 'lifestyle', 'banyak', 'orang', 'Berdasarkan', 'data', 'Badan', 'Pusat', 'Statistik', 'BPS', 'sepanjang', '2025', 'terdapat', '120', 'miliar', 'perjalanan', 'wisatawan', 'nusantara', 'naik', '1755', 'bahkan', 'Desember', '2025', 'saja', 'mencatat', '10598', 'juta', 'perjalanan', 'Masalahnya', 'liburan', 'yang', 'udah', 'lama', 'diidamidamkan', 'sering', 'kali', 'cuma', 'berakhir', 'jadi', 'wacana', 'atau', 'malah', 'bikin', 'kantong', 'bolong', 'kalau', 'nggak', 'dipersiapkan', 'matang', 'Nah', 'biar', 'rencana', 'liburan', 'akhir', 'tahun', 'kamu', 'beneran', 'terwujud', 'blu', 'by', 'BCA', 'Digital', 'bagikan', 'lima', 'langkah', 'cerdas', 'yang', 'bisa', 'dicicil', 'dari', 'sekarang', '1', 'Fixin', 'Destinasinya', 'Kunci', 'Tanggalnya', 'Setelah', 'tahu', 'mau', 'ke', 'mana', 'tentukan', 'juga', 'kapan', 'dan', 'berapa', 'lama', 'perjalanan', 'Menetapkan', 'tanggal', 'perjalanan', 'sejak', 'awal', 'tidak', 'hanya', 'membantu', 'menyusun', 'itinerary', 'dengan', 'leluasa', 'tapi', 'juga', 'memberi', 'waktu', 'lebih', 'panjang', 'untuk', 'menyiapkan', 'dana', 'liburan', 'Biar', 'tabungan', 'liburan', 'nggak', 'terasa', 'berat', 'di', 'akhir', 'kamu', 'bisa', 'mulai', 'menabung', 'jauhjauh', 'hari', 'menggunakan', 'bluSaving', 'Setelah', 'destinasi', 'dan', 'tanggal', 'terkunci', 'langsung', 'sisihkan', 'dana', 'liburanmu', 'di', 'bluSaving', 'secara', 'rutin', 'agar', 'tak', 'terasa', 'membebani', 'cash', 'flow', 'bulanan', '2', 'Budgeting', 'Cerdas', 'Liburan', 'Bebas', 'Cemas', 'Liburan', 'yang', 'menyenangkan', 'bukan', 'berarti', 'harus', 'mengeluarkan', 'uang', 'sebanyakbanyaknya', 'Dengan', 'menentukan', 'anggaran', 'sejak', 'awal', 'dana', 'bisa', 'dibagi', 'dan', 'disesuaikan', 'dengan', 'kebutuhan', 'mulai', 'dari', 'tiket', 'akomodasi', 'makan', 'aktivitas', 'hingga', 'halhal', 'yang', 'ingin', 'dibeli', 'selama', 'perjalanan', 'Khusus', 'buat', 'yang', 'berencana', 'ke', 'luar', 'negeri', 'budgeting', 'bisa', 'makin', 'presisi', 'dengan', 'fitur', 'bluValas', 'Lewat', 'fitur', 'ini', 'kamu', 'bisa', 'mulai', 'nabung', 'mata', 'uang', 'asing', 'dari', 'jauhjauh', 'hari', 'dan', 'saat', 'ini', 'bluValas', 'sudah', 'mendukung', 'delapan', 'mata', 'uang', 'yaitu', 'USD', 'SGD', 'JPY', 'GBP', 'AUD', 'EUR', 'HKD', 'dan', 'CNY', 'Kalau', 'negara', 'tujuan', 'menggunakan', 'salah', 'satu', 'dari', 'delapan', 'mata', 'uang', 'tersebut', 'kamu', 'bisa', 'langsung', 'menabung', 'di', 'mata', 'uang', 'itu', 'Tapi', 'jika', 'tidak', 'kamu', 'bisa', 'menabung', 'dalam', 'bentuk', 'USD', 'Dolar', 'AS', 'supaya', 'nilai', 'tukar', 'mata', 'uang', 'liburan', 'nantinya', 'lebih', 'stabil', '3', 'Susun', 'Itinerary', 'Tapi', 'Tetap', 'Spontan', 'Itinerary', 'membantu', 'membuat', 'perjalanan', 'lebih', 'terarah', 'terutama', 'jika', 'ada', 'banyak', 'tempat', 'yang', 'ingin', 'dikunjungi', 'Susun', 'terlebih', 'dahulu', 'aktivitas', 'utama', 'termasuk', 'tempat', 'yang', 'memang', 'sudah', 'lama', 'masuk', 'dalam', 'wishlist', 'Tapi', 'nggak', 'semua', 'waktu', 'harus', 'dipenuhi', 'jadwal', 'Sisakan', 'ruang', 'untuk', 'menemukan', 'tempat', 'baru', 'menghabiskan', 'waktu', 'lebih', 'lama', 'di', 'satu', 'destinasi', 'atau', 'sekadar', 'menikmati', 'suasana', 'tanpa', 'terburuburu', 'mengejar', 'agenda', 'berikutnya', '4', 'Siapkan', 'Senjata', 'Pembayaran', 'AntiRibet', 'Selain', 'tiket', 'dan', 'itinerary', 'metode', 'pembayaran', 'juga', 'perlu', 'dimasukkan', 'dalam', 'daftar', 'persiapan', 'Mulai', 'dari', 'membayar', 'makanan', 'membeli', 'kopi', 'hingga', 'berbelanja', 'oleholeh', 'berbagai', 'transaksi', 'kecil', 'bisa', 'menjadi', 'bagian', 'penting', 'dari', 'pengalaman', 'selama', 'perjalanan', 'Terlebih', 'jika', 'destinasi', 'yang', 'dipilih', 'adalah', 'luar', 'negeri', 'menyiapkan', 'metode', 'pembayaran', 'yang', 'praktis', 'sejak', 'awal', 'dapat', 'membuat', 'transaksi', 'terasa', 'lebih', 'nyaman', 'Dengan', 'begitu', 'perhatian', 'tetap', 'bisa', 'tertuju', 'pada', 'pengalaman', 'liburan', 'bukan', 'pada', 'urusan', 'pembayaran', '5', 'Hunter', 'Promo', 'Benefit', 'Biar', 'Makin', 'Worth', 'It', 'Menjadi', 'smart', 'traveler', 'bukan', 'cuma', 'soal', 'mendapatkan', 'harga', 'paling', 'murah', 'tetapi', 'juga', 'tahu', 'bagaimana', 'memaksimalkan', 'berbagai', 'keuntungan', 'dari', 'perjalanan', 'Mulai', 'dari', 'promo', 'yang', 'sesuai', 'kebutuhan', 'hingga', 'benefit', 'dari', 'metode', 'pembayaran', 'yang', 'digunakan', 'semuanya', 'bisa', 'membantu', 'membuat', 'pengeluaran', 'terasa', 'lebih', 'bernilai', 'Salah', 'satunya', 'bisa', 'dimulai', 'dengan', 'memilih', 'metode', 'pembayaran', 'yang', 'memberikan', 'lebih', 'dari', 'sekadar', 'kemudahan', 'bertransaksi', 'seperti', 'Garuda', 'x', 'bluDebit', 'Card', 'dari', 'blu', 'by', 'BCA', 'Digital', 'Lebih', 'dari', 'sekadar', 'kartu', 'debit', 'Garuda', 'x', 'bluDebit', 'Card', 'menjadi', 'travel', 'buddy', 'yang', 'mengerti', 'kebutuhan', 'saat', 'jalanjalan', 'apalagi', 'saat', 'ini', 'bebas', 'biaya', 'pengajuan', 'Tiap', 'transaksi', 'memakai', 'Garuda', 'x', 'bluDebit', 'Card', 'juga', 'bisa', 'membantu', 'mengumpulkan', 'GarudaMiles', 'plus', 'akses', 'ke', 'berbagai', 'promo', 'tiket', 'eksklusif', 'Fitur', 'bluValas', 'pun', 'sudah', 'terhubung', 'ke', 'seluruh', 'jenis', 'bluDebit', 'Card', 'sehingga', 'tabungan', 'valas', 'yang', 'sudah', 'dikumpulkan', 'bisa', 'langsung', 'dipakai', 'bertransaksi', 'di', 'luar', 'negeri', 'tanpa', 'ribet', 'Perjalanan', 'yang', 'menyenangkan', 'pada', 'akhirnya', 'adalah', 'tentang', 'menemukan', 'cara', 'untuk', 'menikmati', 'waktu', 'yang', 'kita', 'punya', 'Maka', 'dari', 'itu', 'kami', 'ingin', 'blu', 'selalu', 'menemani', 'keseharian', 'nasabah', 'termasuk', 'menjadi', 'partner', 'andalan', 'saat', 'mereka', 'mewujudkan', 'wishlist', 'perjalanan', 'akhir', 'tahunnya', 'dengan', 'mudah', 'aman', 'dan', 'penuh', 'keuntungan', 'Untuk', 'memaksimalkan', 'momen', 'ini', 'kami', 'menghadirkan', 'blu', 'Travel', 'Week', 'yang', 'akan', 'berlangsung', 'pada', '21', 'hingga', '30', 'September', 'Nasabah', 'bisa', 'memanfaatkan', 'periode', 'ini', 'untuk', 'mendapatkan', 'promo', 'dan', 'cashback', 'yang', 'pastinya', 'sangat', 'menarik', 'Jadi', 'buat', 'yang', 'belum', 'punya', 'Garuda', 'x', 'bluDebit', 'Card', 'yuk', 'segera', 'ajukan', 'supaya', 'bisa', 'dapetin', 'beragam', 'manfaatnya', 'dan', 'siap', 'nikmati', 'liburan', 'akhir', 'tahun', 'secara', 'maksimal', 'ujar', 'Head', 'of', 'Brand', 'Communications', 'BCA', 'Digital', 'Duardi', 'Prihandiko', 'dalam', 'keterangan', 'tertulis', 'Selasa', '1592026', 'Karena', 'setelah', 'semua', 'target', 'tercapai', 'deadline', 'terlewati', 'dan', 'rutinitas', 'panjang', 'selama', 'setahun', 'selesai', 'kini', 'saatnya', 'menikmati', 'hasilnya', 'Tinggalkan', 'sejenak', 'layar', 'kerja', 'buka', 'kembali', 'wishlist', 'lalu', 'tentukan', 'langkah', 'berikutnya', 'anlega']
+
+Contoh tokenisasi TESTING:
+1. ['Presiden', 'Prabowo', 'Subianto', 'meresmikan', 'LRT', 'Jakarta', 'hari', 'ini', 'Sebelum', 'itu', 'Prabowo', 'menjajal', 'langsung', 'LRT', 'Jakarta', 'dari', 'Stasiun', 'LRT', 'Jakarta', 'Kelapa', 'Gading', 'menuju', 'Stasiun', 'Manggarai', 'Dalam', 'kesempatan', 'ini', 'Prabowo', 'didampingi', 'Gubernur', 'DKI', 'Jakarta', 'Pramono', 'Anung', 'hingga', 'Menteri', 'Sekretaris', 'Negara', 'Prasetyo', 'Hadi', 'Prabowo', 'tampak', 'memasuki', 'kereta', 'sekitar', 'pukul', '1310', 'WIB', 'Prabowo', 'duduk', 'di', 'barisan', 'kursi', 'penumpang', 'bersama', 'Pramono', 'dan', 'dua', 'penumpang', 'siswa', 'sekolah', 'Saat', 'kereta', 'berjalan', 'Prabowo', 'berbincang', 'dengan', 'Pramono', 'membahas', 'proyek', 'tersebut', 'Pramono', 'sempat', 'meminta', 'bantuan', 'ke', 'Prabowo', 'untuk', 'mengerahkan', 'Danantara', 'mendanai', 'perpanjangan', 'LRT', 'Jakarta', 'Proyek', 'ini', 'memang', 'diproyeksikan', 'dilanjut', 'dari', 'Manggarai', 'ke', 'Dukuh', 'Atas', 'yang', 'akan', 'selesai', '2029', 'Nah', 'kalo', 'bapak', 'izinkan', 'sebenarnya', 'tinggal', 'dibantu', 'sedikit', 'dengan', 'Danantara', 'Kan', 'selama', 'ini', 'Jakarta', 'sendiri', 'pak', 'ucap', 'Pramono', 'kepada', 'Prabowo', 'disiarkan', 'YouTube', 'Sekretariat', 'Presiden', 'Rabu', '1692026', 'Prabowo', 'lantas', 'menimpali', 'permintaan', 'Pramono', 'dan', 'menyebut', 'bahwa', 'Jakarta', 'tergolong', 'provinsi', 'yang', 'kaya', 'Jakarta', 'kaya', 'ujar', 'Prabowo', 'sambil', 'tertawa', 'Sebagai', 'informasi', 'perpanjangan', 'jalur', 'LRT', 'Jakarta', 'telah', 'selesai', 'dilakukan', 'Jalur', 'yang', 'sebelumnya', 'dimulai', 'dari', 'Kelapa', 'Gading', 'Jakarta', 'Utara', 'dan', 'berakhir', 'di', 'Velodrome', 'Jakarta', 'Timur', 'kini', 'diperpanjang', 'hingga', 'Stasiun', 'Manggarai', 'Jakarta', 'Selatan', 'Proyek', 'ini', 'memiliki', 'panjang', '122', 'kilometer', 'dengan', 'nilai', 'investasi', 'Rp', '121', 'triliun', 'Berikut', 'daftar', '11', 'stasiun', 'yang', 'akan', 'dilalui', 'LRT', 'Jakarta', 'Stasiun', 'Kelapa', 'Gading', 'Stasiun', 'Boulevard', 'Utara', 'Stasiun', 'Boulevard', 'Selatan', 'Stasiun', 'Pulomas', 'Stasiun', 'Equestrian', 'Stasiun', 'Velodrome', 'Stasiun', 'Rawamangun', 'Stasiun', 'Pramuka', 'Stasiun', 'Matraman', 'Stasiun', 'Proklamasi', 'Stasiun', 'Manggarai', 'Simak', 'Video', 'Prabowo', 'Jajal', 'LRT', 'Rute', 'Kelapa', 'GadingManggarai', 'Bareng', 'Pramono', 'acdacd']
+2. ['MotoGP', 'San', 'Marino', '2026', 'masuki', 'pertengahan', 'balapan', 'Marquez', 'bersaudara', 'asapi', 'Jorge', 'Martin', 'MotoGP', 'San', 'Marino', '2026', 'berlangsung', 'di', 'Sirkuit', 'Misano', 'Pada', 'Minggu', '139', 'malam', 'WIB', 'digelar', 'balapan', 'utama', 'dengan', 'total', '27', 'laps', 'Pada', 'starting', 'grid', 'posisi', 'pole', 'diisi', 'oleh', 'Marco', 'Bezzecchi', 'Diikuti', 'oleh', 'Marc', 'Marquez', 'dan', 'Fermin', 'Aldeguer', 'Pada', 'row', 'dua', 'diisi', 'oleh', 'Fabio', 'Di', 'Giannantonio', 'Jorge', 'Martin', 'dan', 'Luca', 'Marini', 'Balapan', 'dimulai', 'Marco', 'Bezzecchi', 'ngacir', 'sekaligus', 'tutup', 'celah', 'buat', 'Marc', 'Marquez', 'Bezzecchi', 'pun', 'mempertahankan', 'posisinya', 'sampai', 'tikungan', 'pertama', 'Jorge', 'Martin', 'naik', 'ke', 'posisi', 'ketiga', 'Aldeguer', 'turun', 'keempat', 'Masuk', 'ke', 'tikungan', 'ke13', 'petaka', 'buat', 'Bezzecchi', 'yang', 'alami', 'lowside', 'crash', 'dan', 'terlempar', 'ke', 'gravel', 'Marc', 'Marquez', 'naik', 'ke', 'posisi', 'pertama', 'Jorge', 'Martin', 'naik', 'kedua', 'Pedro', 'Acosta', 'bisa', 'naik', 'ke', 'posisi', 'ketiga', 'di', 'lap', 'ketiga', 'Panas', 'duel', 'duo', 'Gresini', 'vs', 'KTM', 'Alex', 'Marquez', 'maju', 'ke', 'posisi', 'ketiga', 'setelah', 'asapi', 'Pedro', 'Acosta', 'Aldeguer', 'masih', 'membayanginya', 'di', 'belakang', 'Di', 'lap', 'keenam', 'Francesco', 'Bagnaia', 'terjatuh', 'Lagilagi', 'Pecco', 'tidak', 'menyelesaikan', 'balapannya', 'Di', 'lap', 'ketujuh', 'pada', 'tikungan', 'keempat', 'Jorge', 'Martin', 'sukses', 'menyalip', 'Marc', 'Marquez', 'Martin', 'menyalip', 'dari', 'sisi', 'dalam', 'Balapan', 'makin', 'ketat', 'Posisi', 'dari', 'pertama', 'sampai', 'ketiga', 'yakni', 'Martin', 'Marc', 'dan', 'Alex', 'selisih', 'waktunya', 'tidak', 'sampai', '1', 'detik', 'Lap', 'ke12', 'Marc', 'Marquez', 'sukses', 'menyalip', 'Jorge', 'Martin', 'di', 'tikungan', 'keenam', 'Marquez', 'yang', 'terus', 'menekan', 'dapatkan', 'momentumnya', 'Lap', 'ke14', 'gantian', 'Alex', 'Marquez', 'salip', 'Martin', 'Persis', 'dilakukan', 'seperti', 'kakaknya', 'di', 'tikungan', 'keenam', 'Marc', 'Marquez', 'bisa', 'unggul', 'nyaman', 'satu', 'detik', 'dari', 'kejaran', 'Alex', 'di', 'lap', 'ke15', 'Sementara', 'Martin', 'ditekan', 'terus', 'oleh', 'Acosta', 'Di', 'lap', 'ke16', 'Asocta', 'sukses', 'salip', 'Martin', 'di', 'tikungan', 'kedelapan', 'Martin', 'tampak', 'mulai', 'mengendur', 'affbay']
+3. ['Buat', 'kamu', 'yang', 'mengikuti', 'MotoGP', 'dan', 'merasa', 'hafal', 'dengan', 'karakter', 'berbagai', 'sirkuit', 'ada', 'tantangan', 'menarik', 'yang', 'bisa', 'diikuti', 'Bold', 'Riders', 'bersama', 'detikcom', 'menghadirkan', 'kuis', 'tebak', 'sirkuit', 'MotoGP', 'dengan', 'hadiah', 'saldo', 'ewallet', 'total', 'Rp750', 'ribu', 'Dalam', 'kuis', 'ini', 'peserta', 'ditantang', 'menebak', 'namanama', 'sirkuit', 'berdasarkan', 'siluet', 'pada', 'postingan', 'kuis', 'Tantangan', 'tersebut', 'bisa', 'menjadi', 'kesempatan', 'untuk', 'menguji', 'seberapa', 'jauh', 'pengetahuan', 'peserta', 'terhadap', 'berbagai', 'lintasan', 'MotoGP', 'Menariknya', 'kuis', 'ini', 'tidak', 'hanya', 'mengandalkan', 'jawaban', 'yang', 'tepat', 'Peserta', 'juga', 'perlu', 'mengikuti', 'sejumlah', 'mekanisme', 'yang', 'telah', 'ditentukan', 'agar', 'dapat', 'mengikuti', 'kuis', 'sesuai', 'ketentuan', 'Cara', 'Ikut', 'Kuis', 'Tebak', 'Sirkuit', 'MotoGP', 'Untuk', 'mengikuti', 'kuis', 'peserta', 'perlu', 'memastikan', 'beberapa', 'persyaratan', 'telah', 'dilakukan', 'Berikut', 'mekanismenya', 'Follow', 'akun', 'Instagram', 'detikcom', 'dan', 'boldriders', 'Tulis', 'namanama', 'sirkuit', 'yang', 'sesuai', 'dengan', 'siluet', 'pada', 'slide', '2', 'postingan', 'kuis', 'di', 'kolom', 'komentar', 'Mention', 'detikcom', 'boldriders', 'dan', 'dua', 'teman', 'terdekat', 'untuk', 'ikut', 'meramaikan', 'kuis', 'Pastikan', 'jawaban', 'dan', 'seluruh', 'mekanisme', 'telah', 'dilakukan', 'sesuai', 'ketentuan', 'Kuis', 'ini', 'menguji', 'kemampuan', 'peserta', 'dalam', 'mengenali', 'sirkuit', 'hanya', 'melalui', 'tampilan', 'siluet', 'Bagi', 'penggemar', 'yang', 'terbiasa', 'mengikuti', 'balapan', 'MotoGP', 'bentuk', 'lintasan', 'dan', 'karakter', 'tikungan', 'dapat', 'menjadi', 'petunjuk', 'untuk', 'menentukan', 'jawaban', 'Ada', 'Hadiah', 'Saldo', 'EWallet', 'Rp750', 'Ribu', 'Selain', 'menguji', 'pengetahuan', 'tentang', 'sirkuit', 'MotoGP', 'kuis', 'ini', 'juga', 'menawarkan', 'hadiah', 'menarik', 'Tiga', 'detikers', 'dengan', 'jawaban', 'yang', 'benar', 'akan', 'mendapatkan', 'saldo', 'ewallet', 'Masingmasing', 'pemenang', 'berhak', 'mendapatkan', 'saldo', 'ewallet', 'sebesar', 'Rp250', 'ribu', 'sehingga', 'total', 'hadiah', 'yang', 'disiapkan', 'mencapai', 'Rp750', 'ribu', 'Jadi', 'buat', 'kamu', 'yang', 'merasa', 'jago', 'mengenali', 'sirkuit', 'MotoGP', 'jangan', 'lewatkan', 'kesempatan', 'untuk', 'ikut', 'menjawab', 'tantangan', 'ini', 'Siapkan', 'jawaban', 'terbaik', 'ikuti', 'seluruh', 'mekanisme', 'yang', 'berlaku', 'dan', 'buktikan', 'seberapa', 'kenal', 'kamu', 'dengan', 'berbagai', 'lintasan', 'MotoGP', 'Bold', 'Riders', 'hadir', 'sebagai', 'wadah', 'komunitas', 'motor', 'multigenre', 'Apa', 'pun', 'brand', 'atau', 'jenis', 'motornya', 'semua', 'bisa', 'bergabung', 'di', 'bawah', 'satu', 'semangat', 'yang', 'sama', 'brotherhood', 'Sejalan', 'dengan', 'keberanian', 'memacu', 'adrenalin', 'dan', 'mengambil', 'risiko', 'di', 'sirkuit', 'Bold', 'Riders', 'juga', 'dengan', 'bangga', 'menjadi', 'sponsor', 'resmi', 'Gresini', 'Racing', 'Team', 'di', 'ajang', 'MotoGP', 'Lebih', 'dari', 'sekadar', 'komunitas', 'Bold', 'Riders', 'mendukung', 'penuh', 'nilainilai', 'yang', 'menjadi', 'jiwa', 'dari', 'MotoGP', 'dan', 'para', 'pecinta', 'roda', 'dua', 'untuk', 'selalu', 'berani', 'tampil', 'beda', 'Live', 'Bold', 'Keberanian', 'mengambil', 'keputusan', 'dalam', 'hitungan', 'detik', 'Mentalitas', 'untuk', 'terus', 'maju', 'dan', 'berkembang', 'Passion', 'yang', 'kuat', 'terhadap', 'dunia', 'roda', 'dua', 'Dedikasi', 'dalam', 'menghargai', 'proses', 'latihan', 'dan', 'disiplin', 'Prinsip', 'untuk', 'menjadikan', 'setiap', 'perjalanan', 'sebagai', 'pengalaman', 'yang', 'berarti', 'Semangat', 'brotherhood', 'yang', 'solid', 'dan', 'merangkul', 'semua', 'genre', 'motor', 'tanpa', 'sekat', 'Jangan', 'sampai', 'ketinggalan', 'keseruannya', 'Follow', 'akun', 'boldriders', 'sekarang', 'untuk', 'update', 'info', 'terbaru', 'seputar', 'dunia', 'motor', 'dan', 'MotoGP', 'prfega']
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="membuat-pasangan-target-dan-context">
+<h2>12. Membuat Pasangan Target dan Context<a class="headerlink" href="#membuat-pasangan-target-dan-context" title="Link to this heading">#</a></h2>
+<p>Skip-gram mempelajari hubungan antara kata target dan kata-kata
+di sekitarnya sebagai context.</p>
+<p>Pada tugas ini digunakan <code class="docutils literal notranslate"><span class="pre">window_size</span> <span class="pre">=</span> <span class="pre">1</span></code>.</p>
+<p>Artinya setiap kata akan melihat satu kata di sebelah kiri dan satu kata
+di sebelah kanan apabila tersedia.</p>
+<p>Contoh:</p>
+<p>[“saya”, “suka”, “makan”]</p>
+<p>Pasangan target-context:</p>
+<p>saya → suka
+suka → saya
+suka → makan
+makan → suka</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">WINDOW_SIZE</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="n">training_pairs</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="n">train_sentences</span><span class="p">:</span>
+
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">target_word</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">sentence</span><span class="p">):</span>
+
+        <span class="n">start</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span>
+            <span class="mi">0</span><span class="p">,</span>
+            <span class="n">i</span> <span class="o">-</span> <span class="n">WINDOW_SIZE</span>
+        <span class="p">)</span>
+
+        <span class="n">end</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span>
+            <span class="nb">len</span><span class="p">(</span><span class="n">sentence</span><span class="p">),</span>
+            <span class="n">i</span> <span class="o">+</span> <span class="n">WINDOW_SIZE</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
+
+            <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">j</span><span class="p">:</span>
+
+                <span class="n">context_word</span> <span class="o">=</span> <span class="n">sentence</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+
+                <span class="n">training_pairs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="p">(</span><span class="n">target_word</span><span class="p">,</span> <span class="n">context_word</span><span class="p">)</span>
+                <span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">"Jumlah pasangan target-context:"</span><span class="p">,</span>
+    <span class="nb">len</span><span class="p">(</span><span class="n">training_pairs</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">20 pasangan pertama:"</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">pair</span> <span class="ow">in</span> <span class="n">training_pairs</span><span class="p">[:</span><span class="mi">20</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">pair</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">"→"</span><span class="p">,</span> <span class="n">pair</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah pasangan target-context: 105964
+
+20 pasangan pertama:
+Mantan → Menteri
+Menteri → Mantan
+Menteri → Keuangan
+Keuangan → Menteri
+Keuangan → Purbaya
+Purbaya → Keuangan
+Purbaya → Yudhi
+Yudhi → Purbaya
+Yudhi → Sadewa
+Sadewa → Yudhi
+Sadewa → menegaskan
+menegaskan → Sadewa
+menegaskan → seluruh
+seluruh → menegaskan
+seluruh → urusan
+urusan → seluruh
+urusan → yang
+yang → urusan
+yang → berkaitan
+berkaitan → yang
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="membuat-vocabulary">
+<h2>13. Membuat Vocabulary<a class="headerlink" href="#membuat-vocabulary" title="Link to this heading">#</a></h2>
+<p>Vocabulary dibentuk berdasarkan seluruh kata yang terdapat pada data
+training.</p>
+<p>Setiap kata diberikan indeks numerik agar dapat digunakan dalam proses
+training Skip-gram.</p>
+<p>Vocabulary hanya dibuat dari data training.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">vocabulary</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">({</span>
+    <span class="n">word</span>
+    <span class="k">for</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="n">train_sentences</span>
+    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">sentence</span>
+<span class="p">})</span>
+
+<span class="n">word_to_index</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">word</span><span class="p">:</span> <span class="n">i</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">word</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">vocabulary</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="n">index_to_word</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">i</span><span class="p">:</span> <span class="n">word</span>
+    <span class="k">for</span> <span class="n">word</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">word_to_index</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+<span class="p">}</span>
+
+<span class="n">VOCAB_SIZE</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vocabulary</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">"Jumlah vocabulary:"</span><span class="p">,</span>
+    <span class="n">VOCAB_SIZE</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Contoh vocabulary:"</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">vocabulary</span><span class="p">[:</span><span class="mi">30</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="n">word</span><span class="p">,</span>
+        <span class="s2">"→"</span><span class="p">,</span>
+        <span class="n">word_to_index</span><span class="p">[</span><span class="n">word</span><span class="p">]</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah vocabulary: 8282
+
+Contoh vocabulary:
++0657s → 0
++110kg → 1
++14021s → 2
++18252s → 3
++20581s → 4
++20858s → 5
++22911s → 6
++23229s → 7
++2326s → 8
++23905s → 9
++28031s → 10
++28927s → 11
++31792s → 12
++6027s → 13
++86kg → 14
+0 → 15
+001 → 16
+004 → 17
+006 → 18
+0060 → 19
+010 → 20
+0103 → 21
+012 → 22
+013 → 23
+0133 → 24
+019 → 25
+02 → 26
+023 → 27
+024 → 28
+0262030 → 29
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="parameter-skip-gram">
+<h2>14. Parameter Skip-gram<a class="headerlink" href="#parameter-skip-gram" title="Link to this heading">#</a></h2>
+<p>Skip-gram akan digunakan untuk mempelajari representasi vektor setiap
+kata berdasarkan pasangan target-context.</p>
+<p>Parameter yang digunakan:</p>
+<ul class="simple">
+<li><p>Vector size = 50</p></li>
+<li><p>Window size = 1</p></li>
+<li><p>Learning rate = 0.025</p></li>
+<li><p>Epoch = 5</p></li>
+<li><p>Random seed = 42</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">VECTOR_SIZE</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">LEARNING_RATE</span> <span class="o">=</span> <span class="mf">0.025</span>
+<span class="n">EPOCHS</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Vector size   :"</span><span class="p">,</span> <span class="n">VECTOR_SIZE</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Window size   :"</span><span class="p">,</span> <span class="n">WINDOW_SIZE</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Learning rate :"</span><span class="p">,</span> <span class="n">LEARNING_RATE</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Epoch         :"</span><span class="p">,</span> <span class="n">EPOCHS</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Vocabulary    :"</span><span class="p">,</span> <span class="n">VOCAB_SIZE</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Vector size   : 50
+Window size   : 1
+Learning rate : 0.025
+Epoch         : 5
+Vocabulary    : 8282
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="fungsi-softmax">
+<h2>15. Fungsi Softmax<a class="headerlink" href="#fungsi-softmax" title="Link to this heading">#</a></h2>
+<p>Softmax digunakan untuk mengubah nilai output model menjadi probabilitas
+untuk setiap kata dalam vocabulary.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">softmax</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+
+    <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+    <span class="n">exp_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">exp_x</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">exp_x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="inisialisasi-bobot-skip-gram">
+<h2>16. Inisialisasi Bobot Skip-gram<a class="headerlink" href="#inisialisasi-bobot-skip-gram" title="Link to this heading">#</a></h2>
+<p>Model Skip-gram menggunakan dua matriks bobot:</p>
+<ul class="simple">
+<li><p>W1 sebagai representasi embedding kata</p></li>
+<li><p>W2 sebagai bobot output</p></li>
+</ul>
+<p>Bobot diinisialisasi menggunakan nilai acak kecil.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="n">W1</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span>
+        <span class="n">VOCAB_SIZE</span><span class="p">,</span>
+        <span class="n">VECTOR_SIZE</span>
+    <span class="p">)</span> <span class="o">*</span> <span class="mf">0.01</span>
+<span class="p">)</span>
+
+<span class="n">W2</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span>
+        <span class="n">VECTOR_SIZE</span><span class="p">,</span>
+        <span class="n">VOCAB_SIZE</span>
+    <span class="p">)</span> <span class="o">*</span> <span class="mf">0.01</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">"Shape W1:"</span><span class="p">,</span>
+    <span class="n">W1</span><span class="o">.</span><span class="n">shape</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">"Shape W2:"</span><span class="p">,</span>
+    <span class="n">W2</span><span class="o">.</span><span class="n">shape</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Shape W1: (8282, 50)
+Shape W2: (50, 8282)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="training-skip-gram">
+<h2>16. Training Skip-gram<a class="headerlink" href="#training-skip-gram" title="Link to this heading">#</a></h2>
+<p>Training dilakukan menggunakan pasangan target-context yang telah dibuat.</p>
+<p>Untuk setiap pasangan:</p>
+<p>Target → Context</p>
+<p>model melakukan:</p>
+<ol class="arabic simple">
+<li><p>Mengambil embedding kata target.</p></li>
+<li><p>Menghitung output terhadap seluruh vocabulary.</p></li>
+<li><p>Menggunakan softmax untuk memperoleh probabilitas.</p></li>
+<li><p>Menghitung loss.</p></li>
+<li><p>Menghitung gradient.</p></li>
+<li><p>Memperbarui bobot W1 dan W2.</p></li>
+</ol>
+<p>Embedding pada W1 akan digunakan sebagai representasi vektor kata.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">EPOCHS</span><span class="p">):</span>
+
+    <span class="n">total_loss</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">target_word</span><span class="p">,</span> <span class="n">context_word</span> <span class="ow">in</span> <span class="n">training_pairs</span><span class="p">:</span>
+
+        <span class="n">target_idx</span> <span class="o">=</span> <span class="n">word_to_index</span><span class="p">[</span><span class="n">target_word</span><span class="p">]</span>
+        <span class="n">context_idx</span> <span class="o">=</span> <span class="n">word_to_index</span><span class="p">[</span><span class="n">context_word</span><span class="p">]</span>
+
+        <span class="c1"># Embedding kata target</span>
+        <span class="n">hidden</span> <span class="o">=</span> <span class="n">W1</span><span class="p">[</span><span class="n">target_idx</span><span class="p">]</span>
+
+        <span class="c1"># Forward pass</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
+            <span class="n">hidden</span><span class="p">,</span>
+            <span class="n">W2</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Probabilitas context</span>
+        <span class="n">probabilities</span> <span class="o">=</span> <span class="n">softmax</span><span class="p">(</span>
+            <span class="n">output</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Cross entropy loss</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+            <span class="n">probabilities</span><span class="p">[</span><span class="n">context_idx</span><span class="p">]</span> <span class="o">+</span> <span class="mf">1e-10</span>
+        <span class="p">)</span>
+
+        <span class="n">total_loss</span> <span class="o">+=</span> <span class="n">loss</span>
+
+        <span class="c1"># Error output</span>
+        <span class="n">error</span> <span class="o">=</span> <span class="n">probabilities</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+        <span class="n">error</span><span class="p">[</span><span class="n">context_idx</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">1</span>
+
+        <span class="c1"># Gradient W2</span>
+        <span class="n">grad_W2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span>
+            <span class="n">hidden</span><span class="p">,</span>
+            <span class="n">error</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Gradient hidden layer</span>
+        <span class="n">grad_hidden</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
+            <span class="n">W2</span><span class="p">,</span>
+            <span class="n">error</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Update W2</span>
+        <span class="n">W2</span> <span class="o">-=</span> <span class="p">(</span>
+            <span class="n">LEARNING_RATE</span> <span class="o">*</span>
+            <span class="n">grad_W2</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Update W1</span>
+        <span class="n">W1</span><span class="p">[</span><span class="n">target_idx</span><span class="p">]</span> <span class="o">-=</span> <span class="p">(</span>
+            <span class="n">LEARNING_RATE</span> <span class="o">*</span>
+            <span class="n">grad_hidden</span>
+        <span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">"Epoch </span><span class="si">{</span><span class="n">epoch</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">EPOCHS</span><span class="si">}</span><span class="s2"> "</span>
+        <span class="sa">f</span><span class="s2">"- Loss: </span><span class="si">{</span><span class="n">total_loss</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">17</span><span class="p">],</span> <span class="n">line</span> <span class="mi">55</span>
+<span class="g g-Whitespace">     </span><span class="mi">51</span>             <span class="n">grad_W2</span>
+<span class="g g-Whitespace">     </span><span class="mi">52</span>         <span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">53</span> 
+<span class="g g-Whitespace">     </span><span class="mi">54</span>         <span class="c1"># Update W1</span>
+<span class="ne">---&gt; </span><span class="mi">55</span>         <span class="n">W1</span><span class="p">[</span><span class="n">target_idx</span><span class="p">]</span> <span class="o">-=</span> <span class="p">(</span>
+<span class="g g-Whitespace">     </span><span class="mi">56</span>             <span class="n">LEARNING_RATE</span> <span class="o">*</span>
+<span class="g g-Whitespace">     </span><span class="mi">57</span>             <span class="n">grad_hidden</span>
+<span class="g g-Whitespace">     </span><span class="mi">58</span>         <span class="p">)</span>
+
+<span class="ne">KeyboardInterrupt</span>: 
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="word-embedding-hasil-skip-gram">
+<h2>17. Word Embedding Hasil Skip-gram<a class="headerlink" href="#word-embedding-hasil-skip-gram" title="Link to this heading">#</a></h2>
+<p>Setelah proses training selesai, matriks W1 digunakan sebagai word
+embedding.</p>
+<p>Setiap baris pada W1 merupakan representasi vektor untuk satu kata
+dalam vocabulary.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">word_embeddings</span> <span class="o">=</span> <span class="n">W1</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">"Shape word embedding:"</span><span class="p">,</span>
+    <span class="n">word_embeddings</span><span class="o">.</span><span class="n">shape</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Shape word embedding: (8282, 50)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="melihat-vektor-kata">
+<h2>18. Melihat Vektor Kata<a class="headerlink" href="#melihat-vektor-kata" title="Link to this heading">#</a></h2>
+<p>Bagian ini digunakan untuk melihat hasil representasi numerik dari kata
+setelah training Skip-gram.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">embedding_rows</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">vocabulary</span><span class="p">:</span>
+
+    <span class="n">idx</span> <span class="o">=</span> <span class="n">word_to_index</span><span class="p">[</span><span class="n">word</span><span class="p">]</span>
+
+    <span class="n">vector</span> <span class="o">=</span> <span class="n">word_embeddings</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+
+    <span class="n">row</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">"Kata"</span><span class="p">:</span> <span class="n">word</span>
+    <span class="p">}</span>
+
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span>
+        <span class="n">vector</span><span class="p">,</span>
+        <span class="mi">1</span>
+    <span class="p">):</span>
+
+        <span class="n">row</span><span class="p">[</span><span class="sa">f</span><span class="s2">"Vektor_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">"</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="n">embedding_rows</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+
+
+<span class="n">df_word_embedding</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">embedding_rows</span>
+<span class="p">)</span>
+
+<span class="n">display</span><span class="p">(</span>
+    <span class="n">df_word_embedding</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Kata</th>
+      <th>Vektor_1</th>
+      <th>Vektor_2</th>
+      <th>Vektor_3</th>
+      <th>Vektor_4</th>
+      <th>Vektor_5</th>
+      <th>Vektor_6</th>
+      <th>Vektor_7</th>
+      <th>Vektor_8</th>
+      <th>Vektor_9</th>
+      <th>...</th>
+      <th>Vektor_41</th>
+      <th>Vektor_42</th>
+      <th>Vektor_43</th>
+      <th>Vektor_44</th>
+      <th>Vektor_45</th>
+      <th>Vektor_46</th>
+      <th>Vektor_47</th>
+      <th>Vektor_48</th>
+      <th>Vektor_49</th>
+      <th>Vektor_50</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>+0657s</td>
+      <td>0.007914</td>
+      <td>-0.000532</td>
+      <td>0.010025</td>
+      <td>-0.003380</td>
+      <td>0.005554</td>
+      <td>0.007037</td>
+      <td>0.032875</td>
+      <td>0.020387</td>
+      <td>-0.002351</td>
+      <td>...</td>
+      <td>0.002061</td>
+      <td>-0.005817</td>
+      <td>0.014298</td>
+      <td>0.010966</td>
+      <td>-0.006986</td>
+      <td>-0.038593</td>
+      <td>-0.004890</td>
+      <td>-0.001449</td>
+      <td>0.008807</td>
+      <td>-0.021135</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>+110kg</td>
+      <td>-0.076171</td>
+      <td>0.008515</td>
+      <td>-0.080365</td>
+      <td>0.046188</td>
+      <td>0.025162</td>
+      <td>0.019898</td>
+      <td>-0.033949</td>
+      <td>0.195220</td>
+      <td>-0.033761</td>
+      <td>...</td>
+      <td>0.019456</td>
+      <td>-0.088965</td>
+      <td>0.151752</td>
+      <td>-0.015440</td>
+      <td>0.031825</td>
+      <td>-0.327789</td>
+      <td>0.093255</td>
+      <td>-0.074397</td>
+      <td>-0.012363</td>
+      <td>0.008265</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>+14021s</td>
+      <td>-0.013366</td>
+      <td>-0.009513</td>
+      <td>-0.005762</td>
+      <td>-0.017156</td>
+      <td>0.009377</td>
+      <td>0.013030</td>
+      <td>0.029653</td>
+      <td>0.003540</td>
+      <td>0.006095</td>
+      <td>...</td>
+      <td>0.000197</td>
+      <td>0.012482</td>
+      <td>-0.012688</td>
+      <td>0.000187</td>
+      <td>-0.004948</td>
+      <td>0.001520</td>
+      <td>-0.015022</td>
+      <td>-0.016585</td>
+      <td>0.002137</td>
+      <td>0.004938</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>+18252s</td>
+      <td>0.007794</td>
+      <td>0.002384</td>
+      <td>-0.010963</td>
+      <td>-0.002224</td>
+      <td>0.006570</td>
+      <td>-0.002446</td>
+      <td>0.019471</td>
+      <td>0.007469</td>
+      <td>-0.008940</td>
+      <td>...</td>
+      <td>-0.003533</td>
+      <td>0.002829</td>
+      <td>0.001678</td>
+      <td>-0.015236</td>
+      <td>-0.002786</td>
+      <td>-0.003568</td>
+      <td>-0.012441</td>
+      <td>-0.002806</td>
+      <td>-0.000024</td>
+      <td>-0.009264</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>+20581s</td>
+      <td>0.013082</td>
+      <td>-0.007630</td>
+      <td>-0.000945</td>
+      <td>-0.026542</td>
+      <td>0.014187</td>
+      <td>0.010436</td>
+      <td>0.023498</td>
+      <td>0.024558</td>
+      <td>0.012892</td>
+      <td>...</td>
+      <td>-0.013441</td>
+      <td>-0.011390</td>
+      <td>0.025261</td>
+      <td>0.004373</td>
+      <td>-0.018995</td>
+      <td>-0.045088</td>
+      <td>-0.007747</td>
+      <td>-0.018211</td>
+      <td>0.014785</td>
+      <td>0.003328</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 51 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kata_contoh</span> <span class="o">=</span> <span class="n">vocabulary</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="n">idx</span> <span class="o">=</span> <span class="n">word_to_index</span><span class="p">[</span>
+    <span class="n">kata_contoh</span>
+<span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">"Kata:"</span><span class="p">,</span>
+    <span class="n">kata_contoh</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">"</span><span class="se">\n</span><span class="s2">Vektor:"</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="n">word_embeddings</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">"</span><span class="se">\n</span><span class="s2">Dimensi vektor:"</span><span class="p">,</span>
+    <span class="nb">len</span><span class="p">(</span>
+        <span class="n">word_embeddings</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Kata: +0657s
+
+Vektor:
+[ 7.91385149e-03 -5.32335194e-04  1.00253789e-02 -3.38003025e-03
+  5.55434262e-03  7.03666116e-03  3.28752695e-02  2.03873932e-02
+ -2.35081729e-03  1.00865836e-02 -8.77910625e-03  9.88059834e-03
+  5.82912570e-03 -1.56967821e-02 -1.49736579e-02  6.08445689e-03
+ -6.61750077e-04 -3.96352734e-03 -1.82578409e-02 -3.43305916e-02
+ -1.01666427e-02  3.73417957e-03 -9.83950162e-03 -5.37011979e-03
+ -5.31548204e-03  4.57414266e-04 -2.44803646e-02  1.35961777e-02
+ -9.41327830e-04 -1.38027454e-02 -1.35604103e-02  3.98211396e-02
+  2.12425340e-02  6.91598621e-03  1.09804473e-02  2.80735460e-03
+ -8.94241341e-05 -3.30362154e-03 -1.76806873e-02  3.56249253e-03
+  2.06118458e-03 -5.81685958e-03  1.42977436e-02  1.09660776e-02
+ -6.98587014e-03 -3.85927019e-02 -4.88955436e-03 -1.44869940e-03
+  8.80662829e-03 -2.11350720e-02]
+
+Dimensi vektor: 50
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="mengubah-berita-menjadi-vektor">
+<h2>19. Mengubah Berita Menjadi Vektor<a class="headerlink" href="#mengubah-berita-menjadi-vektor" title="Link to this heading">#</a></h2>
+<p>Skip-gram menghasilkan vektor untuk setiap kata.</p>
+<p>Namun Naive Bayes membutuhkan satu baris fitur untuk setiap berita.</p>
+<p>Oleh karena itu, setiap berita direpresentasikan menggunakan rata-rata
+seluruh word embedding yang terdapat dalam berita.</p>
+<p>Rumus:</p>
+<p>Vektor Berita =
+rata-rata seluruh Vektor Kata dalam berita</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">document_vector</span><span class="p">(</span>
+    <span class="n">tokens</span><span class="p">,</span>
+    <span class="n">word_to_index</span><span class="p">,</span>
+    <span class="n">embeddings</span><span class="p">,</span>
+    <span class="n">vector_size</span>
+<span class="p">):</span>
+
+    <span class="n">vectors</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
+
+        <span class="k">if</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">word_to_index</span><span class="p">:</span>
+
+            <span class="n">idx</span> <span class="o">=</span> <span class="n">word_to_index</span><span class="p">[</span><span class="n">word</span><span class="p">]</span>
+
+            <span class="n">vectors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">embeddings</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+            <span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+            <span class="n">vector_size</span>
+        <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span>
+        <span class="n">vectors</span><span class="p">,</span>
+        <span class="n">axis</span><span class="o">=</span><span class="mi">0</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_train_vectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span>
+
+    <span class="n">document_vector</span><span class="p">(</span>
+        <span class="n">tokens</span><span class="p">,</span>
+        <span class="n">word_to_index</span><span class="p">,</span>
+        <span class="n">word_embeddings</span><span class="p">,</span>
+        <span class="n">VECTOR_SIZE</span>
+    <span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">tokens</span> <span class="ow">in</span> <span class="n">train_sentences</span>
+<span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">"Shape X_train_vectors:"</span><span class="p">,</span>
+    <span class="n">X_train_vectors</span><span class="o">.</span><span class="n">shape</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Shape X_train_vectors: (160, 50)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_test_vectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span>
+
+    <span class="n">document_vector</span><span class="p">(</span>
+        <span class="n">tokens</span><span class="p">,</span>
+        <span class="n">word_to_index</span><span class="p">,</span>
+        <span class="n">word_embeddings</span><span class="p">,</span>
+        <span class="n">VECTOR_SIZE</span>
+    <span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">tokens</span> <span class="ow">in</span> <span class="n">test_sentences</span>
+<span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">"Shape X_test_vectors:"</span><span class="p">,</span>
+    <span class="n">X_test_vectors</span><span class="o">.</span><span class="n">shape</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Shape X_test_vectors: (40, 50)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="dataset-vektor-training">
+<h2>20. Dataset Vektor Training<a class="headerlink" href="#dataset-vektor-training" title="Link to this heading">#</a></h2>
+<p>Dataset training terdiri dari 160 berita dengan 50 fitur hasil
+representasi Skip-gram dan satu kolom label.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">vector_columns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="sa">f</span><span class="s2">"Vektor_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">"</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span>
+        <span class="mi">1</span><span class="p">,</span>
+        <span class="n">VECTOR_SIZE</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="p">)</span>
+<span class="p">]</span>
+
+<span class="n">df_train_vectors</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">X_train_vectors</span><span class="p">,</span>
+    <span class="n">columns</span><span class="o">=</span><span class="n">vector_columns</span>
+<span class="p">)</span>
+
+<span class="n">df_train_vectors</span><span class="p">[</span><span class="s2">"label"</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">y_train</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span>
+        <span class="n">drop</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">"Shape training:"</span><span class="p">,</span>
+    <span class="n">df_train_vectors</span><span class="o">.</span><span class="n">shape</span>
+<span class="p">)</span>
+
+<span class="n">display</span><span class="p">(</span>
+    <span class="n">df_train_vectors</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Shape training: (160, 51)
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Vektor_1</th>
+      <th>Vektor_2</th>
+      <th>Vektor_3</th>
+      <th>Vektor_4</th>
+      <th>Vektor_5</th>
+      <th>Vektor_6</th>
+      <th>Vektor_7</th>
+      <th>Vektor_8</th>
+      <th>Vektor_9</th>
+      <th>Vektor_10</th>
+      <th>...</th>
+      <th>Vektor_42</th>
+      <th>Vektor_43</th>
+      <th>Vektor_44</th>
+      <th>Vektor_45</th>
+      <th>Vektor_46</th>
+      <th>Vektor_47</th>
+      <th>Vektor_48</th>
+      <th>Vektor_49</th>
+      <th>Vektor_50</th>
+      <th>label</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-0.054823</td>
+      <td>-0.032495</td>
+      <td>-0.031093</td>
+      <td>-0.331313</td>
+      <td>0.225695</td>
+      <td>0.123297</td>
+      <td>0.078394</td>
+      <td>0.251283</td>
+      <td>0.051698</td>
+      <td>0.197676</td>
+      <td>...</td>
+      <td>-0.002199</td>
+      <td>0.038643</td>
+      <td>0.121907</td>
+      <td>0.019692</td>
+      <td>-0.331770</td>
+      <td>0.130890</td>
+      <td>-0.056316</td>
+      <td>0.016299</td>
+      <td>0.014920</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-0.119748</td>
+      <td>0.058347</td>
+      <td>-0.029582</td>
+      <td>-0.290773</td>
+      <td>0.336915</td>
+      <td>0.106530</td>
+      <td>0.095110</td>
+      <td>0.247536</td>
+      <td>0.020339</td>
+      <td>0.156473</td>
+      <td>...</td>
+      <td>-0.043277</td>
+      <td>0.151517</td>
+      <td>0.144229</td>
+      <td>0.064033</td>
+      <td>-0.437212</td>
+      <td>0.205927</td>
+      <td>-0.041117</td>
+      <td>0.046477</td>
+      <td>0.117999</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-0.106445</td>
+      <td>0.043761</td>
+      <td>0.008277</td>
+      <td>-0.265117</td>
+      <td>0.217238</td>
+      <td>0.165161</td>
+      <td>0.085318</td>
+      <td>0.181989</td>
+      <td>-0.000360</td>
+      <td>0.158393</td>
+      <td>...</td>
+      <td>-0.000396</td>
+      <td>0.115831</td>
+      <td>0.133047</td>
+      <td>0.032050</td>
+      <td>-0.340983</td>
+      <td>0.126526</td>
+      <td>-0.045640</td>
+      <td>0.020458</td>
+      <td>0.032326</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-0.088335</td>
+      <td>0.023164</td>
+      <td>-0.026936</td>
+      <td>-0.282686</td>
+      <td>0.278973</td>
+      <td>0.146816</td>
+      <td>0.131700</td>
+      <td>0.215119</td>
+      <td>0.050025</td>
+      <td>0.131699</td>
+      <td>...</td>
+      <td>-0.083315</td>
+      <td>0.157228</td>
+      <td>0.123633</td>
+      <td>0.038231</td>
+      <td>-0.474326</td>
+      <td>0.186725</td>
+      <td>-0.012462</td>
+      <td>0.007737</td>
+      <td>0.064194</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-0.025734</td>
+      <td>-0.051660</td>
+      <td>-0.096194</td>
+      <td>-0.274681</td>
+      <td>0.326999</td>
+      <td>0.175491</td>
+      <td>0.170080</td>
+      <td>0.234900</td>
+      <td>0.134387</td>
+      <td>0.167120</td>
+      <td>...</td>
+      <td>-0.093969</td>
+      <td>0.103888</td>
+      <td>0.026114</td>
+      <td>-0.070000</td>
+      <td>-0.528392</td>
+      <td>0.116426</td>
+      <td>-0.063753</td>
+      <td>-0.024386</td>
+      <td>0.051570</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 51 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="dataset-vektor-testing">
+<h2>21. Dataset Vektor Testing<a class="headerlink" href="#dataset-vektor-testing" title="Link to this heading">#</a></h2>
+<p>Dataset testing terdiri dari 40 berita dengan 50 fitur hasil Skip-gram
+dan satu kolom label.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_test_vectors</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">X_test_vectors</span><span class="p">,</span>
+    <span class="n">columns</span><span class="o">=</span><span class="n">vector_columns</span>
+<span class="p">)</span>
+
+<span class="n">df_test_vectors</span><span class="p">[</span><span class="s2">"label"</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">y_test</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span>
+        <span class="n">drop</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">"Shape testing:"</span><span class="p">,</span>
+    <span class="n">df_test_vectors</span><span class="o">.</span><span class="n">shape</span>
+<span class="p">)</span>
+
+<span class="n">display</span><span class="p">(</span>
+    <span class="n">df_test_vectors</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Shape testing: (40, 51)
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Vektor_1</th>
+      <th>Vektor_2</th>
+      <th>Vektor_3</th>
+      <th>Vektor_4</th>
+      <th>Vektor_5</th>
+      <th>Vektor_6</th>
+      <th>Vektor_7</th>
+      <th>Vektor_8</th>
+      <th>Vektor_9</th>
+      <th>Vektor_10</th>
+      <th>...</th>
+      <th>Vektor_42</th>
+      <th>Vektor_43</th>
+      <th>Vektor_44</th>
+      <th>Vektor_45</th>
+      <th>Vektor_46</th>
+      <th>Vektor_47</th>
+      <th>Vektor_48</th>
+      <th>Vektor_49</th>
+      <th>Vektor_50</th>
+      <th>label</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.119211</td>
+      <td>-0.034747</td>
+      <td>-0.085975</td>
+      <td>-0.245587</td>
+      <td>0.229738</td>
+      <td>0.188090</td>
+      <td>0.097475</td>
+      <td>0.240311</td>
+      <td>0.100461</td>
+      <td>0.314398</td>
+      <td>...</td>
+      <td>-0.018116</td>
+      <td>0.050981</td>
+      <td>0.057102</td>
+      <td>-0.033455</td>
+      <td>-0.397459</td>
+      <td>0.008689</td>
+      <td>-0.067464</td>
+      <td>0.001357</td>
+      <td>0.028123</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-0.041866</td>
+      <td>-0.001580</td>
+      <td>-0.059807</td>
+      <td>-0.224029</td>
+      <td>0.382680</td>
+      <td>0.054031</td>
+      <td>0.208569</td>
+      <td>0.368166</td>
+      <td>0.133023</td>
+      <td>0.148906</td>
+      <td>...</td>
+      <td>-0.155748</td>
+      <td>0.184679</td>
+      <td>0.029180</td>
+      <td>-0.000673</td>
+      <td>-0.525233</td>
+      <td>0.158024</td>
+      <td>-0.132602</td>
+      <td>0.066705</td>
+      <td>0.100421</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-0.127273</td>
+      <td>0.062186</td>
+      <td>0.005373</td>
+      <td>-0.237436</td>
+      <td>0.171574</td>
+      <td>0.201837</td>
+      <td>0.150173</td>
+      <td>0.158603</td>
+      <td>0.021413</td>
+      <td>0.099133</td>
+      <td>...</td>
+      <td>0.002158</td>
+      <td>0.154947</td>
+      <td>0.159767</td>
+      <td>0.050363</td>
+      <td>-0.422303</td>
+      <td>0.128996</td>
+      <td>0.043445</td>
+      <td>0.047663</td>
+      <td>0.012126</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-0.091535</td>
+      <td>0.049017</td>
+      <td>-0.087239</td>
+      <td>-0.287269</td>
+      <td>0.384729</td>
+      <td>0.135533</td>
+      <td>0.071108</td>
+      <td>0.288761</td>
+      <td>0.056773</td>
+      <td>0.113961</td>
+      <td>...</td>
+      <td>-0.099640</td>
+      <td>0.127737</td>
+      <td>0.161501</td>
+      <td>0.039399</td>
+      <td>-0.424348</td>
+      <td>0.123913</td>
+      <td>-0.058580</td>
+      <td>0.035205</td>
+      <td>0.019324</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.001422</td>
+      <td>0.027191</td>
+      <td>-0.095612</td>
+      <td>-0.300512</td>
+      <td>0.321131</td>
+      <td>0.137810</td>
+      <td>0.110292</td>
+      <td>0.271102</td>
+      <td>0.094165</td>
+      <td>0.247625</td>
+      <td>...</td>
+      <td>-0.007389</td>
+      <td>0.095506</td>
+      <td>0.148821</td>
+      <td>0.038951</td>
+      <td>-0.404077</td>
+      <td>0.073986</td>
+      <td>-0.042435</td>
+      <td>0.054257</td>
+      <td>0.047655</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 51 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="menyimpan-hasil-vektor-skip-gram">
+<h2>22. Menyimpan Hasil Vektor Skip-gram<a class="headerlink" href="#menyimpan-hasil-vektor-skip-gram" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_train_vectors</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span>
+    <span class="s2">"data_skipgram_training.xlsx"</span><span class="p">,</span>
+    <span class="n">index</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">)</span>
+
+<span class="n">df_test_vectors</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span>
+    <span class="s2">"data_skipgram_testing.xlsx"</span><span class="p">,</span>
+    <span class="n">index</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">"Data berhasil disimpan:"</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">"data_skipgram_training.xlsx"</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">"data_skipgram_testing.xlsx"</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Data berhasil disimpan:
+data_skipgram_training.xlsx
+data_skipgram_testing.xlsx
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="menyiapkan-data-untuk-naive-bayes">
+<h2>23. Menyiapkan Data untuk Naive Bayes<a class="headerlink" href="#menyiapkan-data-untuk-naive-bayes" title="Link to this heading">#</a></h2>
+<p>Vektor hasil Skip-gram digunakan sebagai fitur input untuk algoritma
+Gaussian Naive Bayes.</p>
+<p>X berisi fitur vektor Skip-gram.</p>
+<p>y berisi label berita:</p>
+<ul class="simple">
+<li><p>0 = finance</p></li>
+<li><p>1 = sport</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_train_nb</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">df_train_vectors</span>
+    <span class="o">.</span><span class="n">drop</span><span class="p">(</span>
+        <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">"label"</span><span class="p">]</span>
+    <span class="p">)</span>
+    <span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+<span class="p">)</span>
+
+<span class="n">X_test_nb</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">df_test_vectors</span>
+    <span class="o">.</span><span class="n">drop</span><span class="p">(</span>
+        <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">"label"</span><span class="p">]</span>
+    <span class="p">)</span>
+    <span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+<span class="p">)</span>
+
+<span class="n">y_train_nb</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">df_train_vectors</span><span class="p">[</span><span class="s2">"label"</span><span class="p">]</span>
+    <span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+<span class="p">)</span>
+
+<span class="n">y_test_nb</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">df_test_vectors</span><span class="p">[</span><span class="s2">"label"</span><span class="p">]</span>
+    <span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">"X_train:"</span><span class="p">,</span>
+    <span class="n">X_train_nb</span><span class="o">.</span><span class="n">shape</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">"X_test :"</span><span class="p">,</span>
+    <span class="n">X_test_nb</span><span class="o">.</span><span class="n">shape</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">"y_train:"</span><span class="p">,</span>
+    <span class="n">y_train_nb</span><span class="o">.</span><span class="n">shape</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">"y_test :"</span><span class="p">,</span>
+    <span class="n">y_test_nb</span><span class="o">.</span><span class="n">shape</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>X_train: (160, 50)
+X_test : (40, 50)
+y_train: (160,)
+y_test : (40,)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="training-gaussian-naive-bayes">
+<h2>24. Training Gaussian Naive Bayes<a class="headerlink" href="#training-gaussian-naive-bayes" title="Link to this heading">#</a></h2>
+<p>Gaussian Naive Bayes digunakan untuk melakukan klasifikasi berdasarkan
+vektor Skip-gram yang telah diperoleh sebelumnya.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nb_model</span> <span class="o">=</span> <span class="n">GaussianNB</span><span class="p">()</span>
+
+<span class="n">nb_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+    <span class="n">X_train_nb</span><span class="p">,</span>
+    <span class="n">y_train_nb</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">"Gaussian Naive Bayes berhasil dilatih."</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Gaussian Naive Bayes berhasil dilatih.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="prediksi-data-testing">
+<h2>25. Prediksi Data Testing<a class="headerlink" href="#prediksi-data-testing" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_pred</span> <span class="o">=</span> <span class="n">nb_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span>
+    <span class="n">X_test_nb</span>
+<span class="p">)</span>
+
+<span class="n">df_hasil_prediksi</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+
+    <span class="s2">"Data_Testing"</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span>
+        <span class="mi">1</span><span class="p">,</span>
+        <span class="nb">len</span><span class="p">(</span><span class="n">y_test_nb</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="p">),</span>
+
+    <span class="s2">"Label_Aktual"</span><span class="p">:</span> <span class="n">y_test_nb</span><span class="p">,</span>
+
+    <span class="s2">"Label_Prediksi"</span><span class="p">:</span> <span class="n">y_pred</span>
+<span class="p">})</span>
+
+<span class="n">df_hasil_prediksi</span><span class="p">[</span><span class="s2">"Status"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+
+    <span class="n">df_hasil_prediksi</span><span class="p">[</span><span class="s2">"Label_Aktual"</span><span class="p">]</span>
+    <span class="o">==</span>
+    <span class="n">df_hasil_prediksi</span><span class="p">[</span><span class="s2">"Label_Prediksi"</span><span class="p">],</span>
+
+    <span class="s2">"Benar"</span><span class="p">,</span>
+
+    <span class="s2">"Salah"</span>
+<span class="p">)</span>
+
+<span class="n">display</span><span class="p">(</span>
+    <span class="n">df_hasil_prediksi</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Data_Testing</th>
+      <th>Label_Aktual</th>
+      <th>Label_Prediksi</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>Benar</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Benar</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>1</td>
+      <td>0</td>
+      <td>Salah</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Benar</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>0</td>
+      <td>0</td>
+      <td>Benar</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>6</td>
+      <td>1</td>
+      <td>0</td>
+      <td>Salah</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>7</td>
+      <td>0</td>
+      <td>0</td>
+      <td>Benar</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>8</td>
+      <td>1</td>
+      <td>0</td>
+      <td>Salah</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>9</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Benar</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>10</td>
+      <td>0</td>
+      <td>1</td>
+      <td>Salah</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>11</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Benar</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>12</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Benar</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>13</td>
+      <td>0</td>
+      <td>0</td>
+      <td>Benar</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>14</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Benar</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>15</td>
+      <td>0</td>
+      <td>0</td>
+      <td>Benar</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>16</td>
+      <td>0</td>
+      <td>0</td>
+      <td>Benar</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>17</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Benar</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>18</td>
+      <td>0</td>
+      <td>0</td>
+      <td>Benar</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>19</td>
+      <td>0</td>
+      <td>0</td>
+      <td>Benar</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>20</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Benar</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>21</td>
+      <td>0</td>
+      <td>0</td>
+      <td>Benar</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>22</td>
+      <td>1</td>
+      <td>0</td>
+      <td>Salah</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>23</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Benar</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>24</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Benar</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>25</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Benar</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>26</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Benar</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>27</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Benar</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>28</td>
+      <td>0</td>
+      <td>0</td>
+      <td>Benar</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>29</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Benar</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>30</td>
+      <td>0</td>
+      <td>0</td>
+      <td>Benar</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>31</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Benar</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>32</td>
+      <td>0</td>
+      <td>0</td>
+      <td>Benar</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>33</td>
+      <td>0</td>
+      <td>0</td>
+      <td>Benar</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>34</td>
+      <td>0</td>
+      <td>0</td>
+      <td>Benar</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>35</td>
+      <td>0</td>
+      <td>0</td>
+      <td>Benar</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>36</td>
+      <td>0</td>
+      <td>0</td>
+      <td>Benar</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>37</td>
+      <td>0</td>
+      <td>0</td>
+      <td>Benar</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>38</td>
+      <td>0</td>
+      <td>0</td>
+      <td>Benar</td>
+    </tr>
+    <tr>
+      <th>38</th>
+      <td>39</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Benar</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td>40</td>
+      <td>0</td>
+      <td>0</td>
+      <td>Benar</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="evaluasi-accuracy">
+<h2>26. Evaluasi Accuracy<a class="headerlink" href="#evaluasi-accuracy" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">accuracy</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span>
+    <span class="n">y_test_nb</span><span class="p">,</span>
+    <span class="n">y_pred</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">"Accuracy : </span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">"Accuracy : </span><span class="si">{</span><span class="n">accuracy</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%"</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy : 0.8750
+Accuracy : 87.50%
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="precision-recall-dan-f1-score">
+<h2>27. Precision, Recall, dan F1-Score<a class="headerlink" href="#precision-recall-dan-f1-score" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">precision</span> <span class="o">=</span> <span class="n">precision_score</span><span class="p">(</span>
+    <span class="n">y_test_nb</span><span class="p">,</span>
+    <span class="n">y_pred</span><span class="p">,</span>
+    <span class="n">average</span><span class="o">=</span><span class="s2">"macro"</span><span class="p">,</span>
+    <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span>
+<span class="p">)</span>
+
+<span class="n">recall</span> <span class="o">=</span> <span class="n">recall_score</span><span class="p">(</span>
+    <span class="n">y_test_nb</span><span class="p">,</span>
+    <span class="n">y_pred</span><span class="p">,</span>
+    <span class="n">average</span><span class="o">=</span><span class="s2">"macro"</span><span class="p">,</span>
+    <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span>
+<span class="p">)</span>
+
+<span class="n">f1</span> <span class="o">=</span> <span class="n">f1_score</span><span class="p">(</span>
+    <span class="n">y_test_nb</span><span class="p">,</span>
+    <span class="n">y_pred</span><span class="p">,</span>
+    <span class="n">average</span><span class="o">=</span><span class="s2">"macro"</span><span class="p">,</span>
+    <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">"Precision : </span><span class="si">{</span><span class="n">precision</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">"Recall    : </span><span class="si">{</span><span class="n">recall</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">"F1-Score  : </span><span class="si">{</span><span class="n">f1</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Precision : 0.8836
+Recall    : 0.8750
+F1-Score  : 0.8743
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
+    <span class="n">classification_report</span><span class="p">(</span>
+        <span class="n">y_test_nb</span><span class="p">,</span>
+        <span class="n">y_pred</span><span class="p">,</span>
+        <span class="n">target_names</span><span class="o">=</span><span class="p">[</span>
+            <span class="s2">"finance"</span><span class="p">,</span>
+            <span class="s2">"sport"</span>
+        <span class="p">],</span>
+        <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>              precision    recall  f1-score   support
+
+     finance       0.83      0.95      0.88        20
+       sport       0.94      0.80      0.86        20
+
+    accuracy                           0.88        40
+   macro avg       0.88      0.88      0.87        40
+weighted avg       0.88      0.88      0.87        40
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="confusion-matrix">
+<h2>28. Confusion Matrix<a class="headerlink" href="#confusion-matrix" title="Link to this heading">#</a></h2>
+<p>Confusion matrix digunakan untuk melihat jumlah prediksi benar dan salah
+untuk masing-masing kelas.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cm</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span>
+    <span class="n">y_test_nb</span><span class="p">,</span>
+    <span class="n">y_pred</span><span class="p">,</span>
+    <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">"Confusion Matrix:"</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">cm</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Confusion Matrix:
+[[19  1]
+ [ 4 16]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span>
+    <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span>
+    <span class="n">cm</span><span class="p">,</span>
+    <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">fmt</span><span class="o">=</span><span class="s2">"d"</span><span class="p">,</span>
+    <span class="n">xticklabels</span><span class="o">=</span><span class="p">[</span>
+        <span class="s2">"finance"</span><span class="p">,</span>
+        <span class="s2">"sport"</span>
+    <span class="p">],</span>
+    <span class="n">yticklabels</span><span class="o">=</span><span class="p">[</span>
+        <span class="s2">"finance"</span><span class="p">,</span>
+        <span class="s2">"sport"</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span>
+    <span class="s2">"Predicted Label"</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span>
+    <span class="s2">"Actual Label"</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span>
+    <span class="s2">"Confusion Matrix - Skip-gram + Naive Bayes"</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/3028510cb65371a72b0dd84045effbe943c26c85bd091a161a4ccf5c5a16127b.png" src="_images/3028510cb65371a72b0dd84045effbe943c26c85bd091a161a4ccf5c5a16127b.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_salah</span> <span class="o">=</span> <span class="n">df_hasil_prediksi</span><span class="p">[</span>
+    <span class="n">df_hasil_prediksi</span><span class="p">[</span><span class="s2">"Status"</span><span class="p">]</span>
+    <span class="o">==</span> <span class="s2">"Salah"</span>
+<span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">"Jumlah prediksi salah:"</span><span class="p">,</span>
+    <span class="nb">len</span><span class="p">(</span><span class="n">df_salah</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">display</span><span class="p">(</span>
+    <span class="n">df_salah</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah prediksi salah: 5
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Data_Testing</th>
+      <th>Label_Aktual</th>
+      <th>Label_Prediksi</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>1</td>
+      <td>0</td>
+      <td>Salah</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>6</td>
+      <td>1</td>
+      <td>0</td>
+      <td>Salah</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>8</td>
+      <td>1</td>
+      <td>0</td>
+      <td>Salah</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>10</td>
+      <td>0</td>
+      <td>1</td>
+      <td>Salah</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>22</td>
+      <td>1</td>
+      <td>0</td>
+      <td>Salah</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="ringkasan-hasil-evaluasi">
+<h2>29. Ringkasan Hasil Evaluasi<a class="headerlink" href="#ringkasan-hasil-evaluasi" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_evaluasi</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+
+    <span class="s2">"Model"</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">"Skip-gram + Naive Bayes"</span>
+    <span class="p">],</span>
+
+    <span class="s2">"Jumlah_Training"</span><span class="p">:</span> <span class="p">[</span>
+        <span class="nb">len</span><span class="p">(</span><span class="n">y_train_nb</span><span class="p">)</span>
+    <span class="p">],</span>
+
+    <span class="s2">"Jumlah_Testing"</span><span class="p">:</span> <span class="p">[</span>
+        <span class="nb">len</span><span class="p">(</span><span class="n">y_test_nb</span><span class="p">)</span>
+    <span class="p">],</span>
+
+    <span class="s2">"Vector_Size"</span><span class="p">:</span> <span class="p">[</span>
+        <span class="n">VECTOR_SIZE</span>
+    <span class="p">],</span>
+
+    <span class="s2">"Window"</span><span class="p">:</span> <span class="p">[</span>
+        <span class="n">WINDOW_SIZE</span>
+    <span class="p">],</span>
+
+    <span class="s2">"Accuracy"</span><span class="p">:</span> <span class="p">[</span>
+        <span class="n">accuracy</span>
+    <span class="p">],</span>
+
+    <span class="s2">"Precision_Macro"</span><span class="p">:</span> <span class="p">[</span>
+        <span class="n">precision</span>
+    <span class="p">],</span>
+
+    <span class="s2">"Recall_Macro"</span><span class="p">:</span> <span class="p">[</span>
+        <span class="n">recall</span>
+    <span class="p">],</span>
+
+    <span class="s2">"F1_Macro"</span><span class="p">:</span> <span class="p">[</span>
+        <span class="n">f1</span>
+    <span class="p">]</span>
+<span class="p">})</span>
+
+<span class="n">display</span><span class="p">(</span>
+    <span class="n">df_evaluasi</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Model</th>
+      <th>Jumlah_Training</th>
+      <th>Jumlah_Testing</th>
+      <th>Vector_Size</th>
+      <th>Window</th>
+      <th>Accuracy</th>
+      <th>Precision_Macro</th>
+      <th>Recall_Macro</th>
+      <th>F1_Macro</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Skip-gram + Naive Bayes</td>
+      <td>160</td>
+      <td>40</td>
+      <td>50</td>
+      <td>1</td>
+      <td>0.875</td>
+      <td>0.883632</td>
+      <td>0.875</td>
+      <td>0.874293</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_hasil_prediksi</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span>
+    <span class="s2">"hasil_prediksi_skipgram_naive_bayes.xlsx"</span><span class="p">,</span>
+    <span class="n">index</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">)</span>
+
+<span class="n">df_evaluasi</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span>
+    <span class="s2">"evaluasi_skipgram_naive_bayes.xlsx"</span><span class="p">,</span>
+    <span class="n">index</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">"Semua hasil berhasil disimpan."</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Semua hasil berhasil disimpan.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "envwebmining"
+        },
+        kernelOptions: {
+            name: "envwebmining",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'envwebmining'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Tugas_2.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Tugas 2 - Text Preprocessing, TF-IDF, ICSDF, dan PCA</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pencarian-dan-penambangan-web">Pencarian dan Penambangan Web</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#alur-proses">Alur proses</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ketentuan-preprocessing">Ketentuan preprocessing</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#install-library">1. Install Library</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#import-library">2. Import Library</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#membaca-dataset">3. Membaca Dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pemeriksaan-dataset">4. Pemeriksaan Dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mengubah-label-menjadi-numerik">5. Mengubah Label Menjadi Numerik</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#menghitung-jumlah-kata-sebelum-preprocessing">6. Menghitung Jumlah Kata Sebelum Preprocessing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preprocessing">7. Preprocessing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pemeriksaan-hasil-preprocessing">8. Pemeriksaan Hasil Preprocessing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#menghitung-jumlah-kata-setelah-preprocessing">9. Menghitung Jumlah Kata Setelah Preprocessing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#membagi-data-training-dan-testing">10. Membagi Data Training dan Testing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tokenisasi">11. Tokenisasi</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#membuat-pasangan-target-dan-context">12. Membuat Pasangan Target dan Context</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#membuat-vocabulary">13. Membuat Vocabulary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parameter-skip-gram">14. Parameter Skip-gram</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fungsi-softmax">15. Fungsi Softmax</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inisialisasi-bobot-skip-gram">16. Inisialisasi Bobot Skip-gram</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#training-skip-gram">16. Training Skip-gram</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#word-embedding-hasil-skip-gram">17. Word Embedding Hasil Skip-gram</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#melihat-vektor-kata">18. Melihat Vektor Kata</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mengubah-berita-menjadi-vektor">19. Mengubah Berita Menjadi Vektor</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset-vektor-training">20. Dataset Vektor Training</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset-vektor-testing">21. Dataset Vektor Testing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#menyimpan-hasil-vektor-skip-gram">22. Menyimpan Hasil Vektor Skip-gram</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#menyiapkan-data-untuk-naive-bayes">23. Menyiapkan Data untuk Naive Bayes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#training-gaussian-naive-bayes">24. Training Gaussian Naive Bayes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prediksi-data-testing">25. Prediksi Data Testing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluasi-accuracy">26. Evaluasi Accuracy</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#precision-recall-dan-f1-score">27. Precision, Recall, dan F1-Score</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#confusion-matrix">28. Confusion Matrix</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ringkasan-hasil-evaluasi">29. Ringkasan Hasil Evaluasi</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
