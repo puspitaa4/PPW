@@ -1,0 +1,3266 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Tugas 4: Klasifikasi Teks Berita Menggunakan Word Embedding Skip-gram</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css?v=8cd3d715" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Tugas_3';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="_static/searchtools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/pp.jpeg" class="logo__image only-light" alt=" - Home"/>
+    <img src="_static/pp.jpeg" class="logo__image only-dark pst-js-only" alt=" - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    PPW (Pencarian & penambangan Web)
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Tugas_1.html">Tugas 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tugas_2.html">Tugas 2 - Text Preprocessing, TF-IDF, ICSDF, dan PCA</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FTugas_3.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/Tugas_3.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Tugas 4: Klasifikasi Teks Berita Menggunakan Word Embedding Skip-gram</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Tugas 4: Klasifikasi Teks Berita Menggunakan Word Embedding Skip-gram</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#co-occurrence-matrix-svd-naive-bayes-dan-k-nearest-neighbors-knn">Co-occurrence Matrix + SVD, Naive Bayes, dan k-Nearest Neighbors (kNN)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#install-library">1. Install Library</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#import-library">2. Import Library</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#konfigurasi-parameter">3. Konfigurasi Parameter</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#membaca-dataset">4. Membaca Dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pemeriksaan-dataset">5. Pemeriksaan Dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mengubah-label-menjadi-numerik">6. Mengubah Label Menjadi Numerik</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#menghitung-jumlah-kata-sebelum-preprocessing">7. Menghitung Jumlah Kata Sebelum Preprocessing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preprocessing-dasar">8. Preprocessing Dasar</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#menghitung-jumlah-kata-setelah-preprocessing-dasar">9. Menghitung Jumlah Kata Setelah Preprocessing Dasar</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pembagian-data-training-dan-testing">10. Pembagian Data Training dan Testing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tokenisasi">11. Tokenisasi</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#daftar-stopwords-bahasa-indonesia">12. Daftar Stopwords Bahasa Indonesia</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#membuat-dua-skenario-corpus">13. Membuat Dua Skenario Corpus</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#skenario-1-dengan-stopwords">Skenario 1: Dengan Stopwords</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#skenario-2-tanpa-stopwords">Skenario 2: Tanpa Stopwords</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statistik-corpus">14. Statistik Corpus</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#membentuk-vocabulary">15. Membentuk Vocabulary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#membentuk-co-occurrence-matrix">16. Membentuk Co-occurrence Matrix</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reduksi-dimensi-menggunakan-svd">17. Reduksi Dimensi Menggunakan SVD</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-pooling">18. Mean Pooling</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fungsi-pemrosesan-skenario">19. Fungsi Pemrosesan Skenario</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">20. Skenario 1: Dengan Stopwords</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#naive-bayes-dengan-stopwords">21. Naive Bayes - Dengan Stopwords</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluasi-model">22. Evaluasi Model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#k-nearest-neighbors-dengan-stopwords">23. k-Nearest Neighbors - Dengan Stopwords</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">24. Skenario 2: Tanpa Stopwords</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#naive-bayes-tanpa-stopwords">25. Naive Bayes - Tanpa Stopwords</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluasi-naive-bayes-tanpa-stopwords">26. Evaluasi Naive Bayes - Tanpa Stopwords</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#k-nearest-neighbors-tanpa-stopwords">27. k-Nearest Neighbors - Tanpa Stopwords</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#sensitivitas-nilai-k-pada-knn">28. Sensitivitas Nilai k pada kNN</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-sensitivitas-nilai-k">29. Visualisasi Sensitivitas Nilai k</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nilai-k-untuk-evaluasi-knn">30. Nilai k untuk Evaluasi kNN</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#perbandingan-hasil-eksperimen">31. Perbandingan Hasil Eksperimen</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#confusion-matrix">32. Confusion Matrix</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-ruang-vektor-dokumen-dengan-pca">Visualisasi Ruang Vektor Dokumen dengan PCA</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pca-skenario-dengan-stopwords">PCA Skenario Dengan Stopwords</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pca-skenario-tanpa-stopwords">PCA Skenario Tanpa Stopwords</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#penyimpanan-hasil-eksperimen">Penyimpanan Hasil Eksperimen</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#kesimpulan">Kesimpulan</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="tugas-4-klasifikasi-teks-berita-menggunakan-word-embedding-skip-gram">
+<h1>Tugas 4: Klasifikasi Teks Berita Menggunakan Word Embedding Skip-gram<a class="headerlink" href="#tugas-4-klasifikasi-teks-berita-menggunakan-word-embedding-skip-gram" title="Link to this heading">#</a></h1>
+<section id="co-occurrence-matrix-svd-naive-bayes-dan-k-nearest-neighbors-knn">
+<h2>Co-occurrence Matrix + SVD, Naive Bayes, dan k-Nearest Neighbors (kNN)<a class="headerlink" href="#co-occurrence-matrix-svd-naive-bayes-dan-k-nearest-neighbors-knn" title="Link to this heading">#</a></h2>
+<p>Pada tugas ini dilakukan klasifikasi teks berita menggunakan representasi
+word embedding berbasis Co-occurrence Matrix dan Singular Value
+Decomposition (SVD).</p>
+<p>Klasifikasi dilakukan menggunakan dua algoritma:</p>
+<ol class="arabic simple">
+<li><p>Gaussian Naive Bayes</p></li>
+<li><p>k-Nearest Neighbors (kNN)</p></li>
+</ol>
+<p>Eksperimen dilakukan dalam dua skenario preprocessing:</p>
+<ol class="arabic simple">
+<li><p>Dengan Stopwords</p></li>
+<li><p>Tanpa Stopwords</p></li>
+</ol>
+</section>
+<section id="install-library">
+<h2>1. Install Library<a class="headerlink" href="#install-library" title="Link to this heading">#</a></h2>
+<p>Library yang digunakan pada tugas ini adalah:</p>
+<ul class="simple">
+<li><p>pandas untuk membaca dan mengolah dataset</p></li>
+<li><p>numpy untuk operasi numerik</p></li>
+<li><p>gensim untuk Word2Vec Skip-gram</p></li>
+<li><p>scikit-learn untuk pembagian data dan Naive Bayes</p></li>
+<li><p>matplotlib dan seaborn untuk visualisasi evaluasi</p></li>
+<li><p>openpyxl untuk membaca dan menyimpan file Excel</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">pip</span> install pandas numpy scikit-learn matplotlib seaborn openpyxl Sastrawi
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: pandas in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (3.0.5)
+Requirement already satisfied: numpy in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (2.5.3)
+Requirement already satisfied: scikit-learn in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (1.9.1)
+Requirement already satisfied: matplotlib in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (3.11.2)
+Requirement already satisfied: seaborn in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (0.13.2)
+Requirement already satisfied: openpyxl in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (3.1.5)
+Requirement already satisfied: Sastrawi in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (1.0.1)
+Requirement already satisfied: python-dateutil&gt;=2.8.2 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from pandas) (2.9.0.post0)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: scipy&gt;=1.10.0 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from scikit-learn) (1.18.1)
+Requirement already satisfied: joblib&gt;=1.4.0 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from scikit-learn) (1.6.0)
+Requirement already satisfied: narwhals&gt;=2.0.1 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from scikit-learn) (2.26.0)
+Requirement already satisfied: threadpoolctl&gt;=3.5.0 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from scikit-learn) (3.7.0)
+Requirement already satisfied: contourpy&gt;=1.0.1 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from matplotlib) (1.4.0)
+Requirement already satisfied: cycler&gt;=0.10 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from matplotlib) (0.12.1)
+Requirement already satisfied: fonttools&gt;=4.28.2 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from matplotlib) (4.66.1)
+Requirement already satisfied: kiwisolver&gt;=1.3.1 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from matplotlib) (1.5.1)
+Requirement already satisfied: packaging&gt;=20.0 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from matplotlib) (26.3)
+Requirement already satisfied: pillow&gt;=9 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from matplotlib) (12.3.0)
+Requirement already satisfied: pyparsing&gt;=3 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from matplotlib) (3.3.3)
+Requirement already satisfied: et-xmlfile in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from openpyxl) (2.0.0)
+Requirement already satisfied: cloudpickle&gt;=3.0 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from joblib&gt;=1.4.0-&gt;scikit-learn) (3.1.2)
+Requirement already satisfied: six&gt;=1.5 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from python-dateutil&gt;=2.8.2-&gt;pandas) (1.17.0)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold">[</span><span class=" -Color -Color-Blue">notice</span><span class=" -Color -Color-Bold">]</span> A new release of pip is available: <span class=" -Color -Color-Red">25.3</span> -&gt; <span class=" -Color -Color-Green">26.2.1</span>
+<span class=" -Color -Color-Bold">[</span><span class=" -Color -Color-Blue">notice</span><span class=" -Color -Color-Bold">]</span> To update, run: <span class=" -Color -Color-Green">pip install --upgrade pip</span>
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Note: you may need to restart the kernel to use updated packages.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="import-library">
+<h2>2. Import Library<a class="headerlink" href="#import-library" title="Link to this heading">#</a></h2>
+<p>Library digunakan untuk proses preprocessing, pembentukan Co-occurrence
+Matrix, reduksi dimensi menggunakan SVD, klasifikasi Naive Bayes,
+k-Nearest Neighbors, serta evaluasi model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">unicodedata</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">Counter</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">Sastrawi.StopWordRemover.StopWordRemoverFactory</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">StopWordRemoverFactory</span>
+<span class="p">)</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.decomposition</span><span class="w"> </span><span class="kn">import</span> <span class="n">TruncatedSVD</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.decomposition</span><span class="w"> </span><span class="kn">import</span> <span class="n">PCA</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.naive_bayes</span><span class="w"> </span><span class="kn">import</span> <span class="n">GaussianNB</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.neighbors</span><span class="w"> </span><span class="kn">import</span> <span class="n">KNeighborsClassifier</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">accuracy_score</span><span class="p">,</span>
+    <span class="n">precision_score</span><span class="p">,</span>
+    <span class="n">recall_score</span><span class="p">,</span>
+    <span class="n">f1_score</span><span class="p">,</span>
+    <span class="n">confusion_matrix</span><span class="p">,</span>
+    <span class="n">classification_report</span>
+<span class="p">)</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="konfigurasi-parameter">
+<h2>3. Konfigurasi Parameter<a class="headerlink" href="#konfigurasi-parameter" title="Link to this heading">#</a></h2>
+<p>Parameter digunakan agar proses eksperimen pada kedua skenario
+menggunakan konfigurasi yang sama.</p>
+<p>Parameter utama:</p>
+<ul class="simple">
+<li><p>Embedding dimension = 12</p></li>
+<li><p>Window size = 2</p></li>
+<li><p>Top vocabulary = 150</p></li>
+<li><p>Test size = 20%</p></li>
+<li><p>Random state = 42</p></li>
+<li><p>Nilai k = 1, 3, 5, 7, 9</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">EMBEDDING_DIM</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="n">WINDOW_SIZE</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">TOP_VOCAB</span> <span class="o">=</span> <span class="mi">150</span>
+
+<span class="n">TEST_SIZE</span> <span class="o">=</span> <span class="mf">0.2</span>
+<span class="n">RANDOM_STATE</span> <span class="o">=</span> <span class="mi">42</span>
+
+<span class="n">K_VALUES</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Embedding dimension :"</span><span class="p">,</span> <span class="n">EMBEDDING_DIM</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Window size         :"</span><span class="p">,</span> <span class="n">WINDOW_SIZE</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Top vocabulary      :"</span><span class="p">,</span> <span class="n">TOP_VOCAB</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Test size           :"</span><span class="p">,</span> <span class="n">TEST_SIZE</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Random state        :"</span><span class="p">,</span> <span class="n">RANDOM_STATE</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"K values            :"</span><span class="p">,</span> <span class="n">K_VALUES</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Embedding dimension : 12
+Window size         : 2
+Top vocabulary      : 150
+Test size           : 0.2
+Random state        : 42
+K values            : [1, 3, 5, 7, 9]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="membaca-dataset">
+<h2>4. Membaca Dataset<a class="headerlink" href="#membaca-dataset" title="Link to this heading">#</a></h2>
+<p>Dataset yang digunakan adalah dataset berita yang terdiri dari 200 berita
+dengan dua kategori, yaitu Sport dan Finance.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">DATA_PATH</span> <span class="o">=</span> <span class="s2">"dataset_detik_200_berita.xlsx"</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_excel</span><span class="p">(</span>
+    <span class="n">DATA_PATH</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">"Shape dataset:"</span><span class="p">,</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">shape</span>
+<span class="p">)</span>
+
+<span class="n">display</span><span class="p">(</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Shape dataset: (200, 3)
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>isi_berita</th>
+      <th>label</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>Dalam dua seri terakhir MotoGP 2027, Marc Marq...</td>
+      <td>sport</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>Alwi Farhan, Moh Zaki Ubaidillah dan Muhamad Y...</td>
+      <td>sport</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>Di tengah viral insiden cepirit pada ajang Hyr...</td>
+      <td>sport</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>Dejan Fedinansyah/Felisha Alberta Nathaniel Pa...</td>
+      <td>sport</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>Bagas Maulana/Apriyani Rahayu tak minder meski...</td>
+      <td>sport</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="pemeriksaan-dataset">
+<h2>5. Pemeriksaan Dataset<a class="headerlink" href="#pemeriksaan-dataset" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">"Informasi dataset:"</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Jumlah nilai kosong:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="n">df</span><span class="p">[</span>
+        <span class="p">[</span><span class="s2">"id"</span><span class="p">,</span> <span class="s2">"isi_berita"</span><span class="p">,</span> <span class="s2">"label"</span><span class="p">]</span>
+    <span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Distribusi label:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">"label"</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Informasi dataset:
+&lt;class 'pandas.DataFrame'&gt;
+RangeIndex: 200 entries, 0 to 199
+Data columns (total 3 columns):
+ #   Column      Non-Null Count  Dtype
+---  ------      --------------  -----
+ 0   id          200 non-null    int64
+ 1   isi_berita  200 non-null    str  
+ 2   label       200 non-null    str  
+dtypes: int64(1), str(2)
+memory usage: 4.8 KB
+
+Jumlah nilai kosong:
+id            0
+isi_berita    0
+label         0
+dtype: int64
+
+Distribusi label:
+label
+sport      100
+finance    100
+Name: count, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="mengubah-label-menjadi-numerik">
+<h2>6. Mengubah Label Menjadi Numerik<a class="headerlink" href="#mengubah-label-menjadi-numerik" title="Link to this heading">#</a></h2>
+<p>Mapping label yang digunakan:</p>
+<ul class="simple">
+<li><p>finance = 0</p></li>
+<li><p>sport = 1</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s2">"label_num"</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">"label"</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">({</span>
+    <span class="s2">"finance"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s2">"sport"</span><span class="p">:</span> <span class="mi">1</span>
+<span class="p">})</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Mapping label:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"finance = 0"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"sport   = 1"</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Distribusi label:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">"label_num"</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mapping label:
+finance = 0
+sport   = 1
+
+Distribusi label:
+label_num
+0    100
+1    100
+Name: count, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="menghitung-jumlah-kata-sebelum-preprocessing">
+<h2>7. Menghitung Jumlah Kata Sebelum Preprocessing<a class="headerlink" href="#menghitung-jumlah-kata-sebelum-preprocessing" title="Link to this heading">#</a></h2>
+<p>Jumlah kata dihitung sebelum preprocessing untuk mengetahui kondisi awal
+dataset.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s2">"jumlah_kata_asli"</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">"isi_berita"</span><span class="p">]</span>
+    <span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">"Total seluruh kata:"</span><span class="p">,</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">"jumlah_kata_asli"</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Statistik jumlah kata:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">"jumlah_kata_asli"</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Total seluruh kata: 67076
+
+Statistik jumlah kata:
+count    200.000000
+mean     335.380000
+std      161.031304
+min       42.000000
+25%      241.000000
+50%      303.000000
+75%      392.250000
+max      963.000000
+Name: jumlah_kata_asli, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="preprocessing-dasar">
+<h2>8. Preprocessing Dasar<a class="headerlink" href="#preprocessing-dasar" title="Link to this heading">#</a></h2>
+<p>Preprocessing dasar dilakukan dengan menghilangkan tanda baca.</p>
+<p>Setelah preprocessing dasar, data digunakan untuk dua skenario:</p>
+<ol class="arabic simple">
+<li><p>Dengan Stopwords</p></li>
+<li><p>Tanpa Stopwords</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">remove_punctuation</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+
+    <span class="n">text</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+
+    <span class="n">text</span> <span class="o">=</span> <span class="s2">""</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+        <span class="n">char</span>
+        <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">text</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">unicodedata</span><span class="o">.</span><span class="n">category</span><span class="p">(</span><span class="n">char</span><span class="p">)</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"P"</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span>
+        <span class="sa">r</span><span class="s2">"\s+"</span><span class="p">,</span>
+        <span class="s2">" "</span><span class="p">,</span>
+        <span class="n">text</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">text</span>
+
+
+<span class="n">df</span><span class="p">[</span><span class="s2">"berita_clean"</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">"isi_berita"</span><span class="p">]</span>
+    <span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">remove_punctuation</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">display</span><span class="p">(</span>
+    <span class="n">df</span><span class="p">[</span>
+        <span class="p">[</span>
+            <span class="s2">"id"</span><span class="p">,</span>
+            <span class="s2">"isi_berita"</span><span class="p">,</span>
+            <span class="s2">"berita_clean"</span><span class="p">,</span>
+            <span class="s2">"label"</span>
+        <span class="p">]</span>
+    <span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>isi_berita</th>
+      <th>berita_clean</th>
+      <th>label</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>Dalam dua seri terakhir MotoGP 2027, Marc Marq...</td>
+      <td>Dalam dua seri terakhir MotoGP 2027 Marc Marqu...</td>
+      <td>sport</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>Alwi Farhan, Moh Zaki Ubaidillah dan Muhamad Y...</td>
+      <td>Alwi Farhan Moh Zaki Ubaidillah dan Muhamad Yu...</td>
+      <td>sport</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>Di tengah viral insiden cepirit pada ajang Hyr...</td>
+      <td>Di tengah viral insiden cepirit pada ajang Hyr...</td>
+      <td>sport</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>Dejan Fedinansyah/Felisha Alberta Nathaniel Pa...</td>
+      <td>Dejan FedinansyahFelisha Alberta Nathaniel Pas...</td>
+      <td>sport</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>Bagas Maulana/Apriyani Rahayu tak minder meski...</td>
+      <td>Bagas MaulanaApriyani Rahayu tak minder meski ...</td>
+      <td>sport</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="menghitung-jumlah-kata-setelah-preprocessing-dasar">
+<h2>9. Menghitung Jumlah Kata Setelah Preprocessing Dasar<a class="headerlink" href="#menghitung-jumlah-kata-setelah-preprocessing-dasar" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Menghitung jumlah kata sebelum preprocessing</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">"jumlah_kata_asli"</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">"isi_berita"</span><span class="p">]</span>
+    <span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
+<span class="p">)</span>
+
+<span class="c1"># Menghitung jumlah kata setelah preprocessing</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">"jumlah_kata_clean"</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">"berita_clean"</span><span class="p">]</span>
+    <span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">"Total kata sebelum preprocessing:"</span><span class="p">,</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">"jumlah_kata_asli"</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">"Total kata setelah preprocessing:"</span><span class="p">,</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">"jumlah_kata_clean"</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Total kata sebelum preprocessing: 67076
+Total kata setelah preprocessing: 66885
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="pembagian-data-training-dan-testing">
+<h2>10. Pembagian Data Training dan Testing<a class="headerlink" href="#pembagian-data-training-dan-testing" title="Link to this heading">#</a></h2>
+<p>Dataset dibagi menjadi:</p>
+<ul class="simple">
+<li><p>160 data training</p></li>
+<li><p>40 data testing</p></li>
+</ul>
+<p>Pembagian dilakukan menggunakan stratified split agar distribusi kelas
+tetap seimbang pada data training dan testing.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_text_train</span><span class="p">,</span> <span class="n">X_text_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">"berita_clean"</span><span class="p">],</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">"label_num"</span><span class="p">],</span>
+    <span class="n">test_size</span><span class="o">=</span><span class="n">TEST_SIZE</span><span class="p">,</span>
+    <span class="n">random_state</span><span class="o">=</span><span class="n">RANDOM_STATE</span><span class="p">,</span>
+    <span class="n">stratify</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">"label_num"</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Jumlah data training:"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_text_train</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Jumlah data testing :"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_text_test</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Distribusi training:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">y_train</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">sort_index</span><span class="p">())</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Distribusi testing:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">y_test</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">sort_index</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah data training: 160
+Jumlah data testing : 40
+
+Distribusi training:
+label_num
+0    80
+1    80
+Name: count, dtype: int64
+
+Distribusi testing:
+label_num
+0    20
+1    20
+Name: count, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="tokenisasi">
+<h2>11. Tokenisasi<a class="headerlink" href="#tokenisasi" title="Link to this heading">#</a></h2>
+<p>Setiap berita diubah menjadi kumpulan token atau kata menggunakan
+pemisahan berdasarkan spasi.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">tokenize</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">text</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+
+
+<span class="n">train_tokens_basic</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">tokenize</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">text</span> <span class="ow">in</span> <span class="n">X_text_train</span>
+<span class="p">]</span>
+
+<span class="n">test_tokens_basic</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">tokenize</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">text</span> <span class="ow">in</span> <span class="n">X_text_test</span>
+<span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Contoh tokenisasi:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">train_tokens_basic</span><span class="p">[</span><span class="mi">0</span><span class="p">][:</span><span class="mi">30</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Contoh tokenisasi:
+['Mantan', 'Menteri', 'Keuangan', 'Purbaya', 'Yudhi', 'Sadewa', 'menegaskan', 'seluruh', 'urusan', 'yang', 'berkaitan', 'dengan', 'kesepakatan', 'peralihan', 'handover', 'serta', 'penanganan', 'utang', 'proyek', 'Kereta', 'Cepat', 'JakartaBandung', 'Whoosh', 'kini', 'sepenuhnya', 'diserahkan', 'kepada', 'Bendahara', 'Negara', 'yang']
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="daftar-stopwords-bahasa-indonesia">
+<h2>12. Daftar Stopwords Bahasa Indonesia<a class="headerlink" href="#daftar-stopwords-bahasa-indonesia" title="Link to this heading">#</a></h2>
+<p>Daftar stopwords diperoleh menggunakan Sastrawi.</p>
+<p>Daftar stopwords digunakan pada Skenario 2.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">factory</span> <span class="o">=</span> <span class="n">StopWordRemoverFactory</span><span class="p">()</span>
+
+<span class="n">stopwords</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span>
+    <span class="n">factory</span><span class="o">.</span><span class="n">get_stop_words</span><span class="p">()</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Jumlah stopwords:"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">stopwords</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Contoh stopwords:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">stopwords</span><span class="p">)[:</span><span class="mi">30</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah stopwords: 123
+
+Contoh stopwords:
+['dapat', 'namun', 'dulunya', 'pun', 'seterusnya', 'maka', 'ya', 'menurut', 'yakni', 'serta', 'sudah', 'pada', 'sebetulnya', 'seperti', 'ok', 'sehingga', 'sementara', 'sebagai', 'sampai', 'hanya', 'dst', 'seharusnya', 'telah', 'saat', 'demikian', 'begitu', 'kami', 'sedangkan', 'dsb', 'bagaimanapun']
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="membuat-dua-skenario-corpus">
+<h2>13. Membuat Dua Skenario Corpus<a class="headerlink" href="#membuat-dua-skenario-corpus" title="Link to this heading">#</a></h2>
+<section id="skenario-1-dengan-stopwords">
+<h3>Skenario 1: Dengan Stopwords<a class="headerlink" href="#skenario-1-dengan-stopwords" title="Link to this heading">#</a></h3>
+<p>Stopwords tetap dipertahankan.</p>
+</section>
+<section id="skenario-2-tanpa-stopwords">
+<h3>Skenario 2: Tanpa Stopwords<a class="headerlink" href="#skenario-2-tanpa-stopwords" title="Link to this heading">#</a></h3>
+<p>Stopwords Bahasa Indonesia dihapus dari token.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">remove_stopwords</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="n">stopwords</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">[</span>
+        <span class="n">word</span>
+        <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">tokens</span>
+        <span class="k">if</span> <span class="n">word</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stopwords</span>
+    <span class="p">]</span>
+
+
+<span class="c1"># Skenario 1: Dengan Stopwords</span>
+<span class="n">train_tokens_with_sw</span> <span class="o">=</span> <span class="n">train_tokens_basic</span>
+<span class="n">test_tokens_with_sw</span> <span class="o">=</span> <span class="n">test_tokens_basic</span>
+
+
+<span class="c1"># Skenario 2: Tanpa Stopwords</span>
+<span class="n">train_tokens_without_sw</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">remove_stopwords</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="n">stopwords</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">tokens</span> <span class="ow">in</span> <span class="n">train_tokens_basic</span>
+<span class="p">]</span>
+
+<span class="n">test_tokens_without_sw</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">remove_stopwords</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="n">stopwords</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">tokens</span> <span class="ow">in</span> <span class="n">test_tokens_basic</span>
+<span class="p">]</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Contoh Skenario 1 - Dengan Stopwords:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">train_tokens_with_sw</span><span class="p">[</span><span class="mi">0</span><span class="p">][:</span><span class="mi">30</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Contoh Skenario 2 - Tanpa Stopwords:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">train_tokens_without_sw</span><span class="p">[</span><span class="mi">0</span><span class="p">][:</span><span class="mi">30</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Contoh Skenario 1 - Dengan Stopwords:
+['Mantan', 'Menteri', 'Keuangan', 'Purbaya', 'Yudhi', 'Sadewa', 'menegaskan', 'seluruh', 'urusan', 'yang', 'berkaitan', 'dengan', 'kesepakatan', 'peralihan', 'handover', 'serta', 'penanganan', 'utang', 'proyek', 'Kereta', 'Cepat', 'JakartaBandung', 'Whoosh', 'kini', 'sepenuhnya', 'diserahkan', 'kepada', 'Bendahara', 'Negara', 'yang']
+
+Contoh Skenario 2 - Tanpa Stopwords:
+['Mantan', 'Menteri', 'Keuangan', 'Purbaya', 'Yudhi', 'Sadewa', 'menegaskan', 'seluruh', 'urusan', 'berkaitan', 'kesepakatan', 'peralihan', 'handover', 'penanganan', 'utang', 'proyek', 'Kereta', 'Cepat', 'JakartaBandung', 'Whoosh', 'kini', 'sepenuhnya', 'diserahkan', 'Bendahara', 'Negara', 'baru', 'Suahasil', 'Nazara', 'Purbaya', 'menyatakan']
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="statistik-corpus">
+<h2>14. Statistik Corpus<a class="headerlink" href="#statistik-corpus" title="Link to this heading">#</a></h2>
+<p>Statistik corpus digunakan untuk melihat perbedaan jumlah token dan
+vocabulary antara Skenario 1 dan Skenario 2.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">corpus_statistics</span><span class="p">(</span><span class="n">tokenized_documents</span><span class="p">):</span>
+
+    <span class="n">total_tokens</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span>
+        <span class="nb">len</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">tokens</span> <span class="ow">in</span> <span class="n">tokenized_documents</span>
+    <span class="p">)</span>
+
+    <span class="n">vocabulary</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span>
+        <span class="n">word</span>
+        <span class="k">for</span> <span class="n">tokens</span> <span class="ow">in</span> <span class="n">tokenized_documents</span>
+        <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">tokens</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">"total_tokens"</span><span class="p">:</span> <span class="n">total_tokens</span><span class="p">,</span>
+        <span class="s2">"vocabulary"</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">vocabulary</span><span class="p">)</span>
+    <span class="p">}</span>
+
+
+<span class="n">stats_with_sw</span> <span class="o">=</span> <span class="n">corpus_statistics</span><span class="p">(</span>
+    <span class="n">train_tokens_with_sw</span>
+<span class="p">)</span>
+
+<span class="n">stats_without_sw</span> <span class="o">=</span> <span class="n">corpus_statistics</span><span class="p">(</span>
+    <span class="n">train_tokens_without_sw</span>
+<span class="p">)</span>
+
+
+<span class="n">df_corpus_stats</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+
+    <span class="s2">"Skenario"</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">"Dengan Stopwords"</span><span class="p">,</span>
+        <span class="s2">"Tanpa Stopwords"</span>
+    <span class="p">],</span>
+
+    <span class="s2">"Total Token"</span><span class="p">:</span> <span class="p">[</span>
+        <span class="n">stats_with_sw</span><span class="p">[</span><span class="s2">"total_tokens"</span><span class="p">],</span>
+        <span class="n">stats_without_sw</span><span class="p">[</span><span class="s2">"total_tokens"</span><span class="p">]</span>
+    <span class="p">],</span>
+
+    <span class="s2">"Vocabulary"</span><span class="p">:</span> <span class="p">[</span>
+        <span class="n">stats_with_sw</span><span class="p">[</span><span class="s2">"vocabulary"</span><span class="p">],</span>
+        <span class="n">stats_without_sw</span><span class="p">[</span><span class="s2">"vocabulary"</span><span class="p">]</span>
+    <span class="p">]</span>
+<span class="p">})</span>
+
+
+<span class="n">display</span><span class="p">(</span><span class="n">df_corpus_stats</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Skenario</th>
+      <th>Total Token</th>
+      <th>Vocabulary</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Dengan Stopwords</td>
+      <td>53142</td>
+      <td>8282</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Tanpa Stopwords</td>
+      <td>41831</td>
+      <td>8181</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="membentuk-vocabulary">
+<h2>15. Membentuk Vocabulary<a class="headerlink" href="#membentuk-vocabulary" title="Link to this heading">#</a></h2>
+<p>Vocabulary dibentuk berdasarkan kata-kata yang terdapat pada data
+training.</p>
+<p>Kata dengan frekuensi tertinggi digunakan untuk membentuk
+Co-occurrence Matrix.</p>
+<p>Jumlah vocabulary yang digunakan dibatasi sebanyak 150 kata.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">build_vocabulary</span><span class="p">(</span>
+    <span class="n">tokenized_documents</span><span class="p">,</span>
+    <span class="n">top_vocab</span>
+<span class="p">):</span>
+
+    <span class="n">counter</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">tokens</span> <span class="ow">in</span> <span class="n">tokenized_documents</span><span class="p">:</span>
+        <span class="n">counter</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
+
+    <span class="n">most_common</span> <span class="o">=</span> <span class="n">counter</span><span class="o">.</span><span class="n">most_common</span><span class="p">(</span>
+        <span class="n">top_vocab</span>
+    <span class="p">)</span>
+
+    <span class="n">vocabulary</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">word</span>
+        <span class="k">for</span> <span class="n">word</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">most_common</span>
+    <span class="p">]</span>
+
+    <span class="n">word_to_index</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">word</span><span class="p">:</span> <span class="n">i</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">word</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">vocabulary</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="n">vocabulary</span><span class="p">,</span>
+        <span class="n">word_to_index</span><span class="p">,</span>
+        <span class="n">counter</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="membentuk-co-occurrence-matrix">
+<h2>16. Membentuk Co-occurrence Matrix<a class="headerlink" href="#membentuk-co-occurrence-matrix" title="Link to this heading">#</a></h2>
+<p>Co-occurrence Matrix digunakan untuk merepresentasikan hubungan
+kemunculan antara kata target dan kata context.</p>
+<p>Kata yang berada di sekitar kata target dalam window tertentu
+akan dihitung sebagai kata context.</p>
+<p>Window size yang digunakan adalah 2.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">build_cooccurrence_matrix</span><span class="p">(</span>
+    <span class="n">tokenized_documents</span><span class="p">,</span>
+    <span class="n">word_to_index</span><span class="p">,</span>
+    <span class="n">window_size</span>
+<span class="p">):</span>
+
+    <span class="n">vocab_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">word_to_index</span><span class="p">)</span>
+
+    <span class="n">matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+        <span class="p">(</span>
+            <span class="n">vocab_size</span><span class="p">,</span>
+            <span class="n">vocab_size</span>
+        <span class="p">),</span>
+        <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span>
+    <span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">tokens</span> <span class="ow">in</span> <span class="n">tokenized_documents</span><span class="p">:</span>
+
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">target_word</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">tokens</span><span class="p">):</span>
+
+            <span class="k">if</span> <span class="n">target_word</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">word_to_index</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+            <span class="n">target_index</span> <span class="o">=</span> <span class="n">word_to_index</span><span class="p">[</span>
+                <span class="n">target_word</span>
+            <span class="p">]</span>
+
+            <span class="n">start</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span>
+                <span class="mi">0</span><span class="p">,</span>
+                <span class="n">i</span> <span class="o">-</span> <span class="n">window_size</span>
+            <span class="p">)</span>
+
+            <span class="n">end</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span>
+                <span class="nb">len</span><span class="p">(</span><span class="n">tokens</span><span class="p">),</span>
+                <span class="n">i</span> <span class="o">+</span> <span class="n">window_size</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span>
+                <span class="n">start</span><span class="p">,</span>
+                <span class="n">end</span>
+            <span class="p">):</span>
+
+                <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">j</span><span class="p">:</span>
+                    <span class="k">continue</span>
+
+                <span class="n">context_word</span> <span class="o">=</span> <span class="n">tokens</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+
+                <span class="k">if</span> <span class="n">context_word</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">word_to_index</span><span class="p">:</span>
+                    <span class="k">continue</span>
+
+                <span class="n">context_index</span> <span class="o">=</span> <span class="n">word_to_index</span><span class="p">[</span>
+                    <span class="n">context_word</span>
+                <span class="p">]</span>
+
+                <span class="n">matrix</span><span class="p">[</span>
+                    <span class="n">target_index</span><span class="p">,</span>
+                    <span class="n">context_index</span>
+                <span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">return</span> <span class="n">matrix</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="reduksi-dimensi-menggunakan-svd">
+<h2>17. Reduksi Dimensi Menggunakan SVD<a class="headerlink" href="#reduksi-dimensi-menggunakan-svd" title="Link to this heading">#</a></h2>
+<p>Co-occurrence Matrix memiliki ukuran sebesar jumlah vocabulary.</p>
+<p>Singular Value Decomposition (SVD) digunakan untuk mereduksi
+Co-occurrence Matrix menjadi representasi word embedding dengan
+dimensi yang lebih kecil.</p>
+<p>Dimensi embedding yang digunakan adalah 12.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">build_svd_embedding</span><span class="p">(</span>
+    <span class="n">cooccurrence_matrix</span><span class="p">,</span>
+    <span class="n">embedding_dim</span>
+<span class="p">):</span>
+
+    <span class="n">svd</span> <span class="o">=</span> <span class="n">TruncatedSVD</span><span class="p">(</span>
+        <span class="n">n_components</span><span class="o">=</span><span class="n">embedding_dim</span><span class="p">,</span>
+        <span class="n">random_state</span><span class="o">=</span><span class="n">RANDOM_STATE</span>
+    <span class="p">)</span>
+
+    <span class="n">embedding</span> <span class="o">=</span> <span class="n">svd</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span>
+        <span class="n">cooccurrence_matrix</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="n">embedding</span><span class="p">,</span>
+        <span class="n">svd</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="mean-pooling">
+<h2>18. Mean Pooling<a class="headerlink" href="#mean-pooling" title="Link to this heading">#</a></h2>
+<p>Setiap kata telah memiliki representasi vektor hasil SVD.</p>
+<p>Untuk memperoleh satu representasi vektor bagi setiap berita,
+seluruh vektor kata yang terdapat dalam berita dirata-ratakan
+menggunakan metode mean pooling.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">document_mean_pooling</span><span class="p">(</span>
+    <span class="n">tokens</span><span class="p">,</span>
+    <span class="n">word_to_index</span><span class="p">,</span>
+    <span class="n">embedding</span>
+<span class="p">):</span>
+
+    <span class="n">vectors</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
+
+        <span class="k">if</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">word_to_index</span><span class="p">:</span>
+
+            <span class="n">index</span> <span class="o">=</span> <span class="n">word_to_index</span><span class="p">[</span><span class="n">word</span><span class="p">]</span>
+
+            <span class="n">vectors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">embedding</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+            <span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+            <span class="n">embedding</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span>
+        <span class="n">vectors</span><span class="p">,</span>
+        <span class="n">axis</span><span class="o">=</span><span class="mi">0</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="fungsi-pemrosesan-skenario">
+<h2>19. Fungsi Pemrosesan Skenario<a class="headerlink" href="#fungsi-pemrosesan-skenario" title="Link to this heading">#</a></h2>
+<p>Fungsi ini menjalankan tahapan:</p>
+<p>Tokenisasi
+→ Vocabulary
+→ Co-occurrence Matrix
+→ SVD
+→ Word Embedding
+→ Mean Pooling</p>
+<p>Fungsi digunakan pada Skenario 1 dan Skenario 2.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">process_scenario</span><span class="p">(</span>
+    <span class="n">train_tokens</span><span class="p">,</span>
+    <span class="n">test_tokens</span><span class="p">,</span>
+    <span class="n">scenario_name</span>
+<span class="p">):</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"="</span> <span class="o">*</span> <span class="mi">70</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">"MEMPROSES: </span><span class="si">{</span><span class="n">scenario_name</span><span class="si">}</span><span class="s2">"</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"="</span> <span class="o">*</span> <span class="mi">70</span><span class="p">)</span>
+
+    <span class="c1"># Membentuk vocabulary</span>
+    <span class="n">vocabulary</span><span class="p">,</span> <span class="n">word_to_index</span><span class="p">,</span> <span class="n">counter</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">build_vocabulary</span><span class="p">(</span>
+            <span class="n">train_tokens</span><span class="p">,</span>
+            <span class="n">TOP_VOCAB</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s2">"Jumlah vocabulary:"</span><span class="p">,</span>
+        <span class="nb">len</span><span class="p">(</span><span class="n">vocabulary</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Membentuk Co-occurrence Matrix</span>
+    <span class="n">cooccurrence_matrix</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">build_cooccurrence_matrix</span><span class="p">(</span>
+            <span class="n">train_tokens</span><span class="p">,</span>
+            <span class="n">word_to_index</span><span class="p">,</span>
+            <span class="n">WINDOW_SIZE</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s2">"Shape Co-occurrence Matrix:"</span><span class="p">,</span>
+        <span class="n">cooccurrence_matrix</span><span class="o">.</span><span class="n">shape</span>
+    <span class="p">)</span>
+
+    <span class="c1"># SVD</span>
+    <span class="n">embedding</span><span class="p">,</span> <span class="n">svd</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">build_svd_embedding</span><span class="p">(</span>
+            <span class="n">cooccurrence_matrix</span><span class="p">,</span>
+            <span class="n">EMBEDDING_DIM</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s2">"Shape Word Embedding:"</span><span class="p">,</span>
+        <span class="n">embedding</span><span class="o">.</span><span class="n">shape</span>
+    <span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s2">"Total explained variance:"</span><span class="p">,</span>
+        <span class="n">svd</span><span class="o">.</span><span class="n">explained_variance_ratio_</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Mean Pooling data training</span>
+    <span class="n">X_train</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span>
+
+        <span class="n">document_mean_pooling</span><span class="p">(</span>
+            <span class="n">tokens</span><span class="p">,</span>
+            <span class="n">word_to_index</span><span class="p">,</span>
+            <span class="n">embedding</span>
+        <span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">tokens</span> <span class="ow">in</span> <span class="n">train_tokens</span>
+    <span class="p">])</span>
+
+    <span class="c1"># Mean Pooling data testing</span>
+    <span class="n">X_test</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span>
+
+        <span class="n">document_mean_pooling</span><span class="p">(</span>
+            <span class="n">tokens</span><span class="p">,</span>
+            <span class="n">word_to_index</span><span class="p">,</span>
+            <span class="n">embedding</span>
+        <span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">tokens</span> <span class="ow">in</span> <span class="n">test_tokens</span>
+    <span class="p">])</span>
+
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s2">"Shape X_train:"</span><span class="p">,</span>
+        <span class="n">X_train</span><span class="o">.</span><span class="n">shape</span>
+    <span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s2">"Shape X_test:"</span><span class="p">,</span>
+        <span class="n">X_test</span><span class="o">.</span><span class="n">shape</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">"scenario"</span><span class="p">:</span> <span class="n">scenario_name</span><span class="p">,</span>
+        <span class="s2">"vocabulary"</span><span class="p">:</span> <span class="n">vocabulary</span><span class="p">,</span>
+        <span class="s2">"word_to_index"</span><span class="p">:</span> <span class="n">word_to_index</span><span class="p">,</span>
+        <span class="s2">"cooccurrence_matrix"</span><span class="p">:</span> <span class="n">cooccurrence_matrix</span><span class="p">,</span>
+        <span class="s2">"embedding"</span><span class="p">:</span> <span class="n">embedding</span><span class="p">,</span>
+        <span class="s2">"svd"</span><span class="p">:</span> <span class="n">svd</span><span class="p">,</span>
+        <span class="s2">"X_train"</span><span class="p">:</span> <span class="n">X_train</span><span class="p">,</span>
+        <span class="s2">"X_test"</span><span class="p">:</span> <span class="n">X_test</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>20. Skenario 1: Dengan Stopwords<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<p>Pada skenario pertama, stopwords tetap dipertahankan.</p>
+<p>Data training digunakan untuk membentuk vocabulary, Co-occurrence
+Matrix, SVD, dan word embedding.</p>
+<p>Kemudian mean pooling digunakan untuk memperoleh representasi vektor
+dari setiap dokumen.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scenario_with_sw</span> <span class="o">=</span> <span class="n">process_scenario</span><span class="p">(</span>
+    <span class="n">train_tokens_with_sw</span><span class="p">,</span>
+    <span class="n">test_tokens_with_sw</span><span class="p">,</span>
+    <span class="s2">"Dengan Stopwords"</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>======================================================================
+MEMPROSES: Dengan Stopwords
+======================================================================
+Jumlah vocabulary: 150
+Shape Co-occurrence Matrix: (150, 150)
+Shape Word Embedding: (150, 12)
+Total explained variance: 0.6568664007178999
+Shape X_train: (160, 12)
+Shape X_test: (40, 12)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_train_with_sw</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">scenario_with_sw</span><span class="p">[</span><span class="s2">"X_train"</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="n">X_test_with_sw</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">scenario_with_sw</span><span class="p">[</span><span class="s2">"X_test"</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">"Shape X_train:"</span><span class="p">,</span>
+    <span class="n">X_train_with_sw</span><span class="o">.</span><span class="n">shape</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">"Shape X_test:"</span><span class="p">,</span>
+    <span class="n">X_test_with_sw</span><span class="o">.</span><span class="n">shape</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Shape X_train: (160, 12)
+Shape X_test: (40, 12)
+</pre></div>
+</div>
+</div>
+</div>
+<section id="naive-bayes-dengan-stopwords">
+<h2>21. Naive Bayes - Dengan Stopwords<a class="headerlink" href="#naive-bayes-dengan-stopwords" title="Link to this heading">#</a></h2>
+<p>Gaussian Naive Bayes digunakan untuk melakukan klasifikasi berita
+berdasarkan vektor dokumen hasil mean pooling.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nb_with_sw</span> <span class="o">=</span> <span class="n">GaussianNB</span><span class="p">()</span>
+
+<span class="n">nb_with_sw</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+    <span class="n">X_train_with_sw</span><span class="p">,</span>
+    <span class="n">y_train</span>
+<span class="p">)</span>
+
+<span class="n">y_pred_nb_with_sw</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">nb_with_sw</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span>
+        <span class="n">X_test_with_sw</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">"Naive Bayes selesai."</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Naive Bayes selesai.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="evaluasi-model">
+<h2>22. Evaluasi Model<a class="headerlink" href="#evaluasi-model" title="Link to this heading">#</a></h2>
+<p>Evaluasi dilakukan menggunakan:</p>
+<ul class="simple">
+<li><p>Accuracy</p></li>
+<li><p>Precision</p></li>
+<li><p>Recall</p></li>
+<li><p>F1-Score</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">evaluate_model</span><span class="p">(</span>
+    <span class="n">y_true</span><span class="p">,</span>
+    <span class="n">y_pred</span><span class="p">,</span>
+    <span class="n">model_name</span>
+<span class="p">):</span>
+
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">"Model"</span><span class="p">:</span> <span class="n">model_name</span><span class="p">,</span>
+
+        <span class="s2">"Accuracy"</span><span class="p">:</span> <span class="n">accuracy_score</span><span class="p">(</span>
+            <span class="n">y_true</span><span class="p">,</span>
+            <span class="n">y_pred</span>
+        <span class="p">),</span>
+
+        <span class="s2">"Precision"</span><span class="p">:</span> <span class="n">precision_score</span><span class="p">(</span>
+            <span class="n">y_true</span><span class="p">,</span>
+            <span class="n">y_pred</span><span class="p">,</span>
+            <span class="n">average</span><span class="o">=</span><span class="s2">"macro"</span><span class="p">,</span>
+            <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span>
+        <span class="p">),</span>
+
+        <span class="s2">"Recall"</span><span class="p">:</span> <span class="n">recall_score</span><span class="p">(</span>
+            <span class="n">y_true</span><span class="p">,</span>
+            <span class="n">y_pred</span><span class="p">,</span>
+            <span class="n">average</span><span class="o">=</span><span class="s2">"macro"</span><span class="p">,</span>
+            <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span>
+        <span class="p">),</span>
+
+        <span class="s2">"F1"</span><span class="p">:</span> <span class="n">f1_score</span><span class="p">(</span>
+            <span class="n">y_true</span><span class="p">,</span>
+            <span class="n">y_pred</span><span class="p">,</span>
+            <span class="n">average</span><span class="o">=</span><span class="s2">"macro"</span><span class="p">,</span>
+            <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span>
+        <span class="p">)</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result_nb_with_sw</span> <span class="o">=</span> <span class="n">evaluate_model</span><span class="p">(</span>
+    <span class="n">y_test</span><span class="p">,</span>
+    <span class="n">y_pred_nb_with_sw</span><span class="p">,</span>
+    <span class="s2">"NB - Dengan Stopwords"</span>
+<span class="p">)</span>
+
+<span class="n">display</span><span class="p">(</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">result_nb_with_sw</span><span class="p">]</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Model</th>
+      <th>Accuracy</th>
+      <th>Precision</th>
+      <th>Recall</th>
+      <th>F1</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>NB - Dengan Stopwords</td>
+      <td>0.8</td>
+      <td>0.80303</td>
+      <td>0.8</td>
+      <td>0.799499</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="k-nearest-neighbors-dengan-stopwords">
+<h2>23. k-Nearest Neighbors - Dengan Stopwords<a class="headerlink" href="#k-nearest-neighbors-dengan-stopwords" title="Link to this heading">#</a></h2>
+<p>kNN digunakan untuk melakukan klasifikasi berdasarkan jarak Euclidean.</p>
+<p>Pengujian dilakukan menggunakan beberapa nilai k:</p>
+<p>1, 3, 5, 7, dan 9.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">knn_results_with_sw</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="n">knn_predictions_with_sw</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">K_VALUES</span><span class="p">:</span>
+
+    <span class="n">knn</span> <span class="o">=</span> <span class="n">KNeighborsClassifier</span><span class="p">(</span>
+        <span class="n">n_neighbors</span><span class="o">=</span><span class="n">k</span><span class="p">,</span>
+        <span class="n">metric</span><span class="o">=</span><span class="s2">"euclidean"</span>
+    <span class="p">)</span>
+
+    <span class="n">knn</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+        <span class="n">X_train_with_sw</span><span class="p">,</span>
+        <span class="n">y_train</span>
+    <span class="p">)</span>
+
+    <span class="n">y_pred_knn</span> <span class="o">=</span> <span class="n">knn</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span>
+        <span class="n">X_test_with_sw</span>
+    <span class="p">)</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">evaluate_model</span><span class="p">(</span>
+        <span class="n">y_test</span><span class="p">,</span>
+        <span class="n">y_pred_knn</span><span class="p">,</span>
+        <span class="sa">f</span><span class="s2">"kNN k=</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2"> - Dengan Stopwords"</span>
+    <span class="p">)</span>
+
+    <span class="n">knn_results_with_sw</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+        <span class="n">result</span>
+    <span class="p">)</span>
+
+    <span class="n">knn_predictions_with_sw</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">y_pred_knn</span>
+    <span class="p">)</span>
+
+
+<span class="n">df_knn_with_sw</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">knn_results_with_sw</span>
+<span class="p">)</span>
+
+<span class="n">display</span><span class="p">(</span>
+    <span class="n">df_knn_with_sw</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Model</th>
+      <th>Accuracy</th>
+      <th>Precision</th>
+      <th>Recall</th>
+      <th>F1</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>kNN k=1 - Dengan Stopwords</td>
+      <td>0.725</td>
+      <td>0.740000</td>
+      <td>0.725</td>
+      <td>0.720635</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>kNN k=3 - Dengan Stopwords</td>
+      <td>0.750</td>
+      <td>0.750000</td>
+      <td>0.750</td>
+      <td>0.750000</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>kNN k=5 - Dengan Stopwords</td>
+      <td>0.750</td>
+      <td>0.750000</td>
+      <td>0.750</td>
+      <td>0.750000</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>kNN k=7 - Dengan Stopwords</td>
+      <td>0.725</td>
+      <td>0.725564</td>
+      <td>0.725</td>
+      <td>0.724828</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>kNN k=9 - Dengan Stopwords</td>
+      <td>0.825</td>
+      <td>0.832481</td>
+      <td>0.825</td>
+      <td>0.824010</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="id2">
+<h1>24. Skenario 2: Tanpa Stopwords<a class="headerlink" href="#id2" title="Link to this heading">#</a></h1>
+<p>Pada skenario kedua, stopwords Bahasa Indonesia dihapus menggunakan
+daftar stopwords dari Sastrawi.</p>
+<p>Setelah proses penghapusan stopwords, dilakukan kembali pembentukan
+vocabulary, Co-occurrence Matrix, reduksi dimensi menggunakan SVD,
+word embedding, dan mean pooling.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scenario_without_sw</span> <span class="o">=</span> <span class="n">process_scenario</span><span class="p">(</span>
+    <span class="n">train_tokens_without_sw</span><span class="p">,</span>
+    <span class="n">test_tokens_without_sw</span><span class="p">,</span>
+    <span class="s2">"Tanpa Stopwords"</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>======================================================================
+MEMPROSES: Tanpa Stopwords
+======================================================================
+Jumlah vocabulary: 150
+Shape Co-occurrence Matrix: (150, 150)
+Shape Word Embedding: (150, 12)
+Total explained variance: 0.6244459406241137
+Shape X_train: (160, 12)
+Shape X_test: (40, 12)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_train_without_sw</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">scenario_without_sw</span><span class="p">[</span><span class="s2">"X_train"</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="n">X_test_without_sw</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">scenario_without_sw</span><span class="p">[</span><span class="s2">"X_test"</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">"Shape X_train:"</span><span class="p">,</span>
+    <span class="n">X_train_without_sw</span><span class="o">.</span><span class="n">shape</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">"Shape X_test:"</span><span class="p">,</span>
+    <span class="n">X_test_without_sw</span><span class="o">.</span><span class="n">shape</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Shape X_train: (160, 12)
+Shape X_test: (40, 12)
+</pre></div>
+</div>
+</div>
+</div>
+<section id="naive-bayes-tanpa-stopwords">
+<h2>25. Naive Bayes - Tanpa Stopwords<a class="headerlink" href="#naive-bayes-tanpa-stopwords" title="Link to this heading">#</a></h2>
+<p>Gaussian Naive Bayes digunakan untuk melakukan klasifikasi berita
+berdasarkan vektor dokumen hasil mean pooling pada Skenario 2.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nb_without_sw</span> <span class="o">=</span> <span class="n">GaussianNB</span><span class="p">()</span>
+
+<span class="n">nb_without_sw</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+    <span class="n">X_train_without_sw</span><span class="p">,</span>
+    <span class="n">y_train</span>
+<span class="p">)</span>
+
+<span class="n">y_pred_nb_without_sw</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">nb_without_sw</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span>
+        <span class="n">X_test_without_sw</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">"Naive Bayes tanpa stopwords selesai."</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Naive Bayes tanpa stopwords selesai.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="evaluasi-naive-bayes-tanpa-stopwords">
+<h2>26. Evaluasi Naive Bayes - Tanpa Stopwords<a class="headerlink" href="#evaluasi-naive-bayes-tanpa-stopwords" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result_nb_without_sw</span> <span class="o">=</span> <span class="n">evaluate_model</span><span class="p">(</span>
+    <span class="n">y_test</span><span class="p">,</span>
+    <span class="n">y_pred_nb_without_sw</span><span class="p">,</span>
+    <span class="s2">"NB - Tanpa Stopwords"</span>
+<span class="p">)</span>
+
+<span class="n">display</span><span class="p">(</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">result_nb_without_sw</span><span class="p">]</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Model</th>
+      <th>Accuracy</th>
+      <th>Precision</th>
+      <th>Recall</th>
+      <th>F1</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>NB - Tanpa Stopwords</td>
+      <td>0.875</td>
+      <td>0.9</td>
+      <td>0.875</td>
+      <td>0.873016</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="k-nearest-neighbors-tanpa-stopwords">
+<h2>27. k-Nearest Neighbors - Tanpa Stopwords<a class="headerlink" href="#k-nearest-neighbors-tanpa-stopwords" title="Link to this heading">#</a></h2>
+<p>kNN digunakan dengan Euclidean distance.</p>
+<p>Pengujian dilakukan menggunakan nilai k:</p>
+<p>1, 3, 5, 7, dan 9.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">knn_results_without_sw</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="n">knn_predictions_without_sw</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">K_VALUES</span><span class="p">:</span>
+
+    <span class="n">knn</span> <span class="o">=</span> <span class="n">KNeighborsClassifier</span><span class="p">(</span>
+        <span class="n">n_neighbors</span><span class="o">=</span><span class="n">k</span><span class="p">,</span>
+        <span class="n">metric</span><span class="o">=</span><span class="s2">"euclidean"</span>
+    <span class="p">)</span>
+
+    <span class="n">knn</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+        <span class="n">X_train_without_sw</span><span class="p">,</span>
+        <span class="n">y_train</span>
+    <span class="p">)</span>
+
+    <span class="n">y_pred_knn</span> <span class="o">=</span> <span class="n">knn</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span>
+        <span class="n">X_test_without_sw</span>
+    <span class="p">)</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">evaluate_model</span><span class="p">(</span>
+        <span class="n">y_test</span><span class="p">,</span>
+        <span class="n">y_pred_knn</span><span class="p">,</span>
+        <span class="sa">f</span><span class="s2">"kNN k=</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2"> - Tanpa Stopwords"</span>
+    <span class="p">)</span>
+
+    <span class="n">knn_results_without_sw</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+        <span class="n">result</span>
+    <span class="p">)</span>
+
+    <span class="n">knn_predictions_without_sw</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">y_pred_knn</span>
+    <span class="p">)</span>
+
+
+<span class="n">df_knn_without_sw</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">knn_results_without_sw</span>
+<span class="p">)</span>
+
+<span class="n">display</span><span class="p">(</span>
+    <span class="n">df_knn_without_sw</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Model</th>
+      <th>Accuracy</th>
+      <th>Precision</th>
+      <th>Recall</th>
+      <th>F1</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>kNN k=1 - Tanpa Stopwords</td>
+      <td>0.875</td>
+      <td>0.875940</td>
+      <td>0.875</td>
+      <td>0.874922</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>kNN k=3 - Tanpa Stopwords</td>
+      <td>0.925</td>
+      <td>0.926065</td>
+      <td>0.925</td>
+      <td>0.924953</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>kNN k=5 - Tanpa Stopwords</td>
+      <td>0.900</td>
+      <td>0.900000</td>
+      <td>0.900</td>
+      <td>0.900000</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>kNN k=7 - Tanpa Stopwords</td>
+      <td>0.950</td>
+      <td>0.954545</td>
+      <td>0.950</td>
+      <td>0.949875</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>kNN k=9 - Tanpa Stopwords</td>
+      <td>0.950</td>
+      <td>0.954545</td>
+      <td>0.950</td>
+      <td>0.949875</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="sensitivitas-nilai-k-pada-knn">
+<h1>28. Sensitivitas Nilai k pada kNN<a class="headerlink" href="#sensitivitas-nilai-k-pada-knn" title="Link to this heading">#</a></h1>
+<p>Pengujian dilakukan untuk mengetahui perubahan performa kNN pada
+beberapa nilai k.</p>
+<p>Nilai k yang digunakan adalah 1, 3, 5, 7, dan 9.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_sensitivity_k</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+
+    <span class="s2">"k"</span><span class="p">:</span> <span class="n">K_VALUES</span><span class="p">,</span>
+
+    <span class="s2">"Accuracy_Dengan_Stopwords"</span><span class="p">:</span>
+        <span class="n">df_knn_with_sw</span><span class="p">[</span><span class="s2">"Accuracy"</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+
+    <span class="s2">"Accuracy_Tanpa_Stopwords"</span><span class="p">:</span>
+        <span class="n">df_knn_without_sw</span><span class="p">[</span><span class="s2">"Accuracy"</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+
+    <span class="s2">"F1_Dengan_Stopwords"</span><span class="p">:</span>
+        <span class="n">df_knn_with_sw</span><span class="p">[</span><span class="s2">"F1"</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+
+    <span class="s2">"F1_Tanpa_Stopwords"</span><span class="p">:</span>
+        <span class="n">df_knn_without_sw</span><span class="p">[</span><span class="s2">"F1"</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<span class="p">})</span>
+
+<span class="n">display</span><span class="p">(</span>
+    <span class="n">df_sensitivity_k</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>k</th>
+      <th>Accuracy_Dengan_Stopwords</th>
+      <th>Accuracy_Tanpa_Stopwords</th>
+      <th>F1_Dengan_Stopwords</th>
+      <th>F1_Tanpa_Stopwords</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>0.725</td>
+      <td>0.875</td>
+      <td>0.720635</td>
+      <td>0.874922</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>3</td>
+      <td>0.750</td>
+      <td>0.925</td>
+      <td>0.750000</td>
+      <td>0.924953</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>5</td>
+      <td>0.750</td>
+      <td>0.900</td>
+      <td>0.750000</td>
+      <td>0.900000</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>7</td>
+      <td>0.725</td>
+      <td>0.950</td>
+      <td>0.724828</td>
+      <td>0.949875</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>9</td>
+      <td>0.825</td>
+      <td>0.950</td>
+      <td>0.824010</td>
+      <td>0.949875</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<section id="visualisasi-sensitivitas-nilai-k">
+<h2>29. Visualisasi Sensitivitas Nilai k<a class="headerlink" href="#visualisasi-sensitivitas-nilai-k" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span>
+    <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+    <span class="n">K_VALUES</span><span class="p">,</span>
+    <span class="n">df_knn_with_sw</span><span class="p">[</span><span class="s2">"Accuracy"</span><span class="p">],</span>
+    <span class="n">marker</span><span class="o">=</span><span class="s2">"o"</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">"Dengan Stopwords"</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+    <span class="n">K_VALUES</span><span class="p">,</span>
+    <span class="n">df_knn_without_sw</span><span class="p">[</span><span class="s2">"Accuracy"</span><span class="p">],</span>
+    <span class="n">marker</span><span class="o">=</span><span class="s2">"o"</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">"Tanpa Stopwords"</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span>
+    <span class="s2">"Nilai k"</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span>
+    <span class="s2">"Accuracy"</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span>
+    <span class="s2">"Sensitivitas Nilai k pada kNN"</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span>
+    <span class="n">K_VALUES</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span>
+    <span class="kc">True</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/697b9db67aae083e855311f71ee1cfc17c0f3e971a7d08777cba3e7a53ae268e.png" src="_images/697b9db67aae083e855311f71ee1cfc17c0f3e971a7d08777cba3e7a53ae268e.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
+    <span class="n">classification_report</span><span class="p">(</span>
+        <span class="n">y_test_nb</span><span class="p">,</span>
+        <span class="n">y_pred</span><span class="p">,</span>
+        <span class="n">target_names</span><span class="o">=</span><span class="p">[</span>
+            <span class="s2">"finance"</span><span class="p">,</span>
+            <span class="s2">"sport"</span>
+        <span class="p">],</span>
+        <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">33</span><span class="p">],</span> <span class="n">line</span> <span class="mi">3</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="nb">print</span><span class="p">(</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span>     <span class="n">classification_report</span><span class="p">(</span>
+<span class="ne">----&gt; </span><span class="mi">3</span>         <span class="n">y_test_nb</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span>         <span class="n">y_pred</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span>         <span class="n">target_names</span><span class="o">=</span><span class="p">[</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span>             <span class="s2">"finance"</span><span class="p">,</span>
+
+<span class="ne">NameError</span>: name 'y_test_nb' is not defined
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="nilai-k-untuk-evaluasi-knn">
+<h2>30. Nilai k untuk Evaluasi kNN<a class="headerlink" href="#nilai-k-untuk-evaluasi-knn" title="Link to this heading">#</a></h2>
+<p>Nilai k dengan Accuracy tertinggi pada masing-masing skenario
+digunakan untuk menampilkan confusion matrix kNN.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">best_k_with_sw_value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span>
+    <span class="n">K_VALUES</span><span class="p">[</span>
+        <span class="n">df_knn_with_sw</span><span class="p">[</span><span class="s2">"Accuracy"</span><span class="p">]</span>
+        <span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">argmax</span><span class="p">()</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+
+<span class="n">best_k_without_sw_value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span>
+    <span class="n">K_VALUES</span><span class="p">[</span>
+        <span class="n">df_knn_without_sw</span><span class="p">[</span><span class="s2">"Accuracy"</span><span class="p">]</span>
+        <span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">argmax</span><span class="p">()</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">"Nilai k berdasarkan Accuracy Skenario 1:"</span><span class="p">,</span>
+    <span class="n">best_k_with_sw_value</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">"Nilai k berdasarkan Accuracy Skenario 2:"</span><span class="p">,</span>
+    <span class="n">best_k_without_sw_value</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Nilai k berdasarkan Accuracy Skenario 1: 9
+Nilai k berdasarkan Accuracy Skenario 2: 7
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span>
+    <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span>
+    <span class="n">cm</span><span class="p">,</span>
+    <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">fmt</span><span class="o">=</span><span class="s2">"d"</span><span class="p">,</span>
+    <span class="n">xticklabels</span><span class="o">=</span><span class="p">[</span>
+        <span class="s2">"finance"</span><span class="p">,</span>
+        <span class="s2">"sport"</span>
+    <span class="p">],</span>
+    <span class="n">yticklabels</span><span class="o">=</span><span class="p">[</span>
+        <span class="s2">"finance"</span><span class="p">,</span>
+        <span class="s2">"sport"</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span>
+    <span class="s2">"Predicted Label"</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span>
+    <span class="s2">"Actual Label"</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span>
+    <span class="s2">"Confusion Matrix - Skip-gram + Naive Bayes"</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/3028510cb65371a72b0dd84045effbe943c26c85bd091a161a4ccf5c5a16127b.png" src="_images/3028510cb65371a72b0dd84045effbe943c26c85bd091a161a4ccf5c5a16127b.png" />
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="perbandingan-hasil-eksperimen">
+<h1>31. Perbandingan Hasil Eksperimen<a class="headerlink" href="#perbandingan-hasil-eksperimen" title="Link to this heading">#</a></h1>
+<p>Hasil klasifikasi dibandingkan berdasarkan:</p>
+<ul class="simple">
+<li><p>Accuracy</p></li>
+<li><p>Precision</p></li>
+<li><p>Recall</p></li>
+<li><p>F1-Score</p></li>
+</ul>
+<p>Perbandingan meliputi:</p>
+<ol class="arabic simple">
+<li><p>Naive Bayes dengan Stopwords</p></li>
+<li><p>kNN dengan Stopwords</p></li>
+<li><p>Naive Bayes tanpa Stopwords</p></li>
+<li><p>kNN tanpa Stopwords</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">best_knn_row_with_sw</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">df_knn_with_sw</span>
+    <span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
+        <span class="s2">"Accuracy"</span><span class="p">,</span>
+        <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span>
+    <span class="p">)</span>
+    <span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="n">best_knn_row_without_sw</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">df_knn_without_sw</span>
+    <span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
+        <span class="s2">"Accuracy"</span><span class="p">,</span>
+        <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span>
+    <span class="p">)</span>
+    <span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="p">)</span>
+
+
+<span class="n">comparison_results</span> <span class="o">=</span> <span class="p">[</span>
+
+    <span class="n">result_nb_with_sw</span><span class="p">,</span>
+
+    <span class="p">{</span>
+        <span class="s2">"Model"</span><span class="p">:</span> <span class="n">best_knn_row_with_sw</span><span class="p">[</span><span class="s2">"Model"</span><span class="p">],</span>
+        <span class="s2">"Accuracy"</span><span class="p">:</span> <span class="n">best_knn_row_with_sw</span><span class="p">[</span><span class="s2">"Accuracy"</span><span class="p">],</span>
+        <span class="s2">"Precision"</span><span class="p">:</span> <span class="n">best_knn_row_with_sw</span><span class="p">[</span><span class="s2">"Precision"</span><span class="p">],</span>
+        <span class="s2">"Recall"</span><span class="p">:</span> <span class="n">best_knn_row_with_sw</span><span class="p">[</span><span class="s2">"Recall"</span><span class="p">],</span>
+        <span class="s2">"F1"</span><span class="p">:</span> <span class="n">best_knn_row_with_sw</span><span class="p">[</span><span class="s2">"F1"</span><span class="p">]</span>
+    <span class="p">},</span>
+
+    <span class="n">result_nb_without_sw</span><span class="p">,</span>
+
+    <span class="p">{</span>
+        <span class="s2">"Model"</span><span class="p">:</span> <span class="n">best_knn_row_without_sw</span><span class="p">[</span><span class="s2">"Model"</span><span class="p">],</span>
+        <span class="s2">"Accuracy"</span><span class="p">:</span> <span class="n">best_knn_row_without_sw</span><span class="p">[</span><span class="s2">"Accuracy"</span><span class="p">],</span>
+        <span class="s2">"Precision"</span><span class="p">:</span> <span class="n">best_knn_row_without_sw</span><span class="p">[</span><span class="s2">"Precision"</span><span class="p">],</span>
+        <span class="s2">"Recall"</span><span class="p">:</span> <span class="n">best_knn_row_without_sw</span><span class="p">[</span><span class="s2">"Recall"</span><span class="p">],</span>
+        <span class="s2">"F1"</span><span class="p">:</span> <span class="n">best_knn_row_without_sw</span><span class="p">[</span><span class="s2">"F1"</span><span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+
+
+<span class="n">df_comparison</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">comparison_results</span>
+<span class="p">)</span>
+
+<span class="n">display</span><span class="p">(</span>
+    <span class="n">df_comparison</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Model</th>
+      <th>Accuracy</th>
+      <th>Precision</th>
+      <th>Recall</th>
+      <th>F1</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>NB - Dengan Stopwords</td>
+      <td>0.800</td>
+      <td>0.803030</td>
+      <td>0.800</td>
+      <td>0.799499</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>kNN k=9 - Dengan Stopwords</td>
+      <td>0.825</td>
+      <td>0.832481</td>
+      <td>0.825</td>
+      <td>0.824010</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>NB - Tanpa Stopwords</td>
+      <td>0.875</td>
+      <td>0.900000</td>
+      <td>0.875</td>
+      <td>0.873016</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>kNN k=9 - Tanpa Stopwords</td>
+      <td>0.950</td>
+      <td>0.954545</td>
+      <td>0.950</td>
+      <td>0.949875</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="confusion-matrix">
+<h1>32. Confusion Matrix<a class="headerlink" href="#confusion-matrix" title="Link to this heading">#</a></h1>
+<p>Confusion matrix digunakan untuk melihat jumlah prediksi benar dan
+salah pada masing-masing kelas.</p>
+<p>Kelas yang digunakan:</p>
+<ul class="simple">
+<li><p>Finance</p></li>
+<li><p>Sport</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cm_nb_with_sw</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span>
+    <span class="n">y_test</span><span class="p">,</span>
+    <span class="n">y_pred_nb_with_sw</span><span class="p">,</span>
+    <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span>
+    <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span>
+    <span class="n">cm_nb_with_sw</span><span class="p">,</span>
+    <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">fmt</span><span class="o">=</span><span class="s2">"d"</span><span class="p">,</span>
+    <span class="n">xticklabels</span><span class="o">=</span><span class="p">[</span>
+        <span class="s2">"Finance"</span><span class="p">,</span>
+        <span class="s2">"Sport"</span>
+    <span class="p">],</span>
+    <span class="n">yticklabels</span><span class="o">=</span><span class="p">[</span>
+        <span class="s2">"Finance"</span><span class="p">,</span>
+        <span class="s2">"Sport"</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span>
+    <span class="s2">"Predicted Label"</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span>
+    <span class="s2">"Actual Label"</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span>
+    <span class="s2">"Confusion Matrix - NB Dengan Stopwords"</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/bee14916f8df662ae04f4c03ff962a16465336cee5da874c071962cd097d3dfd.png" src="_images/bee14916f8df662ae04f4c03ff962a16465336cee5da874c071962cd097d3dfd.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#Confusion matrix kNN dengan stopwords.</span>
+<span class="n">y_pred_best_knn_with_sw</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">knn_predictions_with_sw</span><span class="p">[</span>
+        <span class="n">best_k_with_sw_value</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+
+<span class="n">cm_knn_with_sw</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span>
+    <span class="n">y_test</span><span class="p">,</span>
+    <span class="n">y_pred_best_knn_with_sw</span><span class="p">,</span>
+    <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span>
+    <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span>
+    <span class="n">cm_knn_with_sw</span><span class="p">,</span>
+    <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">fmt</span><span class="o">=</span><span class="s2">"d"</span><span class="p">,</span>
+    <span class="n">xticklabels</span><span class="o">=</span><span class="p">[</span>
+        <span class="s2">"Finance"</span><span class="p">,</span>
+        <span class="s2">"Sport"</span>
+    <span class="p">],</span>
+    <span class="n">yticklabels</span><span class="o">=</span><span class="p">[</span>
+        <span class="s2">"Finance"</span><span class="p">,</span>
+        <span class="s2">"Sport"</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span>
+    <span class="s2">"Predicted Label"</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span>
+    <span class="s2">"Actual Label"</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">"Confusion Matrix - kNN Dengan Stopwords (k=</span><span class="si">{</span><span class="n">best_k_with_sw_value</span><span class="si">}</span><span class="s2">)"</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/fdff13de8470d96976c6c35f94dd2062038a9ed1b49d8e29985564ea0f8ba676.png" src="_images/fdff13de8470d96976c6c35f94dd2062038a9ed1b49d8e29985564ea0f8ba676.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#Confusion matrix NB tanpa stopwords.</span>
+<span class="n">cm_nb_without_sw</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span>
+    <span class="n">y_test</span><span class="p">,</span>
+    <span class="n">y_pred_nb_without_sw</span><span class="p">,</span>
+    <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span>
+    <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span>
+    <span class="n">cm_nb_without_sw</span><span class="p">,</span>
+    <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">fmt</span><span class="o">=</span><span class="s2">"d"</span><span class="p">,</span>
+    <span class="n">xticklabels</span><span class="o">=</span><span class="p">[</span>
+        <span class="s2">"Finance"</span><span class="p">,</span>
+        <span class="s2">"Sport"</span>
+    <span class="p">],</span>
+    <span class="n">yticklabels</span><span class="o">=</span><span class="p">[</span>
+        <span class="s2">"Finance"</span><span class="p">,</span>
+        <span class="s2">"Sport"</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span>
+    <span class="s2">"Predicted Label"</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span>
+    <span class="s2">"Actual Label"</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span>
+    <span class="s2">"Confusion Matrix - NB Tanpa Stopwords"</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/e2029b28f00f32c1477197e810052fd96262cfe59366b2d2d28ff40397f5c466.png" src="_images/e2029b28f00f32c1477197e810052fd96262cfe59366b2d2d28ff40397f5c466.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#Confusion matrix kNN tanpa stopwords.</span>
+<span class="n">y_pred_best_knn_without_sw</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">knn_predictions_without_sw</span><span class="p">[</span>
+        <span class="n">best_k_without_sw_value</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+
+<span class="n">cm_knn_without_sw</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span>
+    <span class="n">y_test</span><span class="p">,</span>
+    <span class="n">y_pred_best_knn_without_sw</span><span class="p">,</span>
+    <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span>
+    <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span>
+    <span class="n">cm_knn_without_sw</span><span class="p">,</span>
+    <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">fmt</span><span class="o">=</span><span class="s2">"d"</span><span class="p">,</span>
+    <span class="n">xticklabels</span><span class="o">=</span><span class="p">[</span>
+        <span class="s2">"Finance"</span><span class="p">,</span>
+        <span class="s2">"Sport"</span>
+    <span class="p">],</span>
+    <span class="n">yticklabels</span><span class="o">=</span><span class="p">[</span>
+        <span class="s2">"Finance"</span><span class="p">,</span>
+        <span class="s2">"Sport"</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span>
+    <span class="s2">"Predicted Label"</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span>
+    <span class="s2">"Actual Label"</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">"Confusion Matrix - kNN Tanpa Stopwords (k=</span><span class="si">{</span><span class="n">best_k_without_sw_value</span><span class="si">}</span><span class="s2">)"</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/c8c960f94e10ad26b11dd8d7eb1b07926f5865cc6979b5dda57bbfcfac597a8a.png" src="_images/c8c960f94e10ad26b11dd8d7eb1b07926f5865cc6979b5dda57bbfcfac597a8a.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 33. Classification Report</span>
+
+<span class="n">Classification</span> <span class="n">Report</span> <span class="n">digunakan</span> <span class="n">untuk</span> <span class="n">melihat</span> <span class="n">Precision</span><span class="p">,</span> <span class="n">Recall</span><span class="p">,</span>
+<span class="n">F1</span><span class="o">-</span><span class="n">Score</span><span class="p">,</span> <span class="n">dan</span> <span class="n">jumlah</span> <span class="n">data</span> <span class="n">pada</span> <span class="n">masing</span><span class="o">-</span><span class="n">masing</span> <span class="n">kelas</span><span class="o">.</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
+    <span class="s2">"=== NAIVE BAYES DENGAN STOPWORDS ==="</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="n">classification_report</span><span class="p">(</span>
+        <span class="n">y_test</span><span class="p">,</span>
+        <span class="n">y_pred_nb_with_sw</span><span class="p">,</span>
+        <span class="n">target_names</span><span class="o">=</span><span class="p">[</span>
+            <span class="s2">"Finance"</span><span class="p">,</span>
+            <span class="s2">"Sport"</span>
+        <span class="p">],</span>
+        <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">"</span><span class="se">\n</span><span class="s2">=== NAIVE BAYES TANPA STOPWORDS ==="</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="n">classification_report</span><span class="p">(</span>
+        <span class="n">y_test</span><span class="p">,</span>
+        <span class="n">y_pred_nb_without_sw</span><span class="p">,</span>
+        <span class="n">target_names</span><span class="o">=</span><span class="p">[</span>
+            <span class="s2">"Finance"</span><span class="p">,</span>
+            <span class="s2">"Sport"</span>
+        <span class="p">],</span>
+        <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">"</span><span class="se">\n</span><span class="s2">=== kNN DENGAN STOPWORDS ==="</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="n">classification_report</span><span class="p">(</span>
+        <span class="n">y_test</span><span class="p">,</span>
+        <span class="n">y_pred_best_knn_with_sw</span><span class="p">,</span>
+        <span class="n">target_names</span><span class="o">=</span><span class="p">[</span>
+            <span class="s2">"Finance"</span><span class="p">,</span>
+            <span class="s2">"Sport"</span>
+        <span class="p">],</span>
+        <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">"</span><span class="se">\n</span><span class="s2">=== kNN TANPA STOPWORDS ==="</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span>
+    <span class="n">classification_report</span><span class="p">(</span>
+        <span class="n">y_test</span><span class="p">,</span>
+        <span class="n">y_pred_best_knn_without_sw</span><span class="p">,</span>
+        <span class="n">target_names</span><span class="o">=</span><span class="p">[</span>
+            <span class="s2">"Finance"</span><span class="p">,</span>
+            <span class="s2">"Sport"</span>
+        <span class="p">],</span>
+        <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>=== NAIVE BAYES DENGAN STOPWORDS ===
+              precision    recall  f1-score   support
+
+     Finance       0.77      0.85      0.81        20
+       Sport       0.83      0.75      0.79        20
+
+    accuracy                           0.80        40
+   macro avg       0.80      0.80      0.80        40
+weighted avg       0.80      0.80      0.80        40
+
+
+=== NAIVE BAYES TANPA STOPWORDS ===
+              precision    recall  f1-score   support
+
+     Finance       0.80      1.00      0.89        20
+       Sport       1.00      0.75      0.86        20
+
+    accuracy                           0.88        40
+   macro avg       0.90      0.88      0.87        40
+weighted avg       0.90      0.88      0.87        40
+
+
+=== kNN DENGAN STOPWORDS ===
+              precision    recall  f1-score   support
+
+     Finance       0.78      0.90      0.84        20
+       Sport       0.88      0.75      0.81        20
+
+    accuracy                           0.82        40
+   macro avg       0.83      0.82      0.82        40
+weighted avg       0.83      0.82      0.82        40
+
+
+=== kNN TANPA STOPWORDS ===
+              precision    recall  f1-score   support
+
+     Finance       0.91      1.00      0.95        20
+       Sport       1.00      0.90      0.95        20
+
+    accuracy                           0.95        40
+   macro avg       0.95      0.95      0.95        40
+weighted avg       0.95      0.95      0.95        40
+</pre></div>
+</div>
+</div>
+</div>
+<section id="visualisasi-ruang-vektor-dokumen-dengan-pca">
+<h2>Visualisasi Ruang Vektor Dokumen dengan PCA<a class="headerlink" href="#visualisasi-ruang-vektor-dokumen-dengan-pca" title="Link to this heading">#</a></h2>
+<p>PCA (Principal Component Analysis) digunakan untuk mereduksi vektor dokumen
+berdimensi 12 menjadi dua dimensi, yaitu PC1 dan PC2.</p>
+<p>Visualisasi dilakukan pada dua skenario preprocessing:</p>
+<ol class="arabic simple">
+<li><p>Dengan Stopwords</p></li>
+<li><p>Tanpa Stopwords</p></li>
+</ol>
+<p>Visualisasi ini digunakan untuk melihat persebaran dokumen Finance dan Sport
+dalam ruang vektor hasil word embedding.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">plot_document_pca</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">title</span><span class="p">):</span>
+    <span class="n">X_all</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">])</span>
+    <span class="n">y_all</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y_train</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y_test</span><span class="p">)])</span>
+
+    <span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">RANDOM_STATE</span><span class="p">)</span>
+    <span class="n">X_pca</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_all</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+    <span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">"Finance"</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">"Sport"</span><span class="p">)]:</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="n">y_all</span> <span class="o">==</span> <span class="n">label</span>
+
+        <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
+            <span class="n">X_pca</span><span class="p">[</span><span class="n">mask</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+            <span class="n">X_pca</span><span class="p">[</span><span class="n">mask</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+            <span class="n">label</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+            <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span>
+        <span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">"PC1"</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">"PC2"</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="pca-skenario-dengan-stopwords">
+<h2>PCA Skenario Dengan Stopwords<a class="headerlink" href="#pca-skenario-dengan-stopwords" title="Link to this heading">#</a></h2>
+<p>Visualisasi berikut menunjukkan persebaran dokumen Finance dan Sport
+berdasarkan vektor dokumen pada skenario dengan stopwords.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_document_pca</span><span class="p">(</span>
+    <span class="n">X_train_with_sw</span><span class="p">,</span>
+    <span class="n">X_test_with_sw</span><span class="p">,</span>
+    <span class="n">y_train</span><span class="p">,</span>
+    <span class="n">y_test</span><span class="p">,</span>
+    <span class="s2">"PCA 2D - Dengan Stopwords"</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/3e2f998ae651b4cf9771c9b3404b15abc0f5779698072dc2941caf15e9aaf590.png" src="_images/3e2f998ae651b4cf9771c9b3404b15abc0f5779698072dc2941caf15e9aaf590.png" />
+</div>
+</div>
+</section>
+<section id="pca-skenario-tanpa-stopwords">
+<h2>PCA Skenario Tanpa Stopwords<a class="headerlink" href="#pca-skenario-tanpa-stopwords" title="Link to this heading">#</a></h2>
+<p>Visualisasi berikut menunjukkan persebaran dokumen Finance dan Sport
+berdasarkan vektor dokumen pada skenario tanpa stopwords.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_document_pca</span><span class="p">(</span>
+    <span class="n">X_train_without_sw</span><span class="p">,</span>
+    <span class="n">X_test_without_sw</span><span class="p">,</span>
+    <span class="n">y_train</span><span class="p">,</span>
+    <span class="n">y_test</span><span class="p">,</span>
+    <span class="s2">"PCA 2D - Tanpa Stopwords"</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="penyimpanan-hasil-eksperimen">
+<h1>Penyimpanan Hasil Eksperimen<a class="headerlink" href="#penyimpanan-hasil-eksperimen" title="Link to this heading">#</a></h1>
+<p>Hasil eksperimen disimpan dalam beberapa file Excel untuk memudahkan
+analisis dan dokumentasi hasil penelitian.</p>
+<p>File yang disimpan meliputi:</p>
+<ul class="simple">
+<li><p>Statistik corpus.</p></li>
+<li><p>Perbandingan performa model.</p></li>
+<li><p>Sensitivitas nilai k pada kNN.</p></li>
+<li><p>Embedding data training dan testing pada kedua skenario preprocessing.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_corpus_stats</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span>
+    <span class="s2">"statistik_corpus_tugas4.xlsx"</span><span class="p">,</span>
+    <span class="n">index</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">)</span>
+
+<span class="n">df_comparison</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span>
+    <span class="s2">"perbandingan_model_tugas4.xlsx"</span><span class="p">,</span>
+    <span class="n">index</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">)</span>
+
+<span class="n">df_sensitivity_k</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span>
+    <span class="s2">"sensitivitas_k_knn_tugas4.xlsx"</span><span class="p">,</span>
+    <span class="n">index</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">)</span>
+
+<span class="n">train_embedding_with_sw</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">X_train_with_sw</span><span class="p">,</span>
+    <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">"Dim_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">EMBEDDING_DIM</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+<span class="p">)</span>
+
+<span class="n">train_embedding_with_sw</span><span class="p">[</span><span class="s2">"label"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y_train</span><span class="p">)</span>
+
+<span class="n">test_embedding_with_sw</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">X_test_with_sw</span><span class="p">,</span>
+    <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">"Dim_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">EMBEDDING_DIM</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+<span class="p">)</span>
+
+<span class="n">test_embedding_with_sw</span><span class="p">[</span><span class="s2">"label"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y_test</span><span class="p">)</span>
+
+<span class="n">train_embedding_without_sw</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">X_train_without_sw</span><span class="p">,</span>
+    <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">"Dim_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">EMBEDDING_DIM</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+<span class="p">)</span>
+
+<span class="n">train_embedding_without_sw</span><span class="p">[</span><span class="s2">"label"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y_train</span><span class="p">)</span>
+
+<span class="n">test_embedding_without_sw</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">X_test_without_sw</span><span class="p">,</span>
+    <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">"Dim_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">EMBEDDING_DIM</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+<span class="p">)</span>
+
+<span class="n">test_embedding_without_sw</span><span class="p">[</span><span class="s2">"label"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y_test</span><span class="p">)</span>
+
+<span class="n">train_embedding_with_sw</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span>
+    <span class="s2">"embedding_training_dengan_stopwords.xlsx"</span><span class="p">,</span>
+    <span class="n">index</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">)</span>
+
+<span class="n">test_embedding_with_sw</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span>
+    <span class="s2">"embedding_testing_dengan_stopwords.xlsx"</span><span class="p">,</span>
+    <span class="n">index</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">)</span>
+
+<span class="n">train_embedding_without_sw</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span>
+    <span class="s2">"embedding_training_tanpa_stopwords.xlsx"</span><span class="p">,</span>
+    <span class="n">index</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">)</span>
+
+<span class="n">test_embedding_without_sw</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span>
+    <span class="s2">"embedding_testing_tanpa_stopwords.xlsx"</span><span class="p">,</span>
+    <span class="n">index</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Semua hasil berhasil disimpan."</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="kesimpulan">
+<h1>Kesimpulan<a class="headerlink" href="#kesimpulan" title="Link to this heading">#</a></h1>
+<p>Pada tugas ini dilakukan klasifikasi teks berita menggunakan representasi
+word embedding berbasis Co-occurrence Matrix dan Singular Value
+Decomposition (SVD).</p>
+<p>Eksperimen dilakukan menggunakan dua skenario preprocessing, yaitu
+dengan stopwords dan tanpa stopwords.</p>
+<p>Tahapan pengolahan data meliputi preprocessing teks, tokenisasi,
+pembentukan vocabulary, pembuatan Co-occurrence Matrix dengan sliding
+window, reduksi dimensi menggunakan SVD, pembentukan word embedding,
+serta mean pooling untuk memperoleh representasi vektor dokumen.</p>
+<p>Klasifikasi dilakukan menggunakan Gaussian Naive Bayes dan
+k-Nearest Neighbors (kNN).</p>
+<p>Pada kNN digunakan beberapa nilai k, yaitu 1, 3, 5, 7, dan 9.
+Performa model dievaluasi menggunakan Accuracy, Precision, Recall,
+dan F1-Score. Evaluasi juga dilengkapi dengan Classification Report
+dan Confusion Matrix.</p>
+<p>Hasil dari kedua skenario preprocessing dibandingkan untuk mengetahui
+pengaruh penggunaan stopwords terhadap hasil klasifikasi.</p>
+<p>Selain itu, PCA digunakan untuk memvisualisasikan persebaran dokumen
+Finance dan Sport dalam ruang vektor dua dimensi.</p>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "envwebmining"
+        },
+        kernelOptions: {
+            name: "envwebmining",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'envwebmining'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Tugas 4: Klasifikasi Teks Berita Menggunakan Word Embedding Skip-gram</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#co-occurrence-matrix-svd-naive-bayes-dan-k-nearest-neighbors-knn">Co-occurrence Matrix + SVD, Naive Bayes, dan k-Nearest Neighbors (kNN)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#install-library">1. Install Library</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#import-library">2. Import Library</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#konfigurasi-parameter">3. Konfigurasi Parameter</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#membaca-dataset">4. Membaca Dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pemeriksaan-dataset">5. Pemeriksaan Dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mengubah-label-menjadi-numerik">6. Mengubah Label Menjadi Numerik</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#menghitung-jumlah-kata-sebelum-preprocessing">7. Menghitung Jumlah Kata Sebelum Preprocessing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preprocessing-dasar">8. Preprocessing Dasar</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#menghitung-jumlah-kata-setelah-preprocessing-dasar">9. Menghitung Jumlah Kata Setelah Preprocessing Dasar</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pembagian-data-training-dan-testing">10. Pembagian Data Training dan Testing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tokenisasi">11. Tokenisasi</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#daftar-stopwords-bahasa-indonesia">12. Daftar Stopwords Bahasa Indonesia</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#membuat-dua-skenario-corpus">13. Membuat Dua Skenario Corpus</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#skenario-1-dengan-stopwords">Skenario 1: Dengan Stopwords</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#skenario-2-tanpa-stopwords">Skenario 2: Tanpa Stopwords</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statistik-corpus">14. Statistik Corpus</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#membentuk-vocabulary">15. Membentuk Vocabulary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#membentuk-co-occurrence-matrix">16. Membentuk Co-occurrence Matrix</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reduksi-dimensi-menggunakan-svd">17. Reduksi Dimensi Menggunakan SVD</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-pooling">18. Mean Pooling</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fungsi-pemrosesan-skenario">19. Fungsi Pemrosesan Skenario</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">20. Skenario 1: Dengan Stopwords</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#naive-bayes-dengan-stopwords">21. Naive Bayes - Dengan Stopwords</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluasi-model">22. Evaluasi Model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#k-nearest-neighbors-dengan-stopwords">23. k-Nearest Neighbors - Dengan Stopwords</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">24. Skenario 2: Tanpa Stopwords</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#naive-bayes-tanpa-stopwords">25. Naive Bayes - Tanpa Stopwords</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluasi-naive-bayes-tanpa-stopwords">26. Evaluasi Naive Bayes - Tanpa Stopwords</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#k-nearest-neighbors-tanpa-stopwords">27. k-Nearest Neighbors - Tanpa Stopwords</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#sensitivitas-nilai-k-pada-knn">28. Sensitivitas Nilai k pada kNN</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-sensitivitas-nilai-k">29. Visualisasi Sensitivitas Nilai k</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nilai-k-untuk-evaluasi-knn">30. Nilai k untuk Evaluasi kNN</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#perbandingan-hasil-eksperimen">31. Perbandingan Hasil Eksperimen</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#confusion-matrix">32. Confusion Matrix</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-ruang-vektor-dokumen-dengan-pca">Visualisasi Ruang Vektor Dokumen dengan PCA</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pca-skenario-dengan-stopwords">PCA Skenario Dengan Stopwords</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pca-skenario-tanpa-stopwords">PCA Skenario Tanpa Stopwords</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#penyimpanan-hasil-eksperimen">Penyimpanan Hasil Eksperimen</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#kesimpulan">Kesimpulan</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
