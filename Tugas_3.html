@@ -64,6 +64,7 @@
     <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Tugas 2 - Text Preprocessing, TF-IDF, ICSDF, dan PCA" href="Tugas_2.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -165,8 +166,6 @@
       
       
       
-        
-      
       <dialog id="pst-primary-sidebar-modal"></dialog>
       <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
@@ -219,9 +218,17 @@
                 </a>
             </li>
         </ul>
-        <ul class="nav bd-sidenav">
+        <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="Tugas_1.html">Tugas 1</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Tugas_2.html">Tugas 2 - Text Preprocessing, TF-IDF, ICSDF, dan PCA</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Tugas 4: Klasifikasi Teks Berita Menggunakan Word Embedding Skip-gram</a></li>
+
+
+
+
+
+
+
 </ul>
 
     </div>
@@ -522,10 +529,10 @@ Requirement already satisfied: matplotlib in /workspaces/PPW/envwebmining/lib/py
 Requirement already satisfied: seaborn in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (0.13.2)
 Requirement already satisfied: openpyxl in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (3.1.5)
 Requirement already satisfied: Sastrawi in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (1.0.1)
-Requirement already satisfied: python-dateutil&gt;=2.8.2 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from pandas) (2.9.0.post0)
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: scipy&gt;=1.10.0 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from scikit-learn) (1.18.1)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: python-dateutil&gt;=2.8.2 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from pandas) (2.9.0.post0)
+Requirement already satisfied: scipy&gt;=1.10.0 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from scikit-learn) (1.18.1)
 Requirement already satisfied: joblib&gt;=1.4.0 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from scikit-learn) (1.6.0)
 Requirement already satisfied: narwhals&gt;=2.0.1 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from scikit-learn) (2.26.0)
 Requirement already satisfied: threadpoolctl&gt;=3.5.0 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from scikit-learn) (3.7.0)
@@ -538,7 +545,9 @@ Requirement already satisfied: pillow&gt;=9 in /workspaces/PPW/envwebmining/lib/
 Requirement already satisfied: pyparsing&gt;=3 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from matplotlib) (3.3.3)
 Requirement already satisfied: et-xmlfile in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from openpyxl) (2.0.0)
 Requirement already satisfied: cloudpickle&gt;=3.0 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from joblib&gt;=1.4.0-&gt;scikit-learn) (3.1.2)
-Requirement already satisfied: six&gt;=1.5 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from python-dateutil&gt;=2.8.2-&gt;pandas) (1.17.0)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: six&gt;=1.5 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from python-dateutil&gt;=2.8.2-&gt;pandas) (1.17.0)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold">[</span><span class=" -Color -Color-Blue">notice</span><span class=" -Color -Color-Bold">]</span> A new release of pip is available: <span class=" -Color -Color-Red">25.3</span> -&gt; <span class=" -Color -Color-Green">26.2.1</span>
@@ -1117,7 +1126,7 @@ pemisahan berdasarkan spasi.</p>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah stopwords: 123
 
 Contoh stopwords:
-['dapat', 'namun', 'dulunya', 'pun', 'seterusnya', 'maka', 'ya', 'menurut', 'yakni', 'serta', 'sudah', 'pada', 'sebetulnya', 'seperti', 'ok', 'sehingga', 'sementara', 'sebagai', 'sampai', 'hanya', 'dst', 'seharusnya', 'telah', 'saat', 'demikian', 'begitu', 'kami', 'sedangkan', 'dsb', 'bagaimanapun']
+['sebelum', 'saja', 'demi', 'dan', 'boleh', 'itu', 'sambil', 'ada', 'sebab', 'oh', 'selagi', 'sebagai', 'dahulu', 'nanti', 'bahwa', 'bisa', 'kepada', 'yaitu', 'di', 'yakni', 'maka', 'saat', 'sedangkan', 'setelah', 'guna', 'setiap', 'sesuatu', 'ia', 'hanya', 'dengan']
 </pre></div>
 </div>
 </div>
@@ -3141,6 +3150,15 @@ Finance dan Sport dalam ruang vektor dua dimensi.</p>
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="Tugas_2.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Tugas 2 - Text Preprocessing, TF-IDF, ICSDF, dan PCA</p>
+      </div>
+    </a>
 </div>
                 </footer>
               
