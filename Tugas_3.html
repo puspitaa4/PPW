@@ -64,6 +64,7 @@
     <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="1. Import Library" href="cadangan.html" />
     <link rel="prev" title="Tugas 2 - Text Preprocessing, TF-IDF, ICSDF, dan PCA" href="Tugas_2.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -222,6 +223,34 @@
 <li class="toctree-l1"><a class="reference internal" href="Tugas_1.html">Tugas 1</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Tugas_2.html">Tugas 2 - Text Preprocessing, TF-IDF, ICSDF, dan PCA</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Tugas 4: Klasifikasi Teks Berita Menggunakan Word Embedding Skip-gram</a></li>
+
+
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="cadangan.html">1. Import Library</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -529,10 +558,10 @@ Requirement already satisfied: matplotlib in /workspaces/PPW/envwebmining/lib/py
 Requirement already satisfied: seaborn in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (0.13.2)
 Requirement already satisfied: openpyxl in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (3.1.5)
 Requirement already satisfied: Sastrawi in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (1.0.1)
+Requirement already satisfied: python-dateutil&gt;=2.8.2 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from pandas) (2.9.0.post0)
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: python-dateutil&gt;=2.8.2 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from pandas) (2.9.0.post0)
-Requirement already satisfied: scipy&gt;=1.10.0 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from scikit-learn) (1.18.1)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: scipy&gt;=1.10.0 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from scikit-learn) (1.18.1)
 Requirement already satisfied: joblib&gt;=1.4.0 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from scikit-learn) (1.6.0)
 Requirement already satisfied: narwhals&gt;=2.0.1 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from scikit-learn) (2.26.0)
 Requirement already satisfied: threadpoolctl&gt;=3.5.0 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from scikit-learn) (3.7.0)
@@ -544,10 +573,10 @@ Requirement already satisfied: packaging&gt;=20.0 in /workspaces/PPW/envwebminin
 Requirement already satisfied: pillow&gt;=9 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from matplotlib) (12.3.0)
 Requirement already satisfied: pyparsing&gt;=3 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from matplotlib) (3.3.3)
 Requirement already satisfied: et-xmlfile in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from openpyxl) (2.0.0)
-Requirement already satisfied: cloudpickle&gt;=3.0 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from joblib&gt;=1.4.0-&gt;scikit-learn) (3.1.2)
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: six&gt;=1.5 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from python-dateutil&gt;=2.8.2-&gt;pandas) (1.17.0)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: cloudpickle&gt;=3.0 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from joblib&gt;=1.4.0-&gt;scikit-learn) (3.1.2)
+Requirement already satisfied: six&gt;=1.5 in /workspaces/PPW/envwebmining/lib/python3.14/site-packages (from python-dateutil&gt;=2.8.2-&gt;pandas) (1.17.0)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold">[</span><span class=" -Color -Color-Blue">notice</span><span class=" -Color -Color-Bold">]</span> A new release of pip is available: <span class=" -Color -Color-Red">25.3</span> -&gt; <span class=" -Color -Color-Green">26.2.1</span>
@@ -1126,7 +1155,7 @@ pemisahan berdasarkan spasi.</p>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah stopwords: 123
 
 Contoh stopwords:
-['sebelum', 'saja', 'demi', 'dan', 'boleh', 'itu', 'sambil', 'ada', 'sebab', 'oh', 'selagi', 'sebagai', 'dahulu', 'nanti', 'bahwa', 'bisa', 'kepada', 'yaitu', 'di', 'yakni', 'maka', 'saat', 'sedangkan', 'setelah', 'guna', 'setiap', 'sesuatu', 'ia', 'hanya', 'dengan']
+['tapi', 'dst', 'sampai', 'kepada', 'dapat', 'oleh', 'boleh', 'ok', 'saya', 'lain', 'sementara', 'namun', 'serta', 'juga', 'ketika', 'di', 'pasti', 'pada', 'dia', 'sebetulnya', 'bisa', 'para', 'sambil', 'begitu', 'sehingga', 'terhadap', 'saat', 'dengan', 'ke', 'untuk']
 </pre></div>
 </div>
 </div>
@@ -1619,7 +1648,9 @@ MEMPROSES: Dengan Stopwords
 ======================================================================
 Jumlah vocabulary: 150
 Shape Co-occurrence Matrix: (150, 150)
-Shape Word Embedding: (150, 12)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Shape Word Embedding: (150, 12)
 Total explained variance: 0.6568664007178999
 Shape X_train: (160, 12)
 Shape X_test: (40, 12)
@@ -2932,6 +2963,25 @@ weighted avg       0.95      0.95      0.95        40
 </div>
 </div>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Implementasi Word2Vec Skip-Gram dengan Gensim</span>
+
+<span class="n">Pada</span> <span class="n">bagian</span> <span class="n">ini</span> <span class="n">dilakukan</span> <span class="n">implementasi</span> <span class="n">Word2Vec</span> <span class="n">menggunakan</span> <span class="n">algoritma</span> <span class="n">Skip</span><span class="o">-</span><span class="n">Gram</span> <span class="n">dengan</span> <span class="n">library</span> <span class="n">Gensim</span> <span class="n">sebagai</span> <span class="n">metode</span> <span class="n">embedding</span> <span class="n">tambahan</span><span class="o">.</span>
+
+<span class="n">Model</span> <span class="n">Word2Vec</span> <span class="n">dilatih</span> <span class="n">menggunakan</span> <span class="n">data</span> <span class="n">training</span> <span class="n">pada</span> <span class="n">masing</span><span class="o">-</span><span class="n">masing</span> <span class="n">skenario</span> <span class="n">preprocessing</span><span class="o">.</span> <span class="n">Setiap</span> <span class="n">berita</span> <span class="n">kemudian</span> <span class="n">direpresentasikan</span> <span class="n">menjadi</span> <span class="n">satu</span> <span class="n">vektor</span> <span class="n">dokumen</span> <span class="n">menggunakan</span> <span class="n">metode</span> <span class="n">Mean</span> <span class="n">Pooling</span><span class="o">.</span>
+
+<span class="n">Vektor</span> <span class="n">dokumen</span> <span class="n">hasil</span> <span class="n">Word2Vec</span> <span class="n">selanjutnya</span> <span class="n">digunakan</span> <span class="n">sebagai</span> <span class="n">fitur</span> <span class="n">untuk</span> <span class="n">klasifikasi</span> <span class="n">menggunakan</span> <span class="n">Gaussian</span> <span class="n">Naive</span> <span class="n">Bayes</span><span class="o">.</span>
+
+<span class="n">Implementasi</span> <span class="n">dilakukan</span> <span class="n">pada</span> <span class="n">dua</span> <span class="n">skenario</span><span class="p">:</span>
+<span class="mf">1.</span> <span class="n">Dengan</span> <span class="n">Stopwords</span>
+<span class="mf">2.</span> <span class="n">Tanpa</span> <span class="n">Stopwords</span>
+
+<span class="n">Metode</span> <span class="n">Co</span><span class="o">-</span><span class="n">occurrence</span> <span class="n">Matrix</span> <span class="o">+</span> <span class="n">SVD</span> <span class="n">yang</span> <span class="n">telah</span> <span class="n">dilakukan</span> <span class="n">sebelumnya</span> <span class="n">tetap</span> <span class="n">dipertahankan</span> <span class="n">sebagai</span> <span class="n">metode</span> <span class="n">pembanding</span><span class="o">.</span>
+</pre></div>
+</div>
+</div>
+</div>
 <section id="visualisasi-ruang-vektor-dokumen-dengan-pca">
 <h2>Visualisasi Ruang Vektor Dokumen dengan PCA<a class="headerlink" href="#visualisasi-ruang-vektor-dokumen-dengan-pca" title="Link to this heading">#</a></h2>
 <p>PCA (Principal Component Analysis) digunakan untuk mereduksi vektor dokumen
@@ -3158,6 +3208,15 @@ Finance dan Sport dalam ruang vektor dua dimensi.</p>
         <p class="prev-next-subtitle">previous</p>
         <p class="prev-next-title">Tugas 2 - Text Preprocessing, TF-IDF, ICSDF, dan PCA</p>
       </div>
+    </a>
+    <a class="right-next"
+       href="cadangan.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">1. Import Library</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
