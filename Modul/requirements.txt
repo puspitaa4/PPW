@@ -2,7 +2,5 @@ streamlit
 gensim==4.4.0
 scikit-learn
 joblib
-Sastrawi
-trafilatura
-beautifulsoup4
-requests
+numpy==1.26.4
+scipy==1.13.1
